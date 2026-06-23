@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài Ôn Tập Từ Vựng Tiếng Trung – Bài 9–15</title>
+<style>
+  :root {
+    --red: #c62828;
+    --gold: #f9a825;
+    --bg: #fdf6ec;
+    --card: #fff;
+    --muted: #8d6e63;
+    --green: #2e7d32;
+    --blue: #1565c0;
+    --radius: 14px;
+    --shadow: 0 3px 16px rgba(0,0,0,0.09);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: #2d2320;
+    min-height: 100vh;
+  }
+
+  /* PRINT */
+  @media print {
+    .no-print { display: none !important; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    body { background: #fff; }
+    .answer-reveal { display: none !important; }
+    .blank { border-bottom: 1.5px solid #999 !important; color: transparent !important; background: none !important; }
+    header { background: none !important; color: #000 !important; border-bottom: 2px solid #c62828; }
+    header p { color: #555 !important; }
+  }
+
+  header {
+    background: linear-gradient(135deg, #b71c1c 0%, #e53935 60%, #f9a825 100%);
+    color: #fff;
+    padding: 22px 32px 18px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo { font-size: 2.8rem; }
+  header h1 { font-size: 1.45rem; font-weight: 800; }
+  header p { font-size: .85rem; opacity: .88; margin-top: 3px; }
+  .header-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hbtn {
+    padding: 8px 18px; border-radius: 30px; border: 2px solid rgba(255,255,255,.6);
+    background: rgba(255,255,255,.15); color: #fff; cursor: pointer;
+    font-size: .85rem; font-weight: 700; transition: all .2s;
+  }
+  .hbtn:hover { background: rgba(255,255,255,.3); }
+  .hbtn.primary { background: #fff; color: var(--red); border-color: #fff; }
+
+  .meta-bar {
+    background: #fff; border-bottom: 2px solid #f0e0d0;
+    padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+  }
+  .meta-item { font-size: .82rem; color: var(--muted); }
+  .meta-item strong { color: #2d2320; }
+  .score-display {
+    margin-left: auto; font-size: 1rem; font-weight: 800; color: var(--green);
+    background: #e8f5e9; padding: 5px 16px; border-radius: 20px;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .section {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin-bottom: 26px; overflow: hidden;
+  }
+  .section-header {
+    background: linear-gradient(90deg, #fce4ec, #fff8f0);
+    padding: 14px 22px; border-bottom: 1.5px solid #f5d0c0;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-header .ico { font-size: 1.4rem; }
+  .section-header h2 { font-size: 1.05rem; font-weight: 800; color: var(--red); }
+  .section-header .badge {
+    margin-left: auto; font-size: .75rem; font-weight: 700;
+    background: #c62828; color: #fff; border-radius: 20px; padding: 3px 10px;
+  }
+  .section-body { padding: 20px 22px; }
+
+  /* ===== VOCABULARY TABLE ===== */
+  .vocab-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .vocab-table th {
+    background: #fce4ec; color: var(--red); font-weight: 700;
+    padding: 10px 12px; text-align: left; border-bottom: 2px solid #f5c0c0;
+  }
+  .vocab-table td { padding: 9px 12px; border-bottom: 1px solid #f5ece8; vertical-align: middle; }
+  .vocab-table tr:last-child td { border-bottom: none; }
+  .vocab-table tr:hover td { background: #fffaf7; }
+  .hanzi-cell { font-size: 1.5rem; color: var(--red); font-weight: 700; }
+  .pinyin-cell { color: var(--muted); font-style: italic; font-size: .85rem; }
+  .lesson-dot {
+    display: inline-block; width: 26px; height: 26px; border-radius: 50%;
+    text-align: center; line-height: 26px; font-size: .72rem; font-weight: 800; color: #fff;
+  }
+  .l9{background:#e53935;} .l10{background:#f57c00;} .l11{background:#388e3c;}
+  .l13{background:#1976d2;} .l14{background:#7b1fa2;} .l15{background:#00838f;}
+
+  /* ===== FILL IN THE BLANK ===== */
+  .ex-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .ex-item { display: flex; align-items: flex-start; gap: 10px; }
+  .ex-num {
+    min-width: 28px; height: 28px; border-radius: 50%;
+    background: #fce4ec; color: var(--red); font-weight: 800;
+    font-size: .8rem; display: flex; align-items: center; justify-content: center;
+    margin-top: 2px; flex-shrink: 0;
+  }
+  .ex-content { flex: 1; }
+  .ex-sentence { font-size: .95rem; line-height: 1.7; }
+  .blank {
+    display: inline-block; min-width: 80px; border-bottom: 2px solid #c62828;
+    margin: 0 4px; text-align: center; font-size: 1.1rem;
+    color: #fff; background: #fff; cursor: pointer;
+    transition: color .3s; padding: 0 6px; border-radius: 3px;
+    font-weight: 700;
+  }
+  .blank.revealed { color: var(--red) !important; background: #fce4ec; }
+  .ex-vi { font-size: .82rem; color: var(--muted); margin-top: 4px; font-style: italic; }
+  .hint-hanzi { font-size: 1rem; color: var(--muted); }
+
+  /* ===== MATCHING ===== */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .match-col h3 { font-size: .85rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; }
+  .match-item {
+    padding: 10px 14px; border: 2px solid #f0e0d0; border-radius: 10px;
+    font-size: .92rem; margin-bottom: 8px; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .match-item:hover { border-color: var(--red); background: #fff5f5; }
+  .match-item.selected { border-color: var(--red); background: #fce4ec; }
+  .match-item.matched { border-color: var(--green); background: #e8f5e9; pointer-events: none; }
+  .match-item.wrong { border-color: #e53935; background: #ffebee; animation: shake .3s; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .match-hanzi { font-size: 1.4rem; color: var(--red); }
+  .match-letter {
+    width: 24px; height: 24px; border-radius: 50%; background: #f0e0d0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 800; color: var(--muted); flex-shrink: 0;
+  }
+  .match-letter.matched { background: var(--green); color: #fff; }
+
+  /* ===== MULTIPLE CHOICE ===== */
+  .mc-list { display: flex; flex-direction: column; gap: 20px; }
+  .mc-item {}
+  .mc-question { font-size: .98rem; font-weight: 600; margin-bottom: 10px; display: flex; gap: 8px; align-items: baseline; }
+  .mc-q-num { color: var(--red); font-weight: 800; font-size: 1rem; min-width: 22px; }
+  .mc-hanzi-q { font-size: 1.8rem; color: var(--red); }
+  .mc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mc-opt {
+    padding: 10px 14px; border: 2px solid #f0e0d0; border-radius: 10px;
+    cursor: pointer; font-size: .88rem; transition: all .2s; display: flex; align-items: center; gap: 8px;
+  }
+  .mc-opt:hover:not(.disabled) { border-color: var(--red); background: #fff5f5; }
+  .mc-opt.correct { border-color: var(--green); background: #e8f5e9; color: var(--green); }
+  .mc-opt.wrong { border-color: #e53935; background: #ffebee; color: #c62828; }
+  .mc-opt.disabled { pointer-events: none; }
+  .mc-opt-letter {
+    width: 22px; height: 22px; border-radius: 50%; background: #f0e0d0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .72rem; font-weight: 800; flex-shrink: 0;
+  }
+  .mc-opt.correct .mc-opt-letter { background: var(--green); color: #fff; }
+  .mc-opt.wrong .mc-opt-letter { background: #e53935; color: #fff; }
+
+  /* ===== CATEGORIZE ===== */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+  .cat-box { border: 2px dashed #e0c9b8; border-radius: 12px; padding: 12px; min-height: 120px; }
+  .cat-box h3 { font-size: .82rem; font-weight: 700; color: var(--muted); margin-bottom: 10px; text-align: center; text-transform: uppercase; letter-spacing: .5px; }
+  .cat-words { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .word-chip {
+    padding: 5px 12px; border-radius: 20px; font-size: .85rem; font-weight: 600;
+    background: #fff; border: 1.5px solid #e0c9b8; cursor: pointer;
+    transition: all .18s;
+  }
+  .word-chip:hover { border-color: var(--red); color: var(--red); }
+  .word-chip.placed { opacity: .5; pointer-events: none; }
+  .cat-drop {
+    min-height: 80px; border: 2px dashed #f0e0d0; border-radius: 10px;
+    padding: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start;
+    transition: border-color .2s;
+  }
+  .cat-drop.drag-over { border-color: var(--red); background: #fff5f5; }
+  .dropped-chip {
+    padding: 5px 12px; border-radius: 20px; font-size: .85rem; font-weight: 600;
+    cursor: pointer; transition: all .18s;
+  }
+  .dropped-chip.correct { background: #e8f5e9; border: 1.5px solid var(--green); color: var(--green); }
+  .dropped-chip.incorrect { background: #ffebee; border: 1.5px solid #e53935; color: #c62828; }
+  .dropped-chip.pending { background: #e3f2fd; border: 1.5px solid var(--blue); color: var(--blue); }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; min-height: 40px; padding: 10px; background: #fdf0e8; border-radius: 10px; }
+
+  /* ===== PINYIN ===== */
+  .pinyin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .pinyin-card { border: 1.5px solid #f0e0d0; border-radius: 12px; padding: 14px 12px; text-align: center; transition: all .2s; }
+  .pinyin-card .p-hanzi { font-size: 2rem; color: var(--red); }
+  .pinyin-input {
+    width: 100%; margin-top: 8px; padding: 6px 10px;
+    border: 1.5px solid #e0c9b8; border-radius: 8px;
+    font-size: .9rem; text-align: center; outline: none;
+    transition: border-color .2s;
+  }
+  .pinyin-input:focus { border-color: var(--red); }
+  .pinyin-input.correct { border-color: var(--green); background: #e8f5e9; color: var(--green); }
+  .pinyin-input.wrong { border-color: #e53935; background: #ffebee; }
+  .pinyin-answer { font-size: .8rem; color: var(--muted); font-style: italic; margin-top: 4px; display: none; }
+  .pinyin-answer.show { display: block; }
+
+  /* ===== WRITE ===== */
+  .write-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .write-card { border: 1.5px solid #f0e0d0; border-radius: 12px; padding: 14px; }
+  .write-card .wc-vi { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+  .write-card .wc-pinyin { font-size: .8rem; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+  .write-box {
+    width: 100%; height: 52px; border: none; border-bottom: 2px solid #e0c9b8;
+    font-size: 1.4rem; text-align: center; outline: none; background: none;
+    font-family: inherit; color: var(--red); transition: border-color .2s;
+  }
+  .write-box:focus { border-color: var(--red); }
+  .write-box.correct { border-color: var(--green); color: var(--green); }
+  .write-box.wrong { border-color: #e53935; color: #e53935; }
+  .write-check { display: none; font-size: .78rem; margin-top: 4px; font-weight: 700; }
+  .write-check.show-correct { display: block; color: var(--green); }
+  .write-check.show-wrong { display: block; color: #e53935; }
+
+  /* CONTROLS */
+  .section-footer {
+    padding: 12px 22px; border-top: 1px solid #f5ece8;
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .btn {
+    padding: 8px 20px; border-radius: 30px; border: none; cursor: pointer;
+    font-size: .85rem; font-weight: 700; transition: all .2s;
+  }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: #b71c1c; }
+  .btn-outline { background: none; border: 2px solid #e0c9b8; color: #555; }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
+  .btn-green { background: var(--green); color: #fff; }
+  .result-text { font-size: .88rem; font-weight: 700; color: var(--green); }
+
+  /* PROGRESS */
+  .overall-progress {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 20px 22px; margin-bottom: 26px;
+  }
+  .overall-progress h3 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--red); }
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .progress-label { font-size: .82rem; color: var(--muted); min-width: 130px; }
+  .pbar { flex: 1; height: 10px; background: #f0e0d0; border-radius: 10px; overflow: hidden; }
+  .pbar-fill { height: 100%; border-radius: 10px; transition: width .6s; }
+  .pbar-fill.p1 { background: linear-gradient(90deg,#e53935,#f9a825); }
+  .pbar-fill.p2 { background: linear-gradient(90deg,#1976d2,#42a5f5); }
+  .pbar-fill.p3 { background: linear-gradient(90deg,#388e3c,#66bb6a); }
+  .pbar-fill.p4 { background: linear-gradient(90deg,#7b1fa2,#ba68c8); }
+  .pbar-fill.p5 { background: linear-gradient(90deg,#e65100,#ffa726); }
+  .pbar-score { font-size: .82rem; font-weight: 700; color: var(--muted); min-width: 40px; text-align: right; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: .78rem; color: var(--muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  @media(max-width:560px){
+    .match-grid,.mc-opts { grid-template-columns: 1fr; }
+    .header-btns { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">🀄</div>
+    <div>
+      <h1>Bài Ôn Tập Từ Vựng Tiếng Trung</h1>
+      <p>63 từ vựng · Bài 9 → Bài 15 · 5 dạng bài luyện tập</p>
+    </div>
+  </div>
+  <div class="header-btns no-print">
+    <button class="hbtn" onclick="revealAll()">👁 Xem đáp án</button>
+    <button class="hbtn" onclick="resetAll()">↺ Làm lại</button>
+    <button class="hbtn primary" onclick="window.print()">🖨 In bài</button>
+  </div>
+</header>
+
+<div class="meta-bar no-print">
+  <div class="meta-item">📚 <strong>6 bài học</strong></div>
+  <div class="meta-item">📝 <strong>63 từ vựng</strong></div>
+  <div class="meta-item">🎯 <strong>5 dạng bài</strong></div>
+  <div class="meta-item">⏱ Thời gian gợi ý: <strong>30–45 phút</strong></div>
+  <div class="score-display" id="totalScore">Điểm: 0 / 0</div>
+</div>
+
+<div class="container">
+
+  <!-- PROGRESS -->
+  <div class="overall-progress no-print">
+    <h3>📊 Tiến độ làm bài</h3>
+    <div class="progress-row">
+      <span class="progress-label">Điền chữ Hán</span>
+      <div class="pbar"><div class="pbar-fill p1" id="prog1" style="width:0%"></div></div>
+      <span class="pbar-score" id="pscore1">0/8</span>
+    </div>
+    <div class="progress-row">
+      <span class="progress-label">Nối từ</span>
+      <div class="pbar"><div class="pbar-fill p2" id="prog2" style="width:0%"></div></div>
+      <span class="pbar-score" id="pscore2">0/10</span>
+    </div>
+    <div class="progress-row">
+      <span class="progress-label">Trắc nghiệm</span>
+      <div class="pbar"><div class="pbar-fill p3" id="prog3" style="width:0%"></div></div>
+      <span class="pbar-score" id="pscore3">0/10</span>
+    </div>
+    <div class="progress-row">
+      <span class="progress-label">Phân loại từ</span>
+      <div class="pbar"><div class="pbar-fill p4" id="prog4" style="width:0%"></div></div>
+      <span class="pbar-score" id="pscore4">0/15</span>
+    </div>
+    <div class="progress-row">
+      <span class="progress-label">Viết chữ Hán</span>
+      <div class="pbar"><div class="pbar-fill p5" id="prog5" style="width:0%"></div></div>
+      <span class="pbar-score" id="pscore5">0/10</span>
+    </div>
+  </div>
+
+  <!-- VOCAB TABLE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">📋</span>
+      <h2>Bảng Từ Vựng Tổng Hợp</h2>
+      <span class="badge">63 từ</span>
+    </div>
+    <div class="section-body" style="overflow-x:auto;">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot l9"></div>Bài 9</div>
+        <div class="legend-item"><div class="legend-dot l10"></div>Bài 10</div>
+        <div class="legend-item"><div class="legend-dot l11"></div>Bài 11</div>
+        <div class="legend-item"><div class="legend-dot l13"></div>Bài 13</div>
+        <div class="legend-item"><div class="legend-dot l14"></div>Bài 14</div>
+        <div class="legend-item"><div class="legend-dot l15"></div>Bài 15</div>
+      </div>
+      <table class="vocab-table">
+        <thead>
+          <tr><th>#</th><th>Chữ Hán</th><th>Pinyin</th><th>Nghĩa tiếng Việt</th><th>Bài</th></tr>
+        </thead>
+        <tbody id="vocabTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EXERCISE 1: FILL IN THE BLANK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">✏️</span>
+      <h2>Bài 1 – Điền Chữ Hán Còn Thiếu</h2>
+      <span class="badge">8 câu</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">Nhấn vào ô trống để xem đáp án. Khi in, ô trống sẽ để trống.</p>
+      <ul class="ex-list" id="fillList"></ul>
+    </div>
+    <div class="section-footer no-print">
+      <button class="btn btn-red" onclick="revealFill()">👁 Xem đáp án</button>
+      <button class="btn btn-outline" onclick="hideFill()">🙈 Ẩn đáp án</button>
+    </div>
+  </div>
+
+  <!-- EXERCISE 2: MATCHING -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">🔗</span>
+      <h2>Bài 2 – Nối Từ Với Nghĩa</h2>
+      <span class="badge">10 cặp</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:14px;">Nhấn chọn 1 chữ Hán rồi nhấn chọn nghĩa tương ứng.</p>
+      <div class="match-grid">
+        <div>
+          <h3>Chữ Hán</h3>
+          <div id="matchLeft"></div>
+        </div>
+        <div>
+          <h3>Nghĩa Tiếng Việt</h3>
+          <div id="matchRight"></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-footer no-print">
+      <button class="btn btn-red" onclick="checkMatch()">✓ Kiểm tra</button>
+      <button class="btn btn-outline" onclick="resetMatch()">↺ Làm lại</button>
+      <span class="result-text" id="matchResult"></span>
+    </div>
+  </div>
+
+  <!-- EXERCISE 3: MULTIPLE CHOICE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">🔤</span>
+      <h2>Bài 3 – Trắc Nghiệm</h2>
+      <span class="badge">10 câu</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">Chọn nghĩa đúng cho mỗi chữ Hán bên dưới.</p>
+      <div class="mc-list" id="mcList"></div>
+    </div>
+    <div class="section-footer no-print">
+      <span class="result-text" id="mcResult"></span>
+    </div>
+  </div>
+
+  <!-- EXERCISE 4: CATEGORIZE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">🗂</span>
+      <h2>Bài 4 – Phân Loại Từ Vựng</h2>
+      <span class="badge">15 từ</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px;">Nhấn vào từ trong ngân hàng từ để xếp vào đúng nhóm.</p>
+      <div class="word-bank" id="wordBank"></div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+    <div class="section-footer no-print">
+      <button class="btn btn-red" onclick="checkCat()">✓ Kiểm tra</button>
+      <button class="btn btn-outline" onclick="resetCat()">↺ Làm lại</button>
+      <span class="result-text" id="catResult"></span>
+    </div>
+  </div>
+
+  <!-- EXERCISE 5: WRITE HANZI -->
+  <div class="section">
+    <div class="section-header">
+      <span class="ico">🖊</span>
+      <h2>Bài 5 – Viết Chữ Hán</h2>
+      <span class="badge">10 từ</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">Đọc nghĩa và pinyin, điền chữ Hán đúng vào ô (hỗ trợ gõ tiếng Trung).</p>
+      <div class="write-grid" id="writeGrid"></div>
+    </div>
+    <div class="section-footer no-print">
+      <button class="btn btn-red" onclick="checkWrite()">✓ Kiểm tra tất cả</button>
+      <button class="btn btn-outline" onclick="resetWrite()">↺ Làm lại</button>
+      <span class="result-text" id="writeResult"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const WORDS = [
+  {id:1,pinyin:"bāozi",hanzi:"包子",vi:"bánh bao",lesson:13},
+  {id:2,pinyin:"bēi",hanzi:"杯",vi:"ly, cốc",lesson:13},
+  {id:3,pinyin:"běn",hanzi:"本",vi:"cuốn, quyển",lesson:15},
+  {id:4,pinyin:"cǎoméi",hanzi:"草莓",vi:"dâu tây",lesson:14},
+  {id:5,pinyin:"chī",hanzi:"吃",vi:"ăn",lesson:13},
+  {id:6,pinyin:"dà",hanzi:"大",vi:"to, lớn",lesson:14},
+  {id:7,pinyin:"dìdi",hanzi:"弟弟",vi:"em trai",lesson:9},
+  {id:8,pinyin:"dōu",hanzi:"都",vi:"đều",lesson:10},
+  {id:9,pinyin:"dú",hanzi:"读",vi:"đọc",lesson:15},
+  {id:10,pinyin:"duì",hanzi:"对",vi:"đúng",lesson:11},
+  {id:11,pinyin:"duō dà",hanzi:"多大",vi:"bao nhiêu (tuổi)",lesson:10},
+  {id:12,pinyin:"gè",hanzi:"个",vi:"từ chỉ đơn vị chung",lesson:9},
+  {id:13,pinyin:"gēge",hanzi:"哥哥",vi:"anh trai",lesson:9},
+  {id:14,pinyin:"gōngrén",hanzi:"工人",vi:"công nhân",lesson:11},
+  {id:15,pinyin:"gōngzuò",hanzi:"工作",vi:"công việc",lesson:11},
+  {id:16,pinyin:"guǒzhī",hanzi:"果汁",vi:"nước ép hoa quả",lesson:13},
+  {id:17,pinyin:"Hànzì",hanzi:"汉字",vi:"chữ Hán",lesson:15},
+  {id:18,pinyin:"hǎochī",hanzi:"好吃",vi:"ngon (đồ ăn)",lesson:14},
+  {id:19,pinyin:"hǎohē",hanzi:"好喝",vi:"ngon (đồ uống)",lesson:13},
+  {id:20,pinyin:"hé",hanzi:"和",vi:"và",lesson:9},
+  {id:21,pinyin:"hē",hanzi:"喝",vi:"uống",lesson:13},
+  {id:22,pinyin:"hóngsè",hanzi:"红色",vi:"màu đỏ",lesson:13},
+  {id:23,pinyin:"huì",hanzi:"会",vi:"biết (kỹ năng)",lesson:15},
+  {id:24,pinyin:"hùshi",hanzi:"护士",vi:"y tá, điều dưỡng",lesson:11},
+  {id:25,pinyin:"jǐ",hanzi:"几",vi:"mấy",lesson:9},
+  {id:26,pinyin:"jiā",hanzi:"家",vi:"gia đình, nhà",lesson:9},
+  {id:27,pinyin:"jiàn",hanzi:"件",vi:"cái, chiếc",lesson:14},
+  {id:28,pinyin:"jiějie",hanzi:"姐姐",vi:"chị gái",lesson:9},
+  {id:29,pinyin:"jìzhě",hanzi:"记者",vi:"phóng viên, nhà báo",lesson:11},
+  {id:30,pinyin:"kǒu",hanzi:"口",vi:"từ chỉ thành viên gia đình",lesson:9},
+  {id:31,pinyin:"lánsè",hanzi:"蓝色",vi:"màu xanh dương",lesson:13},
+  {id:32,pinyin:"liǎng",hanzi:"两",vi:"hai (số lượng)",lesson:10},
+  {id:33,pinyin:"mǎi",hanzi:"买",vi:"mua",lesson:14},
+  {id:34,pinyin:"mèimei",hanzi:"妹妹",vi:"em gái",lesson:9},
+  {id:35,pinyin:"méiyǒu",hanzi:"没有",vi:"không có",lesson:9},
+  {id:36,pinyin:"miànbāo",hanzi:"面包",vi:"bánh mì",lesson:13},
+  {id:37,pinyin:"nǎinai",hanzi:"奶奶",vi:"bà nội",lesson:10},
+  {id:38,pinyin:"niúnǎi",hanzi:"牛奶",vi:"sữa",lesson:13},
+  {id:39,pinyin:"nóngmín",hanzi:"农民",vi:"nông dân",lesson:11},
+  {id:40,pinyin:"piàoliang",hanzi:"漂亮",vi:"đẹp",lesson:14},
+  {id:41,pinyin:"píngguǒ",hanzi:"苹果",vi:"táo",lesson:14},
+  {id:42,pinyin:"rén",hanzi:"人",vi:"người",lesson:9},
+  {id:43,pinyin:"sān",hanzi:"三",vi:"3",lesson:9},
+  {id:44,pinyin:"sānshíwǔ",hanzi:"三十五",vi:"35",lesson:10},
+  {id:45,pinyin:"shuō",hanzi:"说",vi:"nói",lesson:15},
+  {id:46,pinyin:"sì",hanzi:"四",vi:"4",lesson:9},
+  {id:47,pinyin:"suì",hanzi:"岁",vi:"tuổi",lesson:10},
+  {id:48,pinyin:"xiǎo",hanzi:"小",vi:"nhỏ",lesson:14},
+  {id:49,pinyin:"xiě",hanzi:"写",vi:"viết",lesson:15},
+  {id:50,pinyin:"xǐhuan",hanzi:"喜欢",vi:"thích",lesson:13},
+  {id:51,pinyin:"xuésheng",hanzi:"学生",vi:"học sinh",lesson:11},
+  {id:52,pinyin:"yě",hanzi:"也",vi:"cũng",lesson:9},
+  {id:53,pinyin:"yéye",hanzi:"爷爷",vi:"ông nội",lesson:10},
+  {id:54,pinyin:"yìbǎi",hanzi:"一百",vi:"100",lesson:10},
+  {id:55,pinyin:"yīfu",hanzi:"衣服",vi:"áo, quần áo",lesson:14},
+  {id:56,pinyin:"Yīngyǔ",hanzi:"英语",vi:"tiếng Anh",lesson:15},
+  {id:57,pinyin:"yīshēng",hanzi:"医生",vi:"bác sĩ",lesson:11},
+  {id:58,pinyin:"yǒu",hanzi:"有",vi:"có",lesson:9},
+  {id:59,pinyin:"zhīdào",hanzi:"知道",vi:"biết (thông tin)",lesson:10},
+  {id:60,pinyin:"Zhōngwén",hanzi:"中文",vi:"tiếng Trung Quốc",lesson:15},
+  {id:61,pinyin:"Zhōngwén shū",hanzi:"中文书",vi:"sách tiếng Trung",lesson:15},
+  {id:62,pinyin:"zì",hanzi:"字",vi:"chữ",lesson:15},
+  {id:63,pinyin:"zuò",hanzi:"做",vi:"làm",lesson:11}
+];
+
+// ===== SCORES =====
+let scores = {fill:0,fillTotal:8,match:0,matchTotal:10,mc:0,mcTotal:10,cat:0,catTotal:15,write:0,writeTotal:10};
+
+function updateTotalScore() {
+  const total = scores.fill + scores.match + scores.mc + scores.cat + scores.write;
+  const max = scores.fillTotal + scores.matchTotal + scores.mcTotal + scores.catTotal + scores.writeTotal;
+  document.getElementById('totalScore').textContent = `Điểm: ${total} / ${max}`;
+}
+function updateProgress(id, current, total) {
+  const pct = total ? (current/total*100) : 0;
+  document.getElementById('prog'+id).style.width = pct+'%';
+  document.getElementById('pscore'+id).textContent = `${current}/${total}`;
+}
+
+// ===== VOCAB TABLE =====
+function buildVocabTable() {
+  const tb = document.getElementById('vocabTableBody');
+  tb.innerHTML = WORDS.map(w => `
+    <tr>
+      <td style="color:var(--muted);font-size:.82rem;">${w.id}</td>
+      <td class="hanzi-cell">${w.hanzi}</td>
+      <td class="pinyin-cell">${w.pinyin}</td>
+      <td>${w.vi}</td>
+      <td><span class="lesson-dot l${w.lesson}">B${w.lesson}</span></td>
+    </tr>`).join('');
+}
+
+// ===== FILL IN THE BLANK =====
+const FILL_DATA = [
+  { sentence: "我家有四口人：爸爸、妈妈、<B>哥哥</B>和我。", hint:"(anh trai)", vi:"Gia đình tôi có 4 người: bố, mẹ, anh trai và tôi.", answer:"哥哥" },
+  { sentence: "他是<B>医生</B>，在医院工作。", hint:"(bác sĩ)", vi:"Anh ấy là bác sĩ, làm việc ở bệnh viện.", answer:"医生" },
+  { sentence: "我<B>喜欢</B>吃苹果和草莓。", hint:"(thích)", vi:"Tôi thích ăn táo và dâu tây.", answer:"喜欢" },
+  { sentence: "她在学校学习<B>中文</B>和英语。", hint:"(tiếng Trung)", vi:"Cô ấy học tiếng Trung và tiếng Anh ở trường.", answer:"中文" },
+  { sentence: "这件衣服很<B>漂亮</B>，我想买。", hint:"(đẹp)", vi:"Bộ quần áo này rất đẹp, tôi muốn mua.", answer:"漂亮" },
+  { sentence: "奶奶今年<B>三十五</B>岁。", hint:"(35 tuổi)", vi:"Bà nội năm nay 35 tuổi... (câu vui!)", answer:"三十五" },
+  { sentence: "我会说<B>汉字</B>，也会写。", hint:"(chữ Hán)", vi:"Tôi biết đọc chữ Hán và cũng biết viết.", answer:"汉字" },
+  { sentence: "这杯<B>牛奶</B>很好喝！", hint:"(sữa)", vi:"Ly sữa này rất ngon!", answer:"牛奶" },
+];
+
+function buildFill() {
+  const el = document.getElementById('fillList');
+  el.innerHTML = FILL_DATA.map((d,i) => {
+    const parts = d.sentence.split(/<B>|<\/B>/);
+    let html = '';
+    for (let j=0;j<parts.length;j++) {
+      if (j%2===0) html += parts[j];
+      else html += `<span class="blank" id="blank${i}" onclick="revealBlank(${i})">&nbsp;${d.hint}&nbsp;</span>`;
+    }
+    return `<li class="ex-item">
+      <div class="ex-num">${i+1}</div>
+      <div class="ex-content">
+        <div class="ex-sentence">${html}</div>
+        <div class="ex-vi">${d.vi}</div>
+      </div>
+    </li>`;
+  }).join('');
+}
+function revealBlank(i) {
+  const b = document.getElementById('blank'+i);
+  if (!b.classList.contains('revealed')) {
+    b.textContent = FILL_DATA[i].answer;
+    b.classList.add('revealed');
+    scores.fill++;
+    updateProgress(1, scores.fill, scores.fillTotal);
+    updateTotalScore();
+  }
+}
+function revealFill() { FILL_DATA.forEach((_,i)=>revealBlank(i)); }
+function hideFill() {
+  FILL_DATA.forEach((d,i)=>{
+    const b = document.getElementById('blank'+i);
+    if (b.classList.contains('revealed')) {
+      b.classList.remove('revealed');
+      b.innerHTML = `&nbsp;${d.hint}&nbsp;`;
+    }
+  });
+  scores.fill=0; updateProgress(1,0,scores.fillTotal); updateTotalScore();
+}
+
+// ===== MATCHING =====
+const MATCH_PAIRS = [
+  {hanzi:"工人",vi:"công nhân"},{hanzi:"护士",vi:"y tá, điều dưỡng"},
+  {hanzi:"农民",vi:"nông dân"},{hanzi:"记者",vi:"phóng viên, nhà báo"},
+  {hanzi:"苹果",vi:"táo"},{hanzi:"草莓",vi:"dâu tây"},
+  {hanzi:"红色",vi:"màu đỏ"},{hanzi:"蓝色",vi:"màu xanh dương"},
+  {hanzi:"买",vi:"mua"},{hanzi:"喜欢",vi:"thích"},
+];
+let matchLeft=[], matchRight=[], selectedLeft=null, selectedRight=null, matchedPairs=[];
+
+function buildMatch() {
+  matchLeft = [...MATCH_PAIRS].sort(()=>Math.random()-.5);
+  matchRight = [...MATCH_PAIRS].sort(()=>Math.random()-.5);
+  selectedLeft=null; selectedRight=null; matchedPairs=[];
+  const L=document.getElementById('matchLeft'), R=document.getElementById('matchRight');
+  L.innerHTML = matchLeft.map((p,i)=>`
+    <div class="match-item" id="ml${i}" onclick="selectMatch('left',${i})">
+      <span class="match-letter" id="mll${i}">${i+1}</span>
+      <span class="match-hanzi">${p.hanzi}</span>
+    </div>`).join('');
+  R.innerHTML = matchRight.map((p,i)=>`
+    <div class="match-item" id="mr${i}" onclick="selectMatch('right',${i})">
+      <span class="match-letter" id="mrl${i}">${String.fromCharCode(65+i)}</span>
+      ${p.vi}
+    </div>`).join('');
+  document.getElementById('matchResult').textContent='';
+}
+function selectMatch(side, idx) {
+  if (side==='left') {
+    if (selectedLeft!==null) document.getElementById('ml'+selectedLeft).classList.remove('selected');
+    if (selectedLeft===idx) { selectedLeft=null; return; }
+    selectedLeft=idx;
+    document.getElementById('ml'+idx).classList.add('selected');
+  } else {
+    if (selectedRight!==null) document.getElementById('mr'+selectedRight).classList.remove('selected');
+    if (selectedRight===idx) { selectedRight=null; return; }
+    selectedRight=idx;
+    document.getElementById('mr'+idx).classList.add('selected');
+  }
+  if (selectedLeft!==null && selectedRight!==null) {
+    const lw=matchLeft[selectedLeft], rw=matchRight[selectedRight];
+    if (lw.hanzi===rw.hanzi) {
+      ['ml'+selectedLeft,'mr'+selectedRight].forEach(id=>{
+        const el=document.getElementById(id);
+        el.classList.remove('selected'); el.classList.add('matched');
+      });
+      document.getElementById('mll'+selectedLeft).classList.add('matched');
+      document.getElementById('mrl'+selectedRight).classList.add('matched');
+      matchedPairs.push(lw.hanzi);
+    } else {
+      ['ml'+selectedLeft,'mr'+selectedRight].forEach(id=>{
+        const el=document.getElementById(id); el.classList.add('wrong');
+        setTimeout(()=>{ el.classList.remove('wrong','selected'); },600);
+      });
+    }
+    selectedLeft=null; selectedRight=null;
+    scores.match=matchedPairs.length; updateProgress(2,scores.match,scores.matchTotal); updateTotalScore();
+  }
+}
+function checkMatch() {
+  const r=document.getElementById('matchResult');
+  if (matchedPairs.length===MATCH_PAIRS.length) r.textContent=`🎉 Hoàn hảo! ${matchedPairs.length}/${MATCH_PAIRS.length} cặp đúng!`;
+  else r.textContent=`✓ ${matchedPairs.length}/${MATCH_PAIRS.length} cặp đúng.`;
+}
+function resetMatch() { scores.match=0; updateProgress(2,0,scores.matchTotal); updateTotalScore(); buildMatch(); }
+
+// ===== MULTIPLE CHOICE =====
+const MC_WORDS = [
+  {w:WORDS.find(x=>x.hanzi==='工作'), wrong:["gia đình","đọc sách","nông dân"]},
+  {w:WORDS.find(x=>x.hanzi==='奶奶'), wrong:["ông nội","em gái","chị gái"]},
+  {w:WORDS.find(x=>x.hanzi==='面包'), wrong:["bánh bao","sữa","nước ép"]},
+  {w:WORDS.find(x=>x.hanzi==='漂亮'), wrong:["nhỏ","to lớn","ngon"]},
+  {w:WORDS.find(x=>x.hanzi==='学生'), wrong:["bác sĩ","y tá","công nhân"]},
+  {w:WORDS.find(x=>x.hanzi==='知道'), wrong:["mua","uống","làm"]},
+  {w:WORDS.find(x=>x.hanzi==='写'), wrong:["đọc","nói","biết"]},
+  {w:WORDS.find(x=>x.hanzi==='衣服'), wrong:["táo","sữa","màu đỏ"]},
+  {w:WORDS.find(x=>x.hanzi==='果汁'), wrong:["bánh mì","sữa","bánh bao"]},
+  {w:WORDS.find(x=>x.hanzi==='爷爷'), wrong:["bà nội","em trai","anh trai"]},
+];
+let mcAnswered = new Array(MC_WORDS.length).fill(false);
+
+function buildMC() {
+  mcAnswered = new Array(MC_WORDS.length).fill(false);
+  const el = document.getElementById('mcList');
+  el.innerHTML = MC_WORDS.map((item,qi) => {
+    const opts = [item.w.vi, ...item.wrong].sort(()=>Math.random()-.5);
+    const letters = ['A','B','C','D'];
+    return `<div class="mc-item">
+      <div class="mc-question">
+        <span class="mc-q-num">${qi+1}.</span>
+        <div>
+          <div class="mc-hanzi-q">${item.w.hanzi}</div>
+          <div style="font-size:.82rem;color:var(--muted);font-style:italic;">${item.w.pinyin}</div>
+        </div>
+      </div>
+      <div class="mc-opts" id="mcOpts${qi}">
+        ${opts.map((o,oi)=>`
+          <button class="mc-opt" onclick="answerMC(${qi},'${o}','${item.w.vi}')">
+            <span class="mc-opt-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('mcResult').textContent='';
+  scores.mc=0; updateProgress(3,0,scores.mcTotal); updateTotalScore();
+}
+function answerMC(qi, selected, correct) {
+  if (mcAnswered[qi]) return;
+  mcAnswered[qi]=true;
+  const opts = document.querySelectorAll(`#mcOpts${qi} .mc-opt`);
+  opts.forEach(b=>{
+    b.classList.add('disabled');
+    if (b.textContent.trim().slice(1)===correct) b.classList.add('correct');
+    else if (b.textContent.trim().slice(1)===selected && selected!==correct) b.classList.add('wrong');
+  });
+  if (selected===correct) scores.mc++;
+  const done = mcAnswered.filter(Boolean).length;
+  const r = document.getElementById('mcResult');
+  if (done===MC_WORDS.length) r.textContent=`🎉 Kết quả: ${scores.mc}/${scores.mcTotal}`;
+  updateProgress(3,scores.mc,scores.mcTotal); updateTotalScore();
+}
+
+// ===== CATEGORIZE =====
+const CAT_CATS = [
+  { label:"🧑‍🤝‍🧑 Gia đình", color:"#e53935", words:["哥哥","弟弟","姐姐","妹妹","奶奶","爷爷"] },
+  { label:"🍎 Thức ăn & uống", color:"#f57c00", words:["包子","面包","苹果","草莓","果汁","牛奶"] },
+  { label:"👔 Nghề nghiệp", color:"#388e3c", words:["医生","护士","农民","工人","记者","学生"] },
+  // pick 5 from each for the 15-word exercise; show subset for usability
+];
+// use 5 from each category
+const CAT_SELECTION = [
+  {hanzi:"哥哥",cat:0},{hanzi:"妹妹",cat:0},{hanzi:"奶奶",cat:0},{hanzi:"爷爷",cat:0},{hanzi:"弟弟",cat:0},
+  {hanzi:"包子",cat:1},{hanzi:"苹果",cat:1},{hanzi:"牛奶",cat:1},{hanzi:"果汁",cat:1},{hanzi:"面包",cat:1},
+  {hanzi:"医生",cat:2},{hanzi:"护士",cat:2},{hanzi:"农民",cat:2},{hanzi:"工人",cat:2},{hanzi:"记者",cat:2},
+];
+let catPlaced = {}; // hanzi -> catIdx
+let catSelected = null;
+
+function buildCat() {
+  catPlaced={}; catSelected=null;
+  const bank = document.getElementById('wordBank');
+  const grid = document.getElementById('catGrid');
+  const shuffled = [...CAT_SELECTION].sort(()=>Math.random()-.5);
+  bank.innerHTML = shuffled.map(item=>`
+    <span class="word-chip" id="chip_${item.hanzi}" onclick="selectChip('${item.hanzi}')">${item.hanzi}</span>
+  `).join('');
+  grid.innerHTML = CAT_CATS.map((cat,ci)=>`
+    <div class="cat-box" style="border-color:${cat.color}33;">
+      <h3 style="color:${cat.color}">${cat.label}</h3>
+      <div class="cat-drop" id="catDrop${ci}" onclick="dropChip(${ci})"></div>
+    </div>
+  `).join('');
+  document.getElementById('catResult').textContent='';
+  scores.cat=0; updateProgress(4,0,scores.catTotal); updateTotalScore();
+}
+function selectChip(hanzi) {
+  document.querySelectorAll('.word-chip').forEach(c=>c.style.outline='');
+  catSelected=hanzi;
+  const chip=document.getElementById('chip_'+hanzi);
+  if(chip) chip.style.outline='2px solid #c62828';
+}
+function dropChip(catIdx) {
+  if (!catSelected) return;
+  const existing = Object.keys(catPlaced).find(h=>catPlaced[h]===catIdx && h===catSelected);
+  if(existing) return;
+  catPlaced[catSelected]=catIdx;
+  const src=document.getElementById('chip_'+catSelected);
+  if(src) src.classList.add('placed');
+  const drop=document.getElementById('catDrop'+catIdx);
+  const span=document.createElement('span');
+  span.className='dropped-chip pending';
+  span.textContent=catSelected;
+  span.dataset.hanzi=catSelected;
+  span.onclick=()=>{
+    delete catPlaced[catSelected=span.dataset.hanzi];
+    const chip=document.getElementById('chip_'+catSelected);
+    if(chip){chip.classList.remove('placed');chip.style.outline='';}
+    span.remove(); catSelected=null;
+  };
+  drop.appendChild(span);
+  catSelected=null;
+  document.querySelectorAll('.word-chip').forEach(c=>c.style.outline='');
+}
+function checkCat() {
+  let correct=0;
+  document.querySelectorAll('.dropped-chip').forEach(span=>{
+    const hanzi=span.dataset.hanzi;
+    const item=CAT_SELECTION.find(x=>x.hanzi===hanzi);
+    const catIdx=parseInt(span.closest('.cat-drop').id.replace('catDrop',''));
+    span.className='dropped-chip '+(item&&item.cat===catIdx?'correct':'incorrect');
+    if(item&&item.cat===catIdx) correct++;
+  });
+  scores.cat=correct; updateProgress(4,scores.cat,scores.catTotal); updateTotalScore();
+  document.getElementById('catResult').textContent=`✓ ${correct}/${scores.catTotal} từ đúng`;
+}
+function resetCat() { scores.cat=0; updateProgress(4,0,scores.catTotal); updateTotalScore(); buildCat(); }
+
+// ===== WRITE HANZI =====
+const WRITE_WORDS = [
+  WORDS.find(x=>x.hanzi==='家'),
+  WORDS.find(x=>x.hanzi==='喝'),
+  WORDS.find(x=>x.hanzi==='买'),
+  WORDS.find(x=>x.hanzi==='说'),
+  WORDS.find(x=>x.hanzi==='做'),
+  WORDS.find(x=>x.hanzi==='有'),
+  WORDS.find(x=>x.hanzi==='也'),
+  WORDS.find(x=>x.hanzi==='都'),
+  WORDS.find(x=>x.hanzi==='写'),
+  WORDS.find(x=>x.hanzi==='读'),
+];
+function buildWrite() {
+  const el = document.getElementById('writeGrid');
+  el.innerHTML = WRITE_WORDS.map((w,i)=>`
+    <div class="write-card">
+      <div class="wc-vi">${w.vi}</div>
+      <div class="wc-pinyin">${w.pinyin}</div>
+      <input type="text" class="write-box" id="wb${i}" placeholder="Viết chữ Hán..." autocomplete="off"
+        onkeydown="if(event.key==='Enter')checkWrite()">
+      <div class="write-check" id="wcheck${i}"></div>
+    </div>`).join('');
+  document.getElementById('writeResult').textContent='';
+  scores.write=0; updateProgress(5,0,scores.writeTotal); updateTotalScore();
+}
+function checkWrite() {
+  let correct=0;
+  WRITE_WORDS.forEach((w,i)=>{
+    const inp=document.getElementById('wb'+i);
+    const chk=document.getElementById('wcheck'+i);
+    const val=inp.value.trim();
+    if (!val) return;
+    if (val===w.hanzi) {
+      inp.className='write-box correct';
+      chk.className='write-check show-correct';
+      chk.textContent='✓ Đúng!';
+      correct++;
+    } else {
+      inp.className='write-box wrong';
+      chk.className='write-check show-wrong';
+      chk.textContent=`✗ Đáp án: ${w.hanzi}`;
+    }
+  });
+  scores.write=correct; updateProgress(5,scores.write,scores.writeTotal); updateTotalScore();
+  document.getElementById('writeResult').textContent=`✓ ${correct}/${scores.writeTotal} câu đúng`;
+}
+function resetWrite() {
+  WRITE_WORDS.forEach((_,i)=>{
+    document.getElementById('wb'+i).value='';
+    document.getElementById('wb'+i).className='write-box';
+    document.getElementById('wcheck'+i).className='write-check';
+    document.getElementById('wcheck'+i).textContent='';
+  });
+  scores.write=0; updateProgress(5,0,scores.writeTotal); updateTotalScore();
+  document.getElementById('writeResult').textContent='';
+}
+
+// ===== GLOBAL =====
+function revealAll() {
+  revealFill();
+}
+function resetAll() {
+  hideFill(); resetMatch(); buildMC(); resetCat(); resetWrite();
+}
+
+// ===== INIT =====
+buildVocabTable();
+buildFill();
+buildMatch();
+buildMC();
+buildCat();
+buildWrite();
+updateTotalScore();
+</script>
+</body>
+</html>
