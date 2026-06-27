@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Học Từ Vựng Tiếng Trung – Chào Hỏi & Lịch Sự</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hanzi-writer/3.5.0/hanzi-writer.min.js"></script>
+<style>
+/* ═══════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#c62828;--red2:#e53935;--red-bg:#fff5f5;--red-light:#ffebee;
+  --gold:#f9a825;--gold-bg:#fffde7;
+  --green:#2e7d32;--green-bg:#e8f5e9;
+  --blue:#1565c0;--blue-bg:#e3f2fd;
+  --bg:#fdf6ec;--card:#ffffff;
+  --text:#2d2320;--muted:#8d6e63;--border:#f0ddd0;
+  --shadow:0 4px 24px rgba(0,0,0,.10);
+  --shadow-hover:0 10px 32px rgba(0,0,0,.15);
+  --r:16px;--r-sm:10px;
+  --ease:.22s cubic-bezier(.4,0,.2,1);
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+button,input{font-family:inherit}
+button{cursor:pointer}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+header{
+  background:linear-gradient(135deg,#b71c1c 0%,#e53935 50%,#f9a825 100%);
+  color:#fff;padding:18px 24px 14px;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:0 4px 18px rgba(183,28,28,.28);
+  position:sticky;top:0;z-index:300;
+}
+.h-logo{font-size:2.5rem;flex-shrink:0;line-height:1}
+.h-text h1{font-size:1.22rem;font-weight:800;letter-spacing:.3px}
+.h-text p{font-size:.78rem;opacity:.85;margin-top:2px}
+.h-pills{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{
+  background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);
+  border-radius:30px;padding:4px 12px;font-size:.76rem;font-weight:700;white-space:nowrap;
+}
+
+/* ═══════════════════════════════════════
+   TABS
+═══════════════════════════════════════ */
+.tabs{
+  display:flex;background:#fff;border-bottom:2.5px solid var(--border);
+  position:sticky;top:68px;z-index:200;overflow-x:auto;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1;min-width:70px;padding:12px 8px 10px;border:none;background:none;
+  font-size:.78rem;font-weight:700;color:var(--muted);
+  border-bottom:3px solid transparent;transition:all var(--ease);white-space:nowrap;
+}
+.tab .t-ico{display:block;font-size:1.25rem;margin-bottom:2px}
+.tab.on{color:var(--red);border-bottom-color:var(--red)}
+.tab:hover:not(.on){background:#fdf0e8;color:var(--red)}
+
+/* ═══════════════════════════════════════
+   PANELS
+═══════════════════════════════════════ */
+.panel{display:none;padding:20px 16px 90px;max-width:740px;margin:0 auto;animation:fadeUp .28s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════════════
+   SHARED UI
+═══════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 22px;border-radius:30px;border:none;
+  font-size:.86rem;font-weight:700;transition:all var(--ease);
+}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#b71c1c;transform:translateY(-1px)}
+.btn-outline{background:none;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#1b5e20;transform:translateY(-1px)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* ═══════════════════════════════════════
+   PANEL 1 – WORD LIST
+═══════════════════════════════════════ */
+.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap input{
+  width:100%;padding:11px 16px 11px 40px;
+  border:1.5px solid var(--border);border-radius:30px;
+  font-size:.9rem;outline:none;background:#fff;transition:border-color var(--ease);
+}
+.search-wrap input:focus{border-color:var(--red)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+#wCount{font-size:.76rem;color:var(--muted);margin-bottom:12px}
+
+.wlist{display:flex;flex-direction:column;gap:10px}
+.wrow{
+  background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:14px 16px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:transform var(--ease),box-shadow var(--ease),border-color var(--ease);
+  border:1.5px solid transparent;
+}
+.wrow:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:#ef9a9a}
+.wrow-hanzi{font-size:2rem;color:var(--red);font-weight:700;min-width:60px;text-align:center;line-height:1;flex-shrink:0}
+.wrow-body{flex:1;min-width:0}
+.wrow-pinyin{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:2px}
+.wrow-vi{font-size:.92rem;font-weight:600}
+.wrow-badge{
+  font-size:.68rem;font-weight:800;padding:3px 10px;
+  border-radius:20px;background:var(--red-light);color:var(--red);flex-shrink:0;
+}
+.speak-icon{background:none;border:none;font-size:1.2rem;color:var(--muted);padding:4px;transition:color var(--ease);flex-shrink:0}
+.speak-icon:hover{color:var(--red)}
+
+/* ═══════════════════════════════════════
+   MODAL
+═══════════════════════════════════════ */
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:1000;align-items:center;justify-content:center;padding:16px;
+}
+.overlay.on{display:flex}
+.modal{
+  background:#fff;border-radius:24px;padding:32px 28px 26px;
+  max-width:420px;width:100%;position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.22);animation:popIn .25s;
+}
+@keyframes popIn{from{transform:scale(.86);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-x{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.4rem;color:var(--muted)}
+.modal-x:hover{color:var(--red)}
+.m-hanzi{font-size:4.5rem;color:var(--red);font-weight:700;text-align:center;line-height:1.1;margin-bottom:4px}
+.m-pinyin{text-align:center;color:var(--muted);font-style:italic;font-size:1.05rem;margin-bottom:6px}
+.m-vi{text-align:center;font-size:1.1rem;font-weight:700;margin-bottom:16px}
+.m-writer{display:flex;justify-content:center;margin:0 0 16px}
+.m-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════
+   PANEL 2 – FLASHCARD
+═══════════════════════════════════════ */
+.fc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.fc-top h2{font-size:1rem;font-weight:800;color:var(--red)}
+.fc-top-acts{display:flex;gap:6px}
+.fc-modes{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.fc-mode{
+  padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);
+  background:none;font-size:.76rem;font-weight:700;color:var(--muted);transition:all var(--ease);
+}
+.fc-mode.on{background:var(--red);border-color:var(--red);color:#fff}
+
+.fc-pbar{height:6px;background:#f0ddd0;border-radius:10px;margin-bottom:6px}
+.fc-pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:10px;transition:width .5s}
+.fc-ptext{font-size:.76rem;color:var(--muted);text-align:right;margin-bottom:18px}
+
+/* 3-D card */
+.fc-scene{perspective:1100px}
+.fc-card{
+  width:100%;aspect-ratio:16/9;max-height:260px;
+  position:relative;transform-style:preserve-3d;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);cursor:pointer;
+}
+.fc-card.flipped{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute;inset:0;backface-visibility:hidden;
+  border-radius:22px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:22px;
+  box-shadow:var(--shadow);
+}
+.fc-front{background:linear-gradient(135deg,#fff 55%,#fde8e0);border:2px solid #f5c8b8}
+.fc-back{background:linear-gradient(135deg,#fffaf5 55%,#fff);border:2px solid var(--border);transform:rotateY(180deg)}
+.fc-big{font-size:4.5rem;color:var(--red);line-height:1;font-weight:700}
+.fc-sub{font-size:.95rem;color:var(--muted);font-style:italic;margin-top:8px}
+.fc-ans{font-size:1.4rem;font-weight:700;text-align:center;padding:0 12px}
+.fc-ans-sm{font-size:2rem;color:var(--red);font-weight:700;margin-bottom:6px}
+.fc-ans-pin{font-size:.85rem;color:var(--muted);font-style:italic;margin-top:4px}
+.fc-hint{font-size:.7rem;color:#ccc;position:absolute;bottom:14px}
+
+.fc-nav{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:18px}
+.fc-nav-btn{padding:10px 28px;border-radius:30px;border:none;font-size:.9rem;font-weight:800;transition:all var(--ease)}
+.fc-prev{background:#f0e4d8;color:var(--text)}
+.fc-prev:hover{background:#e0ccc0}
+.fc-next{background:var(--red);color:#fff}
+.fc-next:hover{background:#b71c1c;transform:translateY(-1px)}
+.fc-spk{
+  width:44px;height:44px;border-radius:50%;border:2px solid var(--border);
+  background:#fff;font-size:1.2rem;color:var(--muted);transition:all var(--ease);
+}
+.fc-spk:hover{border-color:var(--red);color:var(--red)}
+
+.fc-rating{display:none;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.fc-rating.on{display:flex}
+.r-btn{
+  padding:8px 18px;border-radius:20px;border:none;
+  font-size:.8rem;font-weight:700;transition:all var(--ease);
+}
+.r-easy{background:var(--green-bg);color:var(--green)}
+.r-easy:hover{background:var(--green);color:#fff}
+.r-hard{background:#fff3e0;color:#e65100}
+.r-hard:hover{background:#e65100;color:#fff}
+.r-again{background:var(--red-light);color:var(--red)}
+.r-again:hover{background:var(--red);color:#fff}
+
+/* ═══════════════════════════════════════
+   PANEL 3 – QUIZ
+═══════════════════════════════════════ */
+.quiz-modes{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.qmode{
+  padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);
+  background:none;font-size:.76rem;font-weight:700;color:var(--muted);transition:all var(--ease);
+}
+.qmode.on{background:var(--red);border-color:var(--red);color:#fff}
+.quiz-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.q-num{font-size:.82rem;color:var(--muted)}
+.q-score{font-size:.92rem;font-weight:800;color:var(--green)}
+.q-pbar{height:5px;background:#f0ddd0;border-radius:10px;margin-bottom:16px}
+.q-pfill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:10px;transition:width .4s}
+
+.q-card{
+  background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:28px 20px;text-align:center;margin-bottom:16px;
+}
+.q-label{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:10px}
+.q-hanzi{font-size:4rem;color:var(--red);font-weight:700;line-height:1}
+.q-pinyin{font-size:.9rem;color:var(--muted);font-style:italic;margin-top:8px}
+.q-text{font-size:1.3rem;font-weight:700;padding:0 8px}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.q-opt{
+  padding:13px 12px;background:var(--card);border:2px solid var(--border);
+  border-radius:14px;font-size:.88rem;font-weight:600;text-align:center;
+  transition:all var(--ease);
+}
+.q-opt:hover:not(.dis){border-color:var(--red);color:var(--red);transform:translateY(-2px)}
+.q-opt.ok{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.q-opt.no{background:var(--red-light);border-color:var(--red);color:var(--red)}
+.q-opt.dis{pointer-events:none}
+.q-next{text-align:center;margin-top:14px;display:none}
+
+.q-result{
+  display:none;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:36px 22px;text-align:center;
+}
+.qr-big{font-size:3.5rem}
+.qr-score{font-size:3rem;font-weight:900;color:var(--red);margin:6px 0}
+.qr-pct{font-size:1rem;color:var(--muted);margin-bottom:16px}
+.qr-msg{font-size:1.1rem;font-weight:700;margin-bottom:24px}
+
+/* ═══════════════════════════════════════
+   PANEL 4 – STROKE
+═══════════════════════════════════════ */
+.st-search{
+  width:100%;padding:10px 16px;border:1.5px solid var(--border);border-radius:30px;
+  font-size:.9rem;outline:none;margin-bottom:14px;transition:border-color var(--ease);
+}
+.st-search:focus{border-color:var(--red)}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:10px;margin-bottom:18px}
+.st-btn{
+  background:var(--card);border:2px solid var(--border);border-radius:14px;
+  padding:10px 6px;text-align:center;cursor:pointer;transition:all var(--ease);
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.st-btn:hover,.st-btn.on{border-color:var(--red);background:var(--red-bg);transform:translateY(-2px);box-shadow:var(--shadow)}
+.st-btn .sb-h{font-size:1.7rem;color:var(--red);line-height:1;font-weight:700}
+.st-btn .sb-p{font-size:.6rem;color:var(--muted);font-style:italic}
+
+.st-panel{
+  display:none;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:26px 20px;text-align:center;
+}
+.st-panel.on{display:block;animation:fadeUp .25s}
+.st-hanzi{font-size:2rem;color:var(--red);font-weight:700;margin-bottom:2px}
+.st-pinyin{color:var(--muted);font-style:italic;font-size:.88rem;margin-bottom:4px}
+.st-vi{font-weight:700;font-size:1rem;margin-bottom:14px}
+.st-wrap{display:flex;justify-content:center;margin:6px 0 16px}
+.st-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);
+  background:#2d2320;color:#fff;padding:10px 22px;border-radius:30px;
+  font-size:.83rem;font-weight:700;z-index:9999;opacity:0;
+  transition:all .33s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap;
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:480px){
+  .q-opts{grid-template-columns:1fr}
+  .fc-big,.q-hanzi{font-size:3.2rem}
+  .m-hanzi{font-size:3.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="h-logo">🀄</div>
+  <div class="h-text">
+    <h1>Học Từ Vựng Tiếng Trung</h1>
+    <p>Chào hỏi &amp; Lịch sự · 5 từ vựng thiết yếu</p>
+  </div>
+  <div class="h-pills">
+    <span class="pill">📚 5 từ</span>
+    <span class="pill" id="mastPill">⭐ 0 thuộc</span>
+  </div>
+</header>
+
+<!-- ═══ TABS ═══ -->
+<div class="tabs">
+  <button class="tab on" onclick="goTab('list')"><span class="t-ico">📋</span>Từ Vựng</button>
+  <button class="tab"    onclick="goTab('fc')">  <span class="t-ico">🃏</span>Flashcard</button>
+  <button class="tab"    onclick="goTab('quiz')"><span class="t-ico">✏️</span>Trắc Nghiệm</button>
+  <button class="tab"    onclick="goTab('stroke')"><span class="t-ico">✍️</span>Nét Chữ</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PANEL 1 – TỪ VỰNG
+═══════════════════════════════════════ -->
+<div id="panel-list" class="panel on">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Tìm chữ Hán, pinyin, nghĩa…" oninput="renderList()"/>
+  </div>
+  <div id="wCount"></div>
+  <div class="wlist" id="wlist"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PANEL 2 – FLASHCARD
+═══════════════════════════════════════ -->
+<div id="panel-fc" class="panel">
+  <div class="fc-top">
+    <h2>🃏 Flashcard</h2>
+    <div class="fc-top-acts">
+      <button class="btn btn-outline" onclick="shuffleFC()" title="Xáo trộn">🔀</button>
+      <button class="btn btn-outline" onclick="resetFC()"   title="Làm lại">↺</button>
+    </div>
+  </div>
+  <div class="fc-modes">
+    <button class="fc-mode on" onclick="setFCMode('h2v')">Chữ → Nghĩa</button>
+    <button class="fc-mode"    onclick="setFCMode('v2h')">Nghĩa → Chữ</button>
+    <button class="fc-mode"    onclick="setFCMode('p2h')">Pinyin → Chữ</button>
+  </div>
+  <div class="fc-pbar"><div class="fc-pfill" id="fcFill"></div></div>
+  <div class="fc-ptext" id="fcTxt"></div>
+
+  <div class="fc-scene">
+    <div class="fc-card" id="fcCard" onclick="flipFC()">
+      <div class="fc-face fc-front" id="fcFront"></div>
+      <div class="fc-face fc-back"  id="fcBack"></div>
+    </div>
+  </div>
+
+  <div class="fc-nav">
+    <button class="fc-nav-btn fc-prev" onclick="fcMove(-1)">◀ Trước</button>
+    <button class="fc-spk" onclick="speakFC()" title="Phát âm">🔊</button>
+    <button class="fc-nav-btn fc-next" onclick="fcMove(1)">Tiếp ▶</button>
+  </div>
+  <div class="fc-rating" id="fcRating">
+    <button class="r-btn r-again" onclick="rateFC('again')">😓 Chưa nhớ</button>
+    <button class="r-btn r-hard"  onclick="rateFC('hard')">😐 Khó</button>
+    <button class="r-btn r-easy"  onclick="rateFC('easy')">😊 Dễ ✔</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PANEL 3 – TRẮC NGHIỆM
+═══════════════════════════════════════ -->
+<div id="panel-quiz" class="panel">
+  <div class="quiz-modes">
+    <button class="qmode on" onclick="setQMode('h2v')">Chữ → Nghĩa</button>
+    <button class="qmode"    onclick="setQMode('v2h')">Nghĩa → Chữ</button>
+    <button class="qmode"    onclick="setQMode('p2v')">Pinyin → Nghĩa</button>
+  </div>
+  <div class="quiz-head">
+    <span class="q-num"   id="qNum"></span>
+    <span class="q-score" id="qScore">✓ 0</span>
+  </div>
+  <div class="q-pbar"><div class="q-pfill" id="qFill"></div></div>
+
+  <div id="qArea">
+    <div class="q-card">
+      <div class="q-label" id="qLabel"></div>
+      <div id="qQ"></div>
+    </div>
+    <div class="q-opts" id="qOpts"></div>
+    <div class="q-next" id="qNext">
+      <button class="btn btn-red" onclick="nextQ()">Câu tiếp ▶</button>
+    </div>
+  </div>
+
+  <div class="q-result" id="qResult">
+    <div class="qr-big">🏆</div>
+    <div class="qr-score" id="qrS"></div>
+    <div class="qr-pct"   id="qrP"></div>
+    <div class="qr-msg"   id="qrM"></div>
+    <button class="btn btn-red" onclick="startQuiz()">Chơi lại 🔄</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PANEL 4 – NÉT CHỮ
+═══════════════════════════════════════ -->
+<div id="panel-stroke" class="panel">
+  <p style="font-size:.8rem;color:var(--muted);margin-bottom:12px;">
+    Nhấn vào một từ để xem thứ tự nét viết. Với từ nhiều chữ, hiển thị chữ đầu tiên.
+  </p>
+  <input class="st-search" id="stSearch" type="text" placeholder="🔍 Tìm chữ Hán, pinyin…" oninput="renderStrokes()"/>
+  <div class="st-grid" id="stGrid"></div>
+  <div class="st-panel" id="stPanel">
+    <div class="st-hanzi"  id="stH"></div>
+    <div class="st-pinyin" id="stP"></div>
+    <div class="st-vi"     id="stV"></div>
+    <div class="st-wrap"><div id="stTarget" style="width:220px;height:220px;"></div></div>
+    <div class="st-acts">
+      <button class="btn btn-red"     onclick="animSt()">▶ Xem nét viết</button>
+      <button class="btn btn-outline" onclick="quizSt()">🎯 Luyện viết</button>
+      <button class="btn btn-outline" onclick="speakSt()">🔊 Phát âm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL ═══ -->
+<div class="overlay" id="overlay" onclick="closeOvl(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div class="m-hanzi"  id="mH"></div>
+    <div class="m-pinyin" id="mP"></div>
+    <div class="m-vi"     id="mV"></div>
+    <div class="m-writer"><div id="mWrap" style="width:160px;height:160px;"></div></div>
+    <div class="m-acts">
+      <button class="btn btn-red"     onclick="speakModal()">🔊 Phát âm</button>
+      <button class="btn btn-outline" onclick="animModal()">▶ Xem nét</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast"></div>
+
+<script>
+/* ──────────────────────────────
+   DATA
+────────────────────────────── */
+const W = [
+  { id:0, hanzi:'早上',   pinyin:'zǎoshang',  vi:'Buổi sáng' },
+  { id:1, hanzi:'谢谢',   pinyin:'xièxie',    vi:'Cám ơn' },
+  { id:2, hanzi:'不客气', pinyin:'bú kèqi',   vi:'Không có gì, đừng khách khí' },
+  { id:3, hanzi:'对不起', pinyin:'duìbuqǐ',   vi:'Xin lỗi' },
+  { id:4, hanzi:'没关系', pinyin:'méi guānxi',vi:'Không vấn đề, không sao' },
+];
+
+/* ──────────────────────────────
+   STATE
+────────────────────────────── */
+let mastered = new Set();
+
+// FC
+let fcW=[...W], fcI=0, fcMode='h2v', fcFlip=false;
+
+// Quiz
+let qW=[], qI=0, qScore=0, qMode='h2v', qAnswered=false;
+
+// Stroke
+let stW=null, stWriter=null;
+
+// Modal
+let mW=null, mWriter=null;
+
+/* ──────────────────────────────
+   UTILS
+────────────────────────────── */
+function speak(txt){
+  if(!window.speechSynthesis){toast('Trình duyệt không hỗ trợ TTS');return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='zh-CN';u.rate=0.82;
+  const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith('zh'));
+  if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+function toast(msg,ms=2400){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),ms);
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ──────────────────────────────
+   TABS
+────────────────────────────── */
+const TABS=['list','fc','quiz','stroke'];
+function goTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');
+  document.querySelectorAll('.tab')[TABS.indexOf(id)].classList.add('on');
+  if(id==='fc')     renderFC();
+  if(id==='quiz')   startQuiz();
+  if(id==='stroke') renderStrokes();
+}
+
+/* ──────────────────────────────
+   MASTERED
+────────────────────────────── */
+function updMast(){document.getElementById('mastPill').textContent=`⭐ ${mastered.size} thuộc`;}
+
+/* ══════════════════════════════
+   PANEL 1 – WORD LIST
+══════════════════════════════ */
+function renderList(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  const f=W.filter(w=>!q||w.hanzi.includes(q)||w.pinyin.toLowerCase().includes(q)||w.vi.toLowerCase().includes(q));
+  document.getElementById('wCount').textContent=`Hiển thị ${f.length} / ${W.length} từ`;
+  document.getElementById('wlist').innerHTML=f.map(w=>`
+    <div class="wrow" onclick="openModal(${w.id})">
+      <div class="wrow-hanzi">${w.hanzi}</div>
+      <div class="wrow-body">
+        <div class="wrow-pinyin">${w.pinyin}</div>
+        <div class="wrow-vi">${w.vi}</div>
+      </div>
+      <span class="wrow-badge">${mastered.has(w.id)?'⭐ Thuộc':'📖 Học'}</span>
+      <button class="speak-icon" onclick="event.stopPropagation();speak('${w.hanzi}')" title="Phát âm">🔊</button>
+    </div>`).join('');
+}
+
+/* ── MODAL ── */
+function openModal(id){
+  const w=W.find(x=>x.id===id);if(!w)return;
+  mW=w;
+  document.getElementById('mH').textContent=w.hanzi;
+  document.getElementById('mP').textContent=w.pinyin;
+  document.getElementById('mV').textContent=w.vi;
+  document.getElementById('mWrap').innerHTML='';
+  document.getElementById('overlay').classList.add('on');
+  setTimeout(()=>{
+    try{
+      mWriter=HanziWriter.create('mWrap',[...w.hanzi][0],{
+        width:160,height:160,padding:12,
+        strokeColor:'#c62828',radicalColor:'#f9a825',
+        showCharacter:true,showOutline:true,
+      });
+    }catch(e){
+      document.getElementById('mWrap').innerHTML=`<div style="font-size:7rem;text-align:center;line-height:160px;color:#c62828">${w.hanzi}</div>`;
+    }
+  },120);
+}
+function closeModal(){document.getElementById('overlay').classList.remove('on');}
+function closeOvl(e){if(e.target.id==='overlay')closeModal();}
+function speakModal(){if(mW)speak(mW.hanzi);}
+function animModal(){if(mWriter)mWriter.animateCharacter();}
+
+/* ══════════════════════════════
+   PANEL 2 – FLASHCARD
+══════════════════════════════ */
+function setFCMode(m){
+  fcMode=m;fcI=0;fcFlip=false;
+  document.querySelectorAll('.fc-mode').forEach((b,i)=>
+    b.classList.toggle('on',(m==='h2v'&&i===0)||(m==='v2h'&&i===1)||(m==='p2h'&&i===2)));
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcRating').classList.remove('on');
+  renderFC();
+}
+function shuffleFC(){
+  fcW=shuffle([...W]);fcI=0;fcFlip=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcRating').classList.remove('on');
+  renderFC();toast('🔀 Đã xáo trộn thẻ!');
+}
+function resetFC(){
+  fcW=[...W];fcI=0;fcFlip=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcRating').classList.remove('on');
+  renderFC();toast('↺ Đã làm lại!');
+}
+function flipFC(){
+  fcFlip=!fcFlip;
+  document.getElementById('fcCard').classList.toggle('flipped',fcFlip);
+  document.getElementById('fcRating').classList.toggle('on',fcFlip);
+}
+function fcMove(d){
+  fcI=(fcI+d+fcW.length)%fcW.length;fcFlip=false;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcRating').classList.remove('on');
+  renderFC();
+}
+function speakFC(){const w=fcW[fcI];if(w)speak(w.hanzi);}
+function rateFC(r){
+  if(r==='easy'){mastered.add(fcW[fcI].id);updMast();renderList();toast('⭐ Đánh dấu thuộc!');}
+  else if(r==='hard') toast('💪 Cố lên, luyện thêm nhé!');
+  else toast('↺ Không sao, học lại!');
+  fcMove(1);
+}
+function renderFC(){
+  if(!fcW.length)return;
+  const w=fcW[fcI];
+  const pct=((fcI+1)/fcW.length*100).toFixed(0);
+  document.getElementById('fcFill').style.width=pct+'%';
+  document.getElementById('fcTxt').textContent=`${fcI+1} / ${fcW.length}`;
+
+  const front=document.getElementById('fcFront');
+  const back =document.getElementById('fcBack');
+
+  if(fcMode==='h2v'){
+    front.innerHTML=`<div class="fc-big">${w.hanzi}</div><div class="fc-sub">${w.pinyin}</div><div class="fc-hint">Nhấn thẻ để xem nghĩa</div>`;
+    back.innerHTML =`<div class="fc-ans-sm">${w.hanzi}</div><div class="fc-ans">${w.vi}</div><div class="fc-ans-pin">${w.pinyin}</div>`;
+  }else if(fcMode==='v2h'){
+    front.innerHTML=`<div class="fc-ans" style="font-size:1.5rem">${w.vi}</div><div class="fc-hint">Nhấn thẻ để xem chữ Hán</div>`;
+    back.innerHTML =`<div class="fc-big">${w.hanzi}</div><div class="fc-sub">${w.pinyin}</div><div class="fc-ans" style="font-size:.9rem;margin-top:6px">${w.vi}</div>`;
+  }else{
+    front.innerHTML=`<div class="fc-ans" style="font-size:1.7rem;color:var(--muted);font-style:italic">${w.pinyin}</div><div class="fc-hint">Nhấn thẻ để xem chữ Hán</div>`;
+    back.innerHTML =`<div class="fc-big">${w.hanzi}</div><div class="fc-sub">${w.pinyin}</div><div class="fc-ans" style="font-size:.9rem;margin-top:6px">${w.vi}</div>`;
+  }
+}
+
+/* ══════════════════════════════
+   PANEL 3 – QUIZ
+══════════════════════════════ */
+function setQMode(m){
+  qMode=m;
+  document.querySelectorAll('.qmode').forEach((b,i)=>
+    b.classList.toggle('on',(m==='h2v'&&i===0)||(m==='v2h'&&i===1)||(m==='p2v'&&i===2)));
+  startQuiz();
+}
+function startQuiz(){
+  qW=shuffle([...W]);qI=0;qScore=0;qAnswered=false;
+  document.getElementById('qArea').style.display='';
+  document.getElementById('qResult').style.display='none';
+  renderQ();
+}
+function renderQ(){
+  if(qI>=qW.length){showResult();return;}
+  const w=qW[qI];qAnswered=false;
+  const pct=(qI/qW.length*100).toFixed(0);
+  document.getElementById('qFill').style.width=pct+'%';
+  document.getElementById('qNum').textContent=`Câu ${qI+1} / ${qW.length}`;
+  document.getElementById('qScore').textContent=`✓ ${qScore}`;
+  document.getElementById('qNext').style.display='none';
+
+  let qHTML='',label='';
+  if(qMode==='h2v'){
+    label='Từ này có nghĩa là gì?';
+    qHTML=`<div class="q-hanzi">${w.hanzi}</div><div class="q-pinyin">${w.pinyin}</div>`;
+  }else if(qMode==='v2h'){
+    label='Chữ Hán nào có nghĩa này?';
+    qHTML=`<div class="q-text">${w.vi}</div><div class="q-pinyin">pinyin: ${w.pinyin}</div>`;
+  }else{
+    label='Pinyin này có nghĩa gì?';
+    qHTML=`<div class="q-text" style="font-style:italic;color:var(--muted);font-size:1.5rem">${w.pinyin}</div>`;
+  }
+  document.getElementById('qLabel').textContent=label;
+  document.getElementById('qQ').innerHTML=qHTML;
+
+  // 4 options (pad with repeats if < 4 words)
+  const pool=W.filter(x=>x.id!==w.id);
+  const others=shuffle([...pool]).slice(0,3);
+  // if W has fewer than 4, pad with same items
+  while(others.length<3){others.push(pool[others.length%pool.length]);}
+  const opts=shuffle([w,...others]);
+
+  document.getElementById('qOpts').innerHTML=opts.map(opt=>{
+    let lbl;
+    if(qMode==='h2v'||qMode==='p2v') lbl=opt.vi;
+    else lbl=opt.hanzi;
+    return `<button class="q-opt" onclick="answerQ(${opt.id},${w.id})">${lbl}</button>`;
+  }).join('');
+}
+function answerQ(sel,corr){
+  if(qAnswered)return;qAnswered=true;
+  const cw=W.find(x=>x.id===corr);
+  const sw=W.find(x=>x.id===sel);
+  document.querySelectorAll('.q-opt').forEach(btn=>{
+    btn.classList.add('dis');
+    const t=btn.textContent.trim();
+    let cT,sT;
+    if(qMode==='h2v'||qMode==='p2v'){cT=cw.vi;sT=sw.vi;}
+    else{cT=cw.hanzi;sT=sw.hanzi;}
+    if(t===cT) btn.classList.add('ok');
+    else if(t===sT&&sel!==corr) btn.classList.add('no');
+  });
+  if(sel===corr){qScore++;speak(cw.hanzi);toast('✓ Đúng rồi! 🎉');}
+  else toast(`✗ Đáp án đúng: ${cw.hanzi} (${cw.vi})`);
+  document.getElementById('qScore').textContent=`✓ ${qScore}`;
+  document.getElementById('qNext').style.display='block';
+}
+function nextQ(){qI++;renderQ();}
+function showResult(){
+  document.getElementById('qArea').style.display='none';
+  const r=document.getElementById('qResult');r.style.display='block';
+  const pct=Math.round(qScore/qW.length*100);
+  document.getElementById('qrS').textContent=`${qScore}/${qW.length}`;
+  document.getElementById('qrP').textContent=`(${pct}%)`;
+  document.getElementById('qrM').textContent=
+    pct>=90?'🌟 Xuất sắc! Bạn nắm chắc rồi!':
+    pct>=70?'👍 Tốt lắm! Luyện thêm chút nữa!':
+    pct>=50?'💪 Cần ôn thêm một chút!':
+            '📚 Hãy xem lại từ vựng nhé!';
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ══════════════════════════════
+   PANEL 4 – STROKE
+══════════════════════════════ */
+function renderStrokes(){
+  const q=(document.getElementById('stSearch')?.value||'').toLowerCase();
+  const f=W.filter(w=>!q||w.hanzi.includes(q)||w.pinyin.toLowerCase().includes(q)||w.vi.toLowerCase().includes(q));
+  document.getElementById('stGrid').innerHTML=f.map(w=>`
+    <button class="st-btn ${stW&&stW.id===w.id?'on':''}" onclick="selStroke(${w.id})">
+      <span class="sb-h">${w.hanzi}</span>
+      <span class="sb-p">${w.pinyin}</span>
+    </button>`).join('');
+}
+function selStroke(id){
+  const w=W.find(x=>x.id===id);if(!w)return;
+  stW=w;renderStrokes();
+  document.getElementById('stH').textContent=w.hanzi;
+  document.getElementById('stP').textContent=w.pinyin;
+  document.getElementById('stV').textContent=w.vi;
+  document.getElementById('stTarget').innerHTML='';
+  const panel=document.getElementById('stPanel');
+  panel.classList.add('on');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(stWriter){try{stWriter=null;}catch(e){}}
+  setTimeout(()=>{
+    try{
+      stWriter=HanziWriter.create('stTarget',[...w.hanzi][0],{
+        width:220,height:220,padding:14,
+        strokeColor:'#c62828',radicalColor:'#f9a825',
+        showCharacter:true,showOutline:true,
+        strokeAnimationSpeed:.85,delayBetweenStrokes:200,
+      });
+    }catch(e){
+      document.getElementById('stTarget').innerHTML=
+        `<div style="font-size:10rem;text-align:center;line-height:220px;color:#c62828">${[...w.hanzi][0]}</div>`;
+    }
+  },160);
+}
+function animSt(){if(stWriter)stWriter.animateCharacter();else toast('Chọn một từ trước!');}
+function quizSt(){
+  if(!stWriter){toast('Chọn một từ trước!');return;}
+  stWriter.quiz({
+    onMistake(d){toast(`Sai nét ${d.strokeNum+1} – thử lại!`);},
+    onComplete(d){toast(d.totalMistakes===0?'🎉 Hoàn hảo!':`Xong! Sai ${d.totalMistakes} nét.`);}
+  });
+}
+function speakSt(){if(stW)speak(stW.hanzi);else toast('Chọn một từ trước!');}
+
+/* ──────────────────────────────
+   INIT
+────────────────────────────── */
+if(window.speechSynthesis){
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+}
+renderList();
+renderFC();
+</script>
+</body>
+</html>
