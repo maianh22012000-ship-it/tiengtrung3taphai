@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Bài Ôn Tập Tiếng Trung</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fcf8f2;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .welcome-title {
+            color: #c0392b;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .welcome-desc {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* Bố cục hiển thị các mục chọn */
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Thiết kế ô lựa chọn (Card) */
+        .menu-card {
+            background-color: #ffffff;
+            border: 1px solid #f0e6da;
+            border-radius: 16px;
+            width: 320px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(192, 57, 43, 0.1);
+            border-color: #e74c3c;
+        }
+
+        .card-tag {
+            background-color: #fff2f0;
+            color: #e74c3c;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            align-self: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .card-tag.blue {
+            background-color: #ebf5fb;
+            color: #2980b9;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            font-size: 0.9rem;
+            color: #e74c3c;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-title">Học Tiếng Trung Mỗi Ngày</div>
+    <div class="welcome-desc">Vui lòng chọn nội dung bài tập bạn muốn ôn tập bên dưới</div>
+
+    <div class="menu-container">
+
+        <!-- Mục Lựa Chọn 1: Bài 63 Từ -->
+        <a href="bai-tap-63-tu.html" class="menu-card">
+            <div>
+                <div class="card-tag">Bài 9 → Bài 15</div>
+                <div class="card-title">Bài Ôn Tập Từ Vựng Tổng Hợp</div>
+                <div class="card-desc">Bao gồm 63 từ vựng cốt lõi với 5 dạng bài luyện tập tương tác đa dạng.</div>
+            </div>
+            <div class="card-footer">Bắt đầu làm bài →</div>
+        </a>
+
+        <!-- Mục Lựa Chọn 2: Bài Chào Hỏi -->
+        <a href="bai-tap-chao-hoi.html" class="menu-card">
+            <div>
+                <div class="card-tag blue">Giao tiếp cơ bản</div>
+                <div class="card-title">Bài Ôn Tập Chào Hỏi & Lịch Sự</div>
+                <div class="card-desc">Bao gồm 5 từ vựng thiết yếu phục vụ các tình huống giao tiếp và lịch sự hàng ngày.</div>
+            </div>
+            <div class="card-footer" style="color: #2980b9;">Bắt đầu làm bài →</div>
+        </a>
+
+    </div>
+
+</body>
+</html>
