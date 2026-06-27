@@ -16,9 +16,11 @@
 
         .welcome-title {
             color: #c0392b;
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .welcome-desc {
@@ -27,7 +29,7 @@
             margin-bottom: 40px;
         }
 
-        /* Bố cục hiển thị các mục chọn */
+        /* Khung chứa các thư mục lớn */
         .menu-container {
             display: flex;
             justify-content: center;
@@ -37,98 +39,149 @@
             margin: 0 auto;
         }
 
-        /* Thiết kế ô lựa chọn (Card) */
-        .menu-card {
+        /* Thiết kế Thư mục lớn (Card) */
+        .folder-card {
             background-color: #ffffff;
-            border: 1px solid #f0e6da;
+            border: 2px solid #f0e6da;
             border-radius: 16px;
-            width: 320px;
+            width: 340px;
             padding: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            text-decoration: none;
-            color: inherit;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             text-align: left;
+            position: relative;
         }
 
-        .menu-card:hover {
+        .folder-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(192, 57, 43, 0.1);
+            box-shadow: 0 12px 24px rgba(192, 57, 43, 0.08);
             border-color: #e74c3c;
         }
 
-        .card-tag {
-            background-color: #fff2f0;
-            color: #e74c3c;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            align-self: flex-start;
+        .folder-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .folder-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+
+        .folder-desc {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            line-height: 1.5;
             margin-bottom: 15px;
         }
 
-        .card-tag.blue {
+        /* Danh sách bài học nhỏ ẩn bên trong */
+        .sub-menu {
+            display: none; /* Mặc định ẩn */
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #f0e6da;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Khi thư mục được bấm chọn kích hoạt lớp active */
+        .folder-card.active {
+            border-color: #e74c3c;
+            background-color: #fffdfb;
+        }
+        
+        .folder-card.active .sub-menu {
+            display: block;
+        }
+
+        /* Thiết kế link bài học nhỏ */
+        .sub-item {
+            display: block;
+            background-color: #fff2f0;
+            color: #e74c3c;
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .sub-item:hover {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .sub-item.blue {
             background-color: #ebf5fb;
             color: #2980b9;
         }
 
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 0 0 12px 0;
-            line-height: 1.3;
+        .sub-item.blue:hover {
+            background-color: #2980b9;
+            color: #ffffff;
         }
 
-        .card-desc {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .card-footer {
-            font-size: 0.9rem;
-            color: #e74c3c;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="welcome-title">Học Tiếng Trung Mỗi Ngày</div>
-    <div class="welcome-desc">Vui lòng chọn nội dung bài tập bạn muốn ôn tập bên dưới</div>
+    <div class="welcome-title">Tiếng Trung Mai Anh</div>
+    <div class="welcome-desc">Vui lòng chọn khóa học để xem các bài ôn tập</div>
 
     <div class="menu-container">
 
-        <!-- Mục Lựa Chọn 1: Tiếng trung 3 tập 2 -->
-        <a href="bai-tap-63-tu.html" class="menu-card">
-            <div>
-                <div class="card-tag">Bài 9 → Bài 15</div>
-                <div class="card-title">Tiếng trung 3 tập 2</div>
-                <div class="card-desc">Bao gồm 63 từ vựng cốt lõi với 5 dạng bài luyện tập tương tác đa dạng.</div>
+        <!-- THƯ MỤC LỚN 1: Tiếng Trung kid -->
+        <div class="folder-card" onclick="toggleFolder(this)">
+            <div class="folder-icon">👶</div>
+            <div class="folder-title">Tiếng Trung kid</div>
+            <div class="folder-desc">Hệ thống bài giảng và từ vựng sinh động dành cho các bạn nhỏ. Bấm để xem bài học.</div>
+            
+            <!-- Bài học nhỏ bên trong -->
+            <div class="sub-menu">
+                <a href="bai-tap-63-tu.html" class="sub-item" onclick="event.stopPropagation();">
+                    📙 Tiếng trung 3 tập 2 (63 từ)
+                </a>
+                <!-- Sau này muốn thêm bài nhỏ cho Kid thì dán thêm thẻ <a> vào đây -->
             </div>
-            <div class="card-footer">Bắt đầu làm bài →</div>
-        </a>
+        </div>
 
-        <!-- Mục Lựa Chọn 2: pthn bài 2 -->
-        <a href="bai-tap-chao-hoi.html" class="menu-card">
-            <div>
-                <div class="card-tag blue">Giao tiếp cơ bản</div>
-                <div class="card-title">pthn bài 2</div>
-                <div class="card-desc">Bao gồm 5 từ vựng thiết yếu phục vụ các tình huống giao tiếp và lịch sự hàng ngày.</div>
+        <!-- THƯ MỤC LỚN 2: Phát triển hán ngữ -->
+        <div class="folder-card" onclick="toggleFolder(this)">
+            <div class="folder-icon">📈</div>
+            <div class="folder-title">Phát triển hán ngữ</div>
+            <div class="folder-desc">Tổng hợp các bài luyện tập theo giáo trình Phát triển Hán ngữ nâng cao. Bấm để xem bài học.</div>
+            
+            <!-- Bài học nhỏ bên trong -->
+            <div class="sub-menu">
+                <a href="bai-tap-chao-hoi.html" class="sub-item blue" onclick="event.stopPropagation();">
+                    📘 pthn bài 2 (5 từ)
+                </a>
+                <!-- Sau này muốn thêm bài nhỏ cho PTHN thì dán thêm thẻ <a> vào đây -->
             </div>
-            <div class="card-footer" style="color: #2980b9;">Bắt đầu làm bài →</div>
-        </a>
+        </div>
 
     </div>
+
+    <script>
+        // Hàm xử lý việc đóng mở khi click vào thư mục lớn
+        function toggleFolder(card) {
+            // Nếu muốn chỉ mở 1 thư mục mỗi lần bấm, hãy bỏ chú thích 2 dòng dưới:
+            // document.querySelectorAll('.folder-card').forEach(c => { if(c !== card) c.classList.remove('active'); });
+
+            card.classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>
