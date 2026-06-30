@@ -5,13 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Bài Ôn Tập Tiếng Trung</title>
     <style>
+        /* Thiết lập chung */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fcf8f2;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             color: #333;
             text-align: center;
+        }
+
+        /* 👑 THANH ĐIỀU HƯỚNG TRÊN CÙNG (NAVBAR) */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+        }
+
+        .nav-brand {
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 1.1rem;
+            margin-right: 20px;
+            text-transform: uppercase;
+        }
+
+        .nav-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #fff5f5;
+            color: #c0392b;
+            border-color: #feb2b2;
+        }
+
+        /* Nội dung chính phía dưới thanh Navbar */
+        .main-content {
+            padding: 100px 20px 40px 20px; /* Để trống khoảng cách bên trên cho Navbar không che mất chữ */
         }
 
         .welcome-title {
@@ -81,14 +129,14 @@
 
         /* Danh sách bài học nhỏ ẩn bên trong */
         .sub-menu {
-            display: none; /* Mặc định ẩn */
+            display: none; 
             margin-top: 20px;
             padding-top: 15px;
             border-top: 1px dashed #f0e6da;
             animation: fadeIn 0.4s ease forwards;
         }
 
-        /* Khi thư mục được bấm chọn kích hoạt lớp active */
+        /* Khi kích hoạt lớp active */
         .folder-card.active {
             border-color: #e74c3c;
             background-color: #fffdfb;
@@ -146,56 +194,80 @@
 </head>
 <body>
 
-    <div class="welcome-title">Tiếng Trung Mai Anh</div>
-    <div class="welcome-desc">Vui lòng chọn khóa học để xem các bài ôn tập</div>
+    <div class="top-navbar">
+        <div class="nav-brand">📚 Menu nhanh:</div>
+        <button class="nav-btn" onclick="scrollToFolder(0)">👶 Tiếng Trung Kid</button>
+        <button class="nav-btn" onclick="scrollToFolder(1)">📈 Phát triển Hán ngữ</button>
+        <button class="nav-btn" onclick="scrollToFolder(2)">🇹🇼 Tiếng Đài (Phồn thể)</button>
+    </div>
 
-    <div class="menu-container">
+    <div class="main-content">
+        <div class="welcome-title">Tiếng Trung Mai Anh</div>
+        <div class="welcome-desc">Vui lòng chọn khóa học để xem các bài ôn tập</div>
 
-        <div class="folder-card" onclick="toggleFolder(this)">
-            <div class="folder-icon">👶</div>
-            <div class="folder-title">Tiếng Trung kid</div>
-            <div class="folder-desc">Hệ thống bài giảng và từ vựng sinh động dành cho các bạn nhỏ. Bấm để xem bài học.</div>
-            
-            <div class="sub-menu">
-                <a href="bai-tap-63-tu.html" class="sub-item" onclick="event.stopPropagation();">
-                    📙 Tiếng trung 3 tập 2 (63 từ)
-                </a>
-            </div>
-        </div>
+        <div class="menu-container">
 
-        <div class="folder-card" onclick="toggleFolder(this)">
-            <div class="folder-icon">📈</div>
-            <div class="folder-title">Phát triển hán ngữ</div>
-            <div class="folder-desc">Tổng hợp các bài luyện tập theo giáo trình Phát triển Hán ngữ nâng cao. Bấm để xem bài học.</div>
-            
-            <div class="sub-menu">
-                <a href="bai-tap-chao-hoi.html" class="sub-item blue" onclick="event.stopPropagation();">
-                    📘 pthn bài 2 (5 từ)
-                </a>
-                <a href="bai-3-hom-nay-la-thu-hai.html" class="sub-item blue" onclick="event.stopPropagation();">
-    📘 Bài 3 Hôm nay là thứ 2
-</a>
-            </div>
-        </div>
-
-        <div class="folder-card" onclick="toggleFolder(this)">
-            <div class="folder-icon">🇹🇼</div>
-            <div class="folder-title">Tiếng Đài (phồn thể)</div>
-            <div class="folder-desc">Hệ thống bài học và từ vựng phồn thể tương tác hỗ trợ luyện tập giao tiếp. Bấm để xem bài học.</div>
-            
-            <div class="sub-menu">
-                <a href="bai-3-phon-the.html" class="sub-item green" onclick="event.stopPropagation();">
-                    📗 Giáo trình bài 3 (22 từ)
-                </a>
+            <div class="folder-card" id="folder-0" onclick="toggleFolder(this)">
+                <div class="folder-icon">👶</div>
+                <div class="folder-title">Tiếng Trung kid</div>
+                <div class="folder-desc">Hệ thống bài giảng và từ vựng sinh động dành cho các bạn nhỏ. Bấm để xem bài học.</div>
+                
+                <div class="sub-menu">
+                    <a href="bai-tap-63-tu.html" class="sub-item" onclick="event.stopPropagation();">
+                        📙 Tiếng trung 3 tập 2 (63 từ)
+                    </a>
                 </div>
-        </div>
+            </div>
 
+            <div class="folder-card" id="folder-1" onclick="toggleFolder(this)">
+                <div class="folder-icon">📈</div>
+                <div class="folder-title">Phát triển hán ngữ</div>
+                <div class="folder-desc">Tổng hợp các bài luyện tập theo giáo trình Phát triển Hán ngữ nâng cao. Bấm để xem bài học.</div>
+                
+                <div class="sub-menu">
+                    <a href="bai-tap-chao-hoi.html" class="sub-item blue" onclick="event.stopPropagation();">
+                        📘 pthn bài 2 (5 từ)
+                    </a>
+                    <a href="bai-3-hom-nay-la-thu-hai.html" class="sub-item blue" onclick="event.stopPropagation();">
+                        📘 Bài 3 Hôm nay là thứ 2
+                    </a>
+                </div>
+            </div>
+
+            <div class="folder-card" id="folder-2" onclick="toggleFolder(this)">
+                <div class="folder-icon">🇹🇼</div>
+                <div class="folder-title">Tiếng Đài (phồn thể)</div>
+                <div class="folder-desc">Hệ thống bài học và từ vựng phồn thể tương tác hỗ trợ luyện tập giao tiếp. Bấm để xem bài học.</div>
+                
+                <div class="sub-menu">
+                    <a href="bai-3-phon-the.html" class="sub-item green" onclick="event.stopPropagation();">
+                        📗 Giáo trình bài 3 (22 từ)
+                    </a>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <script>
-        // Hàm xử lý việc đóng mở khi click vào thư mục lớn
+        // Hàm đóng/mở thư mục thủ công
         function toggleFolder(card) {
             card.classList.toggle('active');
+        }
+
+        // Hàm click từ Thanh Menu: tự động cuộn xuống, mở toang thư mục đó ra để học viên thấy bài học ngay
+        function scrollToFolder(index) {
+            // Đóng tất cả các thư mục khác lại trước
+            const allCards = document.querySelectorAll('.folder-card');
+            allCards.forEach(card => card.classList.remove('active'));
+
+            // Tìm thư mục được chọn, kích hoạt mở ra
+            const targetCard = document.getElementById('folder-' + index);
+            if (targetCard) {
+                targetCard.classList.add('active');
+                // Cuộn mượt mà đến vị trí thư mục đó
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
     </script>
 
