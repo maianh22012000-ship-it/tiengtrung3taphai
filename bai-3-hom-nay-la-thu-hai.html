@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn Tập Tiếng Trung – Số Đếm & Ngày Tháng</title>
+<style>
+:root {
+  --red:#c0392b; --red-dk:#922b21; --orange:#e67e22;
+  --green:#27ae60; --blue:#2980b9; --gray:#7f8c8d;
+  --bg:#fdf6f0; --card:#fff; --border:#e8d5c4;
+  --text:#2c3e50; --muted:#7f8c8d;
+  --shadow:0 4px 18px rgba(0,0,0,.09);
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--red),var(--red-dk));color:#fff;text-align:center;padding:22px 16px 18px;box-shadow:0 2px 12px rgba(0,0,0,.18);}
+header h1{font-size:1.4rem;letter-spacing:1px;}
+header p{font-size:.84rem;opacity:.85;margin-top:5px;}
+
+/* PROGRESS BAR */
+.progress-wrap{background:#fff;padding:12px 20px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99;flex-wrap:wrap;}
+.progress-label{font-size:.75rem;font-weight:700;color:var(--muted);white-space:nowrap;}
+.progress-bar-outer{flex:1;min-width:120px;height:8px;background:#f0e0d0;border-radius:4px;overflow:hidden;}
+.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:4px;transition:width .4s;}
+.progress-score{font-size:.78rem;font-weight:700;color:var(--red);white-space:nowrap;}
+
+/* NAV */
+nav{display:flex;background:#fff;border-bottom:2px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+.tab-btn{flex:1;min-width:80px;padding:13px 6px;border:none;background:none;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.tab-btn:hover{color:var(--red);background:#fef5f5;}
+
+/* SECTIONS */
+.section{display:none;padding:20px 16px 40px;max-width:800px;margin:0 auto;}
+.section.active{display:block;}
+.section-title{font-size:1.1rem;font-weight:700;color:var(--red);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.section-desc{font-size:.82rem;color:var(--muted);margin-bottom:18px;}
+
+/* ===== BẢNG TỪ VỰNG ===== */
+.vocab-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);}
+.vocab-table th{background:var(--red);color:#fff;padding:10px 12px;font-size:.8rem;text-align:left;}
+.vocab-table td{padding:11px 12px;font-size:.88rem;border-bottom:1px solid #f5e8dc;vertical-align:middle;}
+.vocab-table tr:last-child td{border-bottom:none;}
+.vocab-table tr:hover td{background:#fffaf7;}
+.zh-cell{font-size:1.25rem;color:var(--red);font-weight:700;cursor:pointer;white-space:nowrap;}
+.zh-cell:hover{color:var(--red-dk);}
+.py-cell{color:var(--orange);font-size:.8rem;font-weight:600;}
+.sino-cell{color:var(--muted);font-size:.72rem;font-style:italic;}
+.ex-zh{color:var(--red-dk);font-weight:600;}
+.ex-py{color:var(--gray);font-size:.75rem;}
+.ex-vi{color:var(--text);font-size:.8rem;}
+@media(max-width:600px){
+  .vocab-table th:nth-child(3),.vocab-table td:nth-child(3){display:none;}
+}
+
+/* ===== CHUNG CHO CÁC BÀI ===== */
+.exercise-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;}
+.q-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.score-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;background:#fef5f5;color:var(--red);border:1.5px solid var(--border);margin-bottom:14px;}
+
+/* ===== BÀI 1 – ĐIỀN CHỮ ===== */
+.fill-sent{font-size:1.05rem;line-height:2;margin:8px 0 4px;}
+.fill-blank{
+  display:inline-block;min-width:70px;border:none;border-bottom:2.5px solid var(--red);
+  padding:2px 8px;font-size:1.1rem;color:var(--red);background:transparent;
+  text-align:center;font-family:inherit;outline:none;cursor:pointer;
+  border-radius:0;transition:background .15s;
+}
+.fill-blank:hover,.fill-blank:focus{background:#fff0ee;}
+.fill-blank.revealed{background:#fff0ee;border-bottom-color:var(--green);color:var(--green);}
+.fill-vi{font-size:.82rem;color:var(--muted);margin:2px 0 8px;}
+.fill-hint{font-size:.75rem;color:var(--muted);font-style:italic;}
+.reveal-btn{padding:6px 16px;border:none;border-radius:8px;background:var(--orange);color:#fff;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;}
+.reveal-btn:hover{background:#d35400;}
+.reveal-btn.revealed{background:var(--green);}
+
+/* ===== BÀI 2 – NỐI TỪ ===== */
+.match-wrap{display:flex;gap:12px;flex-wrap:wrap;}
+.match-col{flex:1;min-width:140px;display:flex;flex-direction:column;gap:8px;}
+.match-col h4{font-size:.75rem;color:var(--muted);text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+.match-btn{
+  padding:12px 10px;border-radius:10px;border:2px solid var(--border);
+  background:var(--card);font-size:.95rem;cursor:pointer;font-weight:600;
+  transition:all .15s;text-align:center;
+}
+.match-btn.zh-btn{font-size:1.25rem;color:var(--red);}
+.match-btn:hover:not(:disabled){border-color:var(--red);background:#fef5f5;}
+.match-btn.selected{border-color:var(--red);background:#fef5f5;box-shadow:0 0 0 3px rgba(192,57,43,.15);}
+.match-btn.correct{border-color:var(--green);background:#eafaf1;color:var(--green);pointer-events:none;}
+.match-btn.wrong{border-color:var(--red);background:#fef0f0;color:var(--red);animation:shake .3s;}
+.match-btn.disabled{opacity:.5;pointer-events:none;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-status{text-align:center;margin-top:12px;font-size:.88rem;font-weight:700;min-height:24px;color:var(--green);}
+.match-reset{padding:7px 18px;border:none;border-radius:8px;background:var(--gray);color:#fff;font-size:.82rem;cursor:pointer;margin-top:10px;}
+.match-reset:hover{background:#636e72;}
+
+/* ===== BÀI 3 – TRẮC NGHIỆM ===== */
+.mc-question{font-size:1.8rem;color:var(--red);font-weight:700;text-align:center;margin:8px 0 4px;}
+.mc-py{font-size:.9rem;color:var(--orange);text-align:center;margin-bottom:16px;}
+.mc-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mc-opt{
+  padding:13px 10px;border:2px solid var(--border);border-radius:11px;
+  font-size:.9rem;cursor:pointer;background:var(--card);text-align:center;
+  font-weight:600;transition:all .15s;
+}
+.mc-opt:hover:not(:disabled){border-color:var(--red);background:#fef5f5;}
+.mc-opt.correct{border-color:var(--green);background:#eafaf1;color:var(--green);}
+.mc-opt.wrong{border-color:var(--red);background:#fef0f0;color:var(--red);}
+.mc-opt:disabled{cursor:default;}
+.mc-feedback{margin-top:10px;padding:9px 14px;border-radius:9px;font-size:.85rem;font-weight:600;display:none;}
+.mc-feedback.show{display:block;}
+.mc-feedback.ok{background:#eafaf1;color:var(--green);}
+.mc-feedback.fail{background:#fef0f0;color:var(--red);}
+.mc-next{display:none;margin-top:10px;width:100%;padding:11px;border:none;border-radius:10px;background:var(--red);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;}
+.mc-next.show{display:block;}
+.mc-next:hover{background:var(--red-dk);}
+.mc-result{text-align:center;padding:24px 16px;}
+.mc-result .big{font-size:2.8rem;}
+.mc-result h3{color:var(--red);margin:8px 0 4px;}
+.mc-result p{color:var(--muted);font-size:.88rem;margin-bottom:14px;}
+.restart-btn{padding:10px 24px;border:none;border-radius:10px;background:var(--red);color:#fff;font-size:.92rem;font-weight:700;cursor:pointer;}
+
+/* ===== BÀI 4 – VIẾT PINYIN ===== */
+.py-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+.py-hanzi{font-size:1.9rem;color:var(--red);min-width:54px;text-align:center;}
+.py-meaning{font-size:.82rem;color:var(--muted);min-width:110px;}
+.py-input{
+  flex:1;min-width:120px;padding:9px 12px;border:2px solid var(--border);
+  border-radius:9px;font-size:.95rem;font-family:inherit;outline:none;
+  transition:border .15s;
+}
+.py-input:focus{border-color:var(--red);}
+.py-input.correct{border-color:var(--green);background:#eafaf1;color:var(--green);}
+.py-input.wrong{border-color:var(--red);background:#fef0f0;}
+.py-tag{font-size:.72rem;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;}
+.py-tag.ok{background:#eafaf1;color:var(--green);}
+.py-tag.fail{background:#fef0f0;color:var(--red);}
+.check-btn{padding:10px 22px;border:none;border-radius:10px;background:var(--blue);color:#fff;font-size:.92rem;font-weight:700;cursor:pointer;margin-top:6px;}
+.check-btn:hover{background:#1f6898;}
+.py-retry-btn{padding:8px 18px;border:none;border-radius:10px;background:var(--gray);color:#fff;font-size:.85rem;cursor:pointer;margin-top:6px;margin-left:8px;}
+
+/* ===== BÀI 5 – TÌNH HUỐNG ===== */
+.sit-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 16px;margin-bottom:14px;}
+.sit-scenario{font-size:.9rem;background:#fef5f5;border-left:4px solid var(--orange);padding:10px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;line-height:1.6;}
+.sit-opts{display:flex;flex-direction:column;gap:7px;}
+.sit-opt{
+  padding:11px 14px;border:2px solid var(--border);border-radius:10px;
+  font-size:.88rem;cursor:pointer;background:var(--card);text-align:left;
+  transition:all .15s;font-family:inherit;
+}
+.sit-opt:hover:not(:disabled){border-color:var(--red);background:#fef5f5;}
+.sit-opt.correct{border-color:var(--green);background:#eafaf1;color:var(--green);}
+.sit-opt.wrong{border-color:var(--red);background:#fef0f0;color:var(--red);}
+.sit-opt:disabled{cursor:default;}
+.sit-explain{margin-top:8px;font-size:.8rem;padding:8px 12px;border-radius:8px;background:#f8f4ff;color:#6c3483;display:none;}
+.sit-explain.show{display:block;}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  .mc-opts{grid-template-columns:1fr;}
+  .match-wrap{flex-direction:column;}
+  .py-row{gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📝 Ôn Tập Tiếng Trung – Số Đếm & Ngày Tháng</h1>
+  <p>18 từ · 5 bài ôn tập · Bảng từ vựng có ví dụ thực tế</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ:</span>
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="global-bar" style="width:0%"></div></div>
+  <span class="progress-score" id="global-score">0 / 25 điểm</span>
+</div>
+
+<nav>
+  <button class="tab-btn active" onclick="showTab('vocab',this)">📋 Từ vựng</button>
+  <button class="tab-btn" onclick="showTab('fill',this)">✏️ Bài 1</button>
+  <button class="tab-btn" onclick="showTab('match',this)">🔗 Bài 2</button>
+  <button class="tab-btn" onclick="showTab('mc',this)">🔤 Bài 3</button>
+  <button class="tab-btn" onclick="showTab('pinyin',this)">🔡 Bài 4</button>
+  <button class="tab-btn" onclick="showTab('sit',this)">💬 Bài 5</button>
+</nav>
+
+<!-- ========== BẢNG TỪ VỰNG ========== -->
+<div id="tab-vocab" class="section active">
+  <div class="section-title">📋 Bảng Từ Vựng – Số Đếm & Ngày Tháng</div>
+  <div class="section-desc">Click vào chữ Hán để nghe phát âm. 18 từ có ví dụ sử dụng thực tế.</div>
+  <div style="overflow-x:auto;">
+  <table class="vocab-table">
+    <thead>
+      <tr>
+        <th style="width:40px">#</th>
+        <th>Chữ Hán</th>
+        <th>Pinyin</th>
+        <th>Nghĩa</th>
+        <th>Ví dụ thực tế</th>
+      </tr>
+    </thead>
+    <tbody id="vocab-tbody"></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ========== BÀI 1 – ĐIỀN CHỮ ========== -->
+<div id="tab-fill" class="section">
+  <div class="section-title">✏️ Bài 1 – Điền Chữ Hán Còn Thiếu</div>
+  <div class="section-desc">Đọc câu hội thoại, nhấn vào ô trống để xem đáp án. Mỗi câu đúng +1 điểm.</div>
+  <div class="score-badge">Điểm bài này: <span id="fill-score">0</span> / 5</div>
+  <div id="fill-area"></div>
+</div>
+
+<!-- ========== BÀI 2 – NỐI TỪ ========== -->
+<div id="tab-match" class="section">
+  <div class="section-title">🔗 Bài 2 – Nối Từ Với Nghĩa</div>
+  <div class="section-desc">Nhấn một chữ Hán, rồi nhấn nghĩa tiếng Việt tương ứng. 5 cặp từ.</div>
+  <div class="score-badge">Điểm bài này: <span id="match-score">0</span> / 5</div>
+  <div class="exercise-card">
+    <div class="match-wrap">
+      <div class="match-col">
+        <h4>🀄 Chữ Hán</h4>
+        <div id="match-left"></div>
+      </div>
+      <div class="match-col">
+        <h4>🇻🇳 Nghĩa</h4>
+        <div id="match-right"></div>
+      </div>
+    </div>
+    <div class="match-status" id="match-status"></div>
+    <button class="match-reset" onclick="initMatch()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ========== BÀI 3 – TRẮC NGHIỆM ========== -->
+<div id="tab-mc" class="section">
+  <div class="section-title">🔤 Bài 3 – Trắc Nghiệm</div>
+  <div class="section-desc">Chọn nghĩa đúng cho từng chữ Hán. Tô màu đúng/sai tự động.</div>
+  <div class="score-badge">Điểm bài này: <span id="mc-score">0</span> / 5</div>
+  <div id="mc-area"></div>
+</div>
+
+<!-- ========== BÀI 4 – VIẾT PINYIN ========== -->
+<div id="tab-pinyin" class="section">
+  <div class="section-title">🔡 Bài 4 – Viết Pinyin</div>
+  <div class="section-desc">Gõ pinyin cho từng chữ Hán. Chấp nhận cả có dấu (xīngqīyī) và không dấu (xingqiyi). Nhấn <strong>Kiểm tra</strong> để chấm.</div>
+  <div class="score-badge">Điểm bài này: <span id="py-score">0</span> / 5</div>
+  <div class="exercise-card" id="py-area"></div>
+  <div style="margin-top:12px;">
+    <button class="check-btn" onclick="checkPinyin()">✅ Kiểm tra</button>
+    <button class="py-retry-btn" onclick="initPinyin()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ========== BÀI 5 – TÌNH HUỐNG ========== -->
+<div id="tab-sit" class="section">
+  <div class="section-title">💬 Bài 5 – Chọn Câu Phù Hợp Với Tình Huống</div>
+  <div class="section-desc">Đọc tình huống, chọn câu tiếng Trung phù hợp nhất. Nhấn để xem giải thích.</div>
+  <div class="score-badge">Điểm bài này: <span id="sit-score">0</span> / 5</div>
+  <div id="sit-area"></div>
+</div>
+
+<script>
+// ==================== DATA ====================
+const vocab = [
+  {id:1, zh:"一", py:"yī", vi:"một (1)",
+   ex:{zh:"我有一本書。",py:"Wǒ yǒu yī běn shū.",vi:"Tôi có một cuốn sách."}},
+  {id:2, zh:"二", py:"èr", vi:"hai (2)",
+   ex:{zh:"今天星期二。",py:"Jīntiān xīngqī'èr.",vi:"Hôm nay là thứ ba."}},
+  {id:3, zh:"三", py:"sān", vi:"ba (3)",
+   ex:{zh:"我們三個人。",py:"Wǒmen sān gè rén.",vi:"Chúng tôi có ba người."}},
+  {id:4, zh:"四", py:"sì", vi:"bốn (4)",
+   ex:{zh:"他四歲了。",py:"Tā sì suì le.",vi:"Bé đã bốn tuổi rồi."}},
+  {id:5, zh:"五", py:"wǔ", vi:"năm (5)",
+   ex:{zh:"五月很熱。",py:"Wǔ yuè hěn rè.",vi:"Tháng năm rất nóng."}},
+  {id:6, zh:"六", py:"liù", vi:"sáu (6)",
+   ex:{zh:"星期六我不上課。",py:"Xīngqīliù wǒ bù shàngkè.",vi:"Thứ bảy tôi không học."}},
+  {id:7, zh:"七", py:"qī", vi:"bảy (7)",
+   ex:{zh:"七月七號是我的生日。",py:"Qī yuè qī hào shì wǒ de shēngrì.",vi:"Ngày 7 tháng 7 là sinh nhật tôi."}},
+  {id:8, zh:"八", py:"bā", vi:"tám (8)",
+   ex:{zh:"我八點起床。",py:"Wǒ bā diǎn qǐchuáng.",vi:"Tôi thức dậy lúc 8 giờ."}},
+  {id:9, zh:"九", py:"jiǔ", vi:"chín (9)",
+   ex:{zh:"九月開學。",py:"Jiǔ yuè kāixué.",vi:"Tháng chín bắt đầu năm học."}},
+  {id:10, zh:"十", py:"shí", vi:"mười (10)",
+   ex:{zh:"今天十號。",py:"Jīntiān shí hào.",vi:"Hôm nay là ngày 10."}},
+  {id:11, zh:"今天", py:"jīntiān", vi:"hôm nay",
+   ex:{zh:"今天是星期一。",py:"Jīntiān shì xīngqīyī.",vi:"Hôm nay là thứ hai."}},
+  {id:12, zh:"星期一", py:"xīngqīyī", vi:"thứ hai",
+   ex:{zh:"星期一我有中文課。",py:"Xīngqīyī wǒ yǒu Zhōngwén kè.",vi:"Thứ hai tôi có lớp tiếng Trung."}},
+  {id:13, zh:"明天", py:"míngtiān", vi:"ngày mai",
+   ex:{zh:"明天是星期二。",py:"Míngtiān shì xīngqī'èr.",vi:"Ngày mai là thứ ba."}},
+  {id:14, zh:"星期二", py:"xīngqī'èr", vi:"thứ ba",
+   ex:{zh:"我星期二很忙。",py:"Wǒ xīngqī'èr hěn máng.",vi:"Tôi rất bận vào thứ ba."}},
+  {id:15, zh:"月", py:"yuè", vi:"tháng",
+   ex:{zh:"這個月很冷。",py:"Zhège yuè hěn lěng.",vi:"Tháng này rất lạnh."}},
+  {id:16, zh:"日/号", py:"rì/hào", vi:"ngày",
+   ex:{zh:"今天幾號？",py:"Jīntiān jǐ hào?",vi:"Hôm nay ngày mấy?"}},
+  {id:17, zh:"星期六", py:"xīngqīliù", vi:"thứ bảy",
+   ex:{zh:"星期六我們去看電影。",py:"Xīngqīliù wǒmen qù kàn diànyǐng.",vi:"Thứ bảy chúng tôi đi xem phim."}},
+  {id:18, zh:"星期日", py:"xīngqīrì", vi:"chủ nhật",
+   ex:{zh:"星期日我不工作。",py:"Xīngqīrì wǒ bù gōngzuò.",vi:"Chủ nhật tôi không làm việc."}},
+];
+
+// ==================== AUDIO ====================
+function speak(text){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const cleaned = text.replace('/', '');
+  const u=new SpeechSynthesisUtterance(cleaned);
+  u.lang='zh-TW'; u.rate=0.85;
+  const v=speechSynthesis.getVoices();
+  const p=v.find(x=>x.lang==='zh-TW')||v.find(x=>x.lang==='zh-HK')||v.find(x=>x.lang.startsWith('zh'));
+  if(p)u.voice=p;
+  speechSynthesis.speak(u);
+}
+if(window.speechSynthesis)speechSynthesis.onvoiceschanged=()=>{};
+
+// ==================== SCORE ====================
+const scores={fill:0,match:0,mc:0,py:0,sit:0};
+function addScore(section,n){
+  scores[section]+=n;
+  document.getElementById(section+'-score').textContent=scores[section];
+  updateGlobal();
+}
+function setScore(section,n){
+  scores[section]=n;
+  document.getElementById(section+'-score').textContent=scores[section];
+  updateGlobal();
+}
+function updateGlobal(){
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  document.getElementById('global-score').textContent=total+' / 25 điểm';
+  document.getElementById('global-bar').style.width=(total/25*100)+'%';
+}
+
+// ==================== TAB ====================
+function showTab(name,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ==================== BẢNG TỪ VỰNG ====================
+function renderVocab(){
+  const tb=document.getElementById('vocab-tbody');
+  tb.innerHTML=vocab.map(w=>`
+    <tr>
+      <td style="color:var(--muted);font-size:.8rem">${w.id}</td>
+      <td><span class="zh-cell" onclick="speak('${w.zh}')" title="Nhấn để nghe">${w.zh} 🔊</span><br><span class="py-cell">${w.py}</span></td>
+      <td class="py-cell">${w.py}</td>
+      <td style="font-size:.88rem">${w.vi}</td>
+      <td>
+        <div class="ex-zh" onclick="speak('${w.ex.zh}')" style="cursor:pointer">${w.ex.zh} 🔊</div>
+        <div class="ex-py">${w.ex.py}</div>
+        <div class="ex-vi">${w.ex.vi}</div>
+      </td>
+    </tr>
+  `).join('');
+}
+renderVocab();
+
+// ==================== BÀI 1 – ĐIỀN CHỮ ====================
+const fillData = [
+  {
+    before:"今天",blank:"星期一",after:"，明天星期二。",
+    vi:"Hôm nay là thứ hai, ngày mai là thứ ba.",
+    hint:"Tên thứ trong tuần đứng ngay sau 今天"
+  },
+  {
+    before:"我",blank:"五",after:"月",after2:"十",after3:"號去日本。",
+    vi:"Tôi đi Nhật Bản vào ngày 10 tháng 5.",
+    hint:"Số chỉ tháng (5)",
+    specialBefore:"我",specialBlank:"五",specialAfter:"月十號去日本。"
+  },
+  {
+    before:"",blank:"星期六",after:"我們去看電影，",after2:"星期日",after3:"我們在家。",
+    vi:"Thứ bảy chúng tôi đi xem phim, chủ nhật chúng tôi ở nhà.",
+    hint:"Ngày cuối tuần đầu tiên (sau thứ sáu)",
+    specialBefore:"",specialBlank:"星期六",specialAfter:"我們去看電影，星期日我們在家。"
+  },
+  {
+    before:"明天是",blank:"九",after:"月",after2:"一",after3:"號，是開學日。",
+    vi:"Ngày mai là ngày 1 tháng 9, là ngày khai giảng.",
+    hint:"Số chỉ tháng (9) — tháng bắt đầu năm học",
+    specialBefore:"明天是",specialBlank:"九",specialAfter:"月一號，是開學日。"
+  },
+  {
+    before:"我",blank:"七",after:"歲，他",after2:"八",after3:"歲。",
+    vi:"Tôi 7 tuổi, anh ấy 8 tuổi.",
+    hint:"Số đếm (7) — đứng trước 歲 (tuổi)",
+    specialBefore:"我",specialBlank:"七",specialAfter:"歲，他八歲。"
+  },
+];
+
+let fillRevealed=[false,false,false,false,false];
+function initFill(){
+  setScore('fill',0);
+  fillRevealed=[false,false,false,false,false];
+  const area=document.getElementById('fill-area');
+  area.innerHTML=fillData.map((q,i)=>{
+    const sentence = (q.specialBlank!==undefined)
+      ? `${q.specialBefore}<span class="fill-blank" id="fb-${i}" onclick="revealFill(${i})">？</span>${q.specialAfter}`
+      : `${q.before}<span class="fill-blank" id="fb-${i}" onclick="revealFill(${i})">？</span>${q.after}`;
+    return `
+      <div class="exercise-card">
+        <div class="q-label">Câu ${i+1}</div>
+        <div class="fill-sent">${sentence}</div>
+        <div class="fill-vi">${q.vi}</div>
+        <div class="fill-hint">💡 Gợi ý: ${q.hint}</div>
+        <div>
+          <button class="reveal-btn" id="rbtn-${i}" onclick="revealFill(${i})">👁 Xem đáp án (+1đ)</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function revealFill(i){
+  if(fillRevealed[i])return;
+  fillRevealed[i]=true;
+  const blank=document.getElementById('fb-'+i);
+  blank.textContent=fillData[i].blank;
+  blank.classList.add('revealed');
+  speak(fillData[i].blank);
+  const btn=document.getElementById('rbtn-'+i);
+  btn.textContent='✅ Đã xem';
+  btn.classList.add('revealed');
+  btn.disabled=true;
+  addScore('fill',1);
+}
+initFill();
+
+// ==================== BÀI 2 – NỐI TỪ ====================
+const matchPool=[
+  {zh:"星期六",vi:"thứ bảy"},
+  {zh:"星期日",vi:"chủ nhật"},
+  {zh:"明天",vi:"ngày mai"},
+  {zh:"七",vi:"bảy (7)"},
+  {zh:"九",vi:"chín (9)"},
+];
+
+let matchSelected=null;
+let matchCorrect=0;
+let matchDone=[];
+
+function initMatch(){
+  matchSelected=null; matchCorrect=0; matchDone=[];
+  setScore('match',0);
+  document.getElementById('match-status').textContent='';
+  const leftPool=[...matchPool];
+  const rightPool=shuffle([...matchPool]);
+  document.getElementById('match-left').innerHTML=leftPool.map((w,i)=>`
+    <button class="match-btn zh-btn" id="ml-${i}" onclick="selectLeft(${i},'${w.zh}')">${w.zh}</button>
+  `).join('');
+  document.getElementById('match-right').innerHTML=rightPool.map((w,i)=>`
+    <button class="match-btn" id="mr-${i}" onclick="selectRight(${i},'${w.zh}','${w.vi.replace(/'/g,"\\'")}','${w.zh}')">${w.vi}</button>
+  `).join('');
+}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function selectLeft(i,zh){
+  if(matchDone.includes('L'+zh))return;
+  document.querySelectorAll('.match-btn').forEach(b=>{if(!b.classList.contains('correct'))b.classList.remove('selected');});
+  matchSelected={type:'left',zh,id:'ml-'+i};
+  document.getElementById('ml-'+i).classList.add('selected');
+}
+
+function selectRight(i,zh,vi,correctZh){
+  if(!matchSelected||matchSelected.type!=='left')return;
+  const leftEl=document.getElementById(matchSelected.id);
+  const rightEl=document.getElementById('mr-'+i);
+  if(matchSelected.zh===zh){
+    leftEl.classList.remove('selected'); leftEl.classList.add('correct');
+    rightEl.classList.add('correct');
+    leftEl.disabled=true; rightEl.disabled=true;
+    matchDone.push('L'+zh);
+    matchCorrect++;
+    setScore('match',matchCorrect);
+    speak(zh);
+    if(matchCorrect===5){
+      document.getElementById('match-status').textContent='🎉 Xuất sắc! Nối đúng tất cả 5 cặp!';
+    }
+  } else {
+    rightEl.classList.add('wrong');
+    setTimeout(()=>rightEl.classList.remove('wrong'),600);
+  }
+  matchSelected=null;
+  document.querySelectorAll('.match-btn:not(.correct)').forEach(b=>b.classList.remove('selected'));
+}
+initMatch();
+
+// ==================== BÀI 3 – TRẮC NGHIỆM ====================
+const mcPool=[
+  {zh:"星期一",py:"xīngqīyī",correct:"thứ hai",wrong:["thứ ba","chủ nhật","thứ bảy"]},
+  {zh:"明天",py:"míngtiān",correct:"ngày mai",wrong:["hôm nay","tháng","ngày"]},
+  {zh:"五",py:"wǔ",correct:"năm (5)",wrong:["bốn (4)","sáu (6)","bảy (7)"]},
+  {zh:"月",py:"yuè",correct:"tháng",wrong:["ngày","hôm nay","thứ"]},
+  {zh:"星期日",py:"xīngqīrì",correct:"chủ nhật",wrong:["thứ hai","thứ ba","thứ bảy"]},
+];
+
+let mcCurrent=0, mcScoreVal=0, mcAnswered=false;
+function initMC(){
+  mcCurrent=0; mcScoreVal=0; mcAnswered=false;
+  setScore('mc',0);
+  renderMC();
+}
+function renderMC(){
+  const area=document.getElementById('mc-area');
+  if(mcCurrent>=mcPool.length){
+    const pct=Math.round(mcScoreVal/mcPool.length*100);
+    area.innerHTML=`<div class="mc-result">
+      <div class="big">${pct>=80?'🎉':pct>=60?'👍':'💪'}</div>
+      <h3>${mcScoreVal}/${mcPool.length} câu đúng</h3>
+      <p>${pct>=80?'Xuất sắc!':pct>=60?'Khá tốt, ôn thêm nhé!':'Hãy xem lại bảng từ vựng!'}</p>
+      <button class="restart-btn" onclick="initMC()">🔄 Làm lại</button>
+    </div>`;
+    return;
+  }
+  mcAnswered=false;
+  const q=mcPool[mcCurrent];
+  const opts=shuffle([q.correct,...q.wrong]);
+  area.innerHTML=`<div class="exercise-card">
+    <div class="q-label">Câu ${mcCurrent+1} / ${mcPool.length}</div>
+    <div class="mc-question">${q.zh}</div>
+    <div class="mc-py">${q.py}</div>
+    <div class="mc-opts">${opts.map(o=>`
+      <button class="mc-opt" onclick="checkMC(this,'${o.replace(/'/g,"\\'")}','${q.correct.replace(/'/g,"\\'")}','${q.zh}')">${o}</button>
+    `).join('')}</div>
+    <div class="mc-feedback" id="mc-fb"></div>
+    <button class="mc-next" id="mc-next" onclick="mcCurrent++;renderMC()">Câu tiếp ▶</button>
+  </div>`;
+  setTimeout(()=>speak(q.zh),400);
+}
+function checkMC(btn,selected,correct,zh){
+  if(mcAnswered)return;
+  mcAnswered=true;
+  document.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('mc-fb');
+  const nb=document.getElementById('mc-next');
+  if(selected===correct){
+    btn.classList.add('correct');
+    fb.className='mc-feedback show ok';
+    fb.textContent='✅ Đúng! '+zh+' = '+correct;
+    mcScoreVal++;
+    setScore('mc',mcScoreVal);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.mc-opt').forEach(b=>{
+      if(b.textContent===correct)b.classList.add('correct');
+    });
+    fb.className='mc-feedback show fail';
+    fb.textContent='❌ Sai! Đáp án: '+zh+' = '+correct;
+  }
+  nb.classList.add('show');
+}
+initMC();
+
+// ==================== BÀI 4 – VIẾT PINYIN ====================
+const pyPool=[
+  {zh:"今天",py:"jīntiān",noTone:"jintian"},
+  {zh:"星期二",py:"xīngqī'èr",noTone:"xingqi'er"},
+  {zh:"三",py:"sān",noTone:"san"},
+  {zh:"八",py:"bā",noTone:"ba"},
+  {zh:"星期六",py:"xīngqīliù",noTone:"xingqiliu"},
+];
+
+function normPy(s){
+  return s.toLowerCase()
+    .replace(/[āáǎà]/g,'a').replace(/[ēéěè]/g,'e').replace(/[īíǐì]/g,'i')
+    .replace(/[ōóǒò]/g,'o').replace(/[ūúǔù]/g,'u').replace(/[ǖǘǚǜü]/g,'u')
+    .replace(/\s+/g,'');
+}
+function initPinyin(){
+  setScore('py',0);
+  const area=document.getElementById('py-area');
+  area.innerHTML='<div style="margin-bottom:8px;font-size:.8rem;color:var(--muted)">Gõ pinyin (có hoặc không cần dấu thanh đều được):</div>'+
+  pyPool.map((w,i)=>`
+    <div class="py-row">
+      <span class="zh-cell" style="cursor:pointer" onclick="speak('${w.zh}')" title="Nghe">${w.zh}</span>
+      <span class="py-meaning">(${vocab.find(v=>v.zh===w.zh).vi})</span>
+      <input class="py-input" id="py-inp-${i}" type="text" placeholder="Nhập pinyin..." spellcheck="false" autocomplete="off">
+      <span class="py-tag" id="py-tag-${i}"></span>
+    </div>
+  `).join('');
+}
+function checkPinyin(){
+  let sc=0;
+  pyPool.forEach((w,i)=>{
+    const inp=document.getElementById('py-inp-'+i);
+    const tag=document.getElementById('py-tag-'+i);
+    const val=inp.value.trim();
+    if(!val){tag.textContent='';inp.className='py-input';return;}
+    const norm=normPy(val);
+    const ok=norm===normPy(w.py)||norm===w.noTone;
+    inp.className='py-input '+(ok?'correct':'wrong');
+    if(ok){tag.className='py-tag ok';tag.textContent='✅ '+w.py;sc++;}
+    else{tag.className='py-tag fail';tag.textContent='❌ '+w.py;}
+  });
+  setScore('py',sc);
+}
+initPinyin();
+
+// ==================== BÀI 5 – TÌNH HUỐNG ====================
+const sitData=[
+  {
+    scenario:"📍 Bạn muốn hỏi bạn của bạn hôm nay là thứ mấy:",
+    opts:[
+      {text:"今天星期幾？",correct:true,explain:"✅ Đúng! 今天 (hôm nay) + 星期幾 (thứ mấy) — câu hỏi chuẩn về ngày trong tuần."},
+      {text:"明天九月幾號？",correct:false,explain:"❌ Sai. Câu này hỏi về ngày tháng 9 của ngày mai."},
+      {text:"你五歲了嗎？",correct:false,explain:"❌ Sai. Câu này hỏi tuổi, không liên quan thứ trong tuần."},
+      {text:"星期六你忙嗎？",correct:false,explain:"❌ Sai. Câu hỏi này giả định sẵn là thứ bảy."},
+    ]
+  },
+  {
+    scenario:"📍 Bạn muốn nói rằng cuối tuần (thứ bảy và chủ nhật) bạn không đi học:",
+    opts:[
+      {text:"星期六、星期日我不上課。",correct:true,explain:"✅ Đúng! 星期六 (thứ bảy) + 星期日 (chủ nhật) + 不上課 (không đi học) — diễn đạt đúng ý nghĩa."},
+      {text:"今天星期一，我上課。",correct:false,explain:"❌ Sai. Câu này nói về thứ hai, không phải cuối tuần."},
+      {text:"明天九號，我七歲。",correct:false,explain:"❌ Sai. Câu này không liên quan đến việc đi học."},
+      {text:"五月十號是星期二。",correct:false,explain:"❌ Sai. Câu này nói về một ngày cụ thể trong tháng 5."},
+    ]
+  },
+  {
+    scenario:"📍 Bạn muốn nói rằng sinh nhật của bạn là ngày 8 tháng 9:",
+    opts:[
+      {text:"我的生日是九月八號。",correct:true,explain:"✅ Đúng! 九月 (tháng 9) + 八號 (ngày 8) — thứ tự tháng trước ngày sau đúng theo tiếng Trung."},
+      {text:"我的生日是八月九號。",correct:false,explain:"❌ Sai. Câu này đảo ngược: tháng 8 ngày 9, không phải tháng 9 ngày 8."},
+      {text:"今天是星期六。",correct:false,explain:"❌ Sai. Câu này nói về thứ trong tuần, không phải ngày sinh."},
+      {text:"明天我七歲。",correct:false,explain:"❌ Sai. Câu này nói về tuổi vào ngày mai."},
+    ]
+  },
+  {
+    scenario:"📍 Bạn muốn hỏi xem hôm nay là ngày mấy trong tháng:",
+    opts:[
+      {text:"今天幾號？",correct:true,explain:"✅ Đúng! 今天 (hôm nay) + 幾號 (ngày mấy) — câu hỏi chuẩn về ngày trong tháng."},
+      {text:"明天星期幾？",correct:false,explain:"❌ Sai. Câu này hỏi về thứ của ngày mai, không phải ngày trong tháng."},
+      {text:"你有幾本書？",correct:false,explain:"❌ Sai. Câu này hỏi số lượng sách."},
+      {text:"星期日你做什麼？",correct:false,explain:"❌ Sai. Câu này hỏi hoạt động vào chủ nhật."},
+    ]
+  },
+  {
+    scenario:"📍 Bạn muốn nói: 'Hôm nay thứ năm, ngày mai thứ sáu, còn thứ bảy tôi nghỉ':",
+    opts:[
+      {text:"今天星期四，明天星期五，星期六我休息。",correct:true,explain:"✅ Đúng! Câu nối đúng 3 mốc thời gian liên tiếp theo trình tự 今天 → 明天 → 星期六."},
+      {text:"今天星期一，星期日我休息。",correct:false,explain:"❌ Sai. Câu này chỉ nói 2 mốc và sai logic thứ tự."},
+      {text:"明天九月十號，我七歲。",correct:false,explain:"❌ Sai. Câu này không liên quan đến chuỗi ngày trong tuần."},
+      {text:"星期六、星期日我看電影。",correct:false,explain:"❌ Sai. Câu này không có 今天/明天 như yêu cầu."},
+    ]
+  },
+];
+
+let sitDone=[false,false,false,false,false];
+function initSit(){
+  setScore('sit',0);
+  sitDone=[false,false,false,false,false];
+  const area=document.getElementById('sit-area');
+  area.innerHTML=sitData.map((q,qi)=>`
+    <div class="sit-card" id="sit-card-${qi}">
+      <div class="q-label">Tình huống ${qi+1}</div>
+      <div class="sit-scenario">${q.scenario}</div>
+      <div class="sit-opts">
+        ${shuffle([...q.opts.map((o,oi)=>({...o,origIdx:oi}))]).map((o,i)=>`
+          <button class="sit-opt" id="sit-${qi}-${i}" onclick="checkSit(${qi},this,${o.correct},'${o.explain.replace(/'/g,"\\'").replace(/"/g,"&quot;")}')">${o.text}</button>
+        `).join('')}
+      </div>
+      <div class="sit-explain" id="sit-ex-${qi}"></div>
+    </div>
+  `).join('');
+}
+
+function checkSit(qi,btn,correct,explain){
+  if(sitDone[qi])return;
+  sitDone[qi]=true;
+  const card=document.getElementById('sit-card-'+qi);
+  card.querySelectorAll('.sit-opt').forEach(b=>b.disabled=true);
+  if(correct){
+    btn.classList.add('correct');
+    addScore('sit',1);
+    speak(btn.textContent);
+  } else {
+    btn.classList.add('wrong');
+    card.querySelectorAll('.sit-opt').forEach(b=>{
+      const txt=b.textContent;
+      const match=sitData[qi].opts.find(o=>o.text===txt&&o.correct);
+      if(match)b.classList.add('correct');
+    });
+  }
+  const ex=document.getElementById('sit-ex-'+qi);
+  ex.innerHTML=explain;
+  ex.classList.add('show');
+}
+initSit();
+</script>
+</body>
+</html>
