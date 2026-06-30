@@ -5,6 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Bài Ôn Tập Tiếng Trung</title>
     <style>
+        /* ĐỊNH DẠNG THANH ĐIỀU HƯỚNG */
+.back-to-menu-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 20px;
+    font-family: sans-serif;
+}
+.back-to-menu-nav a {
+    color: #4a5568;
+    text-decoration: none;
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+.back-to-menu-nav a:hover {
+    background: #e2e8f0;
+}
+.back-to-menu-nav .btn-home {
+    background-color: #c0392b;
+    color: white;
+}
+.back-to-menu-nav .btn-home:hover {
+    background-color: #a93226;
+}
+
+/* ĐẨY NỘI DUNG XUỐNG ĐỂ KHÔNG BỊ MENU CHE */
+body {
+    <div class="back-to-menu-nav">
+    <a href="index.html" class="btn-home">🏠 Về Trang Chủ</a>
+    <span style="color: #7f8c8d; font-size: 0.9rem; font-weight: bold; margin-left: 10px;">Chuyển mục nhanh:</span>
+    <a href="index.html">👶 Tiếng Trung Kid</a>
+    <a href="index.html">📈 Phát triển Hán ngữ</a>
+    <a href="index.html">🇹🇼 Tiếng Đài (Phồn thể)</a>
+</div>
+    padding-top: 60px !important;
+}
         /* Thiết lập chung */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
