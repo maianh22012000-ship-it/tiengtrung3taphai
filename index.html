@@ -27,15 +27,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             padding: 10px 20px;
+            flex-wrap: wrap;
         }
 
         .nav-brand {
             font-weight: bold;
             color: #c0392b;
             font-size: 1.1rem;
-            margin-right: 20px;
+            margin-right: 10px;
             text-transform: uppercase;
         }
 
@@ -59,7 +60,7 @@
 
         /* Nội dung chính phía dưới thanh Navbar */
         .main-content {
-            padding: 100px 20px 40px 20px;
+            padding: 120px 20px 40px 20px;
         }
 
         .welcome-title {
@@ -83,7 +84,7 @@
             justify-content: center;
             gap: 25px;
             flex-wrap: wrap;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -92,7 +93,7 @@
             background-color: #ffffff;
             border: 2px solid #f0e6da;
             border-radius: 16px;
-            width: 320px;
+            width: 260px;
             padding: 25px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
             cursor: pointer;
@@ -186,6 +187,17 @@
             color: #ffffff;
         }
 
+        /* Màu cam cho HSK3 */
+        .sub-item.orange {
+            background-color: #fef5e7;
+            color: #e67e22;
+        }
+
+        .sub-item.orange:hover {
+            background-color: #e67e22;
+            color: #ffffff;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -199,7 +211,7 @@
         <button class="nav-btn" onclick="scrollToFolder(0)">👶 Tiếng Trung Kid</button>
         <button class="nav-btn" onclick="scrollToFolder(1)">📈 Phát triển Hán ngữ</button>
         <button class="nav-btn" onclick="scrollToFolder(2)">🇹🇼 Tiếng Đài (Phồn thể)</button>
-    </div>
+        <button class="nav-btn" onclick="scrollToFolder(3)">🏆 HSK3 (3.0)</button> </div>
 
     <div class="main-content">
         <div class="welcome-title">Tiếng Trung Mai Anh</div>
@@ -248,6 +260,18 @@
                 <div class="sub-menu">
                     <a href="bai-3-phon-the.html" class="sub-item green" onclick="event.stopPropagation();">
                         📗 Giáo trình bài 3 (22 từ)
+                    </a>
+                </div>
+            </div>
+
+            <div class="folder-card" id="folder-3" onclick="toggleFolder(this)">
+                <div class="folder-icon">🏆</div>
+                <div class="folder-title">HSK3 (3.0)</div>
+                <div class="folder-desc">Hệ thống bài tập luyện dịch, từ vựng và ngữ pháp chuẩn hóa HSK 3 phiên bản mới. Bấm để xem bài học.</div>
+                
+                <div class="sub-menu">
+                    <a href="bai-1-hsk3.html" class="sub-item orange" onclick="event.stopPropagation();">
+                        📙 Bài 1 HSK3
                     </a>
                 </div>
             </div>
