@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Ôn Tập Bài 1 – HSK 3 (3.0)</title>
+    <title>Bài Ôn Tập Bài 3 – Hôm Nay Là Thứ Hai</title>
     <style>
         /* 👑 ĐỊNH DẠNG THANH MENU NHANH TRÊN CÙNG */
         .top-fast-menu {
@@ -57,79 +57,71 @@
 
         /* 🎨 HỆ THỐNG BIẾN MÀU SẮC GỐC */
         :root {
-            --org: #d35400; --org2: #e67e22; --org-bg: #fdf5e6; --org-light: #fbeee6;
-            --red: #c0392b; --red-bg: #f9ebea;
-            --green: #27ae60; --green-bg: #e8f8f5;
-            --blue: #2980b9; --blue-bg: #ebf5fb;
-            --bg: #fdfafd; --card: #fff;
-            --text: #2c3e50; --muted: #7f8c8d; --border: #f5c8a8;
-            --shadow: 0 4px 15px rgba(211,84,0,.08);
-            --r: 14px; --ease: .2s ease;
+            --red: #c0392b; --red-dk: #922b21; --orange: #e67e22;
+            --green: #27ae60; --blue: #2980b9; --gray: #7f8c8d;
+            --bg: #fdf6f0; --card: #fff; --border: #e8d5c4;
+            --text: #2c3e50; --muted: #7f8c8d;
+            --shadow: 0 4px 18px rgba(0,0,0,.09);
+            --r: 14px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding-top: 75px !important; 
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            min-height: 100vh; 
+            padding-top: 75px !important; /* ĐẨY TOÀN BỘ NỘI DUNG XUỐNG ĐỂ KHÔNG BỊ MENU CHE CHỮ */
         }
 
-        header {
-            background: linear-gradient(135deg, var(--org), var(--org2));
-            color: #fff;
-            padding: 22px 16px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        /* HEADER */
+        header { 
+            background: linear-gradient(135deg, var(--red), var(--red-dk)); 
+            color: #fff; 
+            text-align: center; 
+            padding: 22px 16px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        header h1 { font-size: 1.35rem; font-weight: 800; }
-        header p { font-size: .8rem; opacity: .9; margin-top: 4px; }
+        header h1 { font-size: 1.4rem; letter-spacing: 1px; margin-bottom: 5px; }
+        header p { font-size: .84rem; opacity: .85; }
 
-        .meta { background: #fff; border-bottom: 2px solid #f0e6da; padding: 10px 20px; display: flex; align-items: center; justify-content: center; }
-        #totalScore { font-size: .95rem; font-weight: 800; color: var(--green); background: var(--green-bg); padding: 5px 15px; border-radius: 20px; }
+        .progress-container { max-width: 850px; margin: 20px auto 0; padding: 0 15px; }
+        .progress-label { font-size: .75rem; font-weight: 700; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .progress-bar { background: #e2e8f0; height: 6px; border-radius: 3px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--orange), var(--red)); height: 100%; width: 0%; transition: width .3s ease; }
 
         /* TABS */
-        .tabs { display: flex; justify-content: center; background: #fff; border-bottom: 2px solid #f0e6da; position: sticky; top: 55px; z-index: 100; overflow-x: auto; }
-        .tab-btn { padding: 12px 20px; border: none; background: none; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all var(--ease); border-bottom: 3px solid transparent; }
-        .tab-btn:hover { color: var(--org); }
-        .tab-btn.active { color: var(--org); border-bottom-color: var(--org); font-weight: 700; }
+        .tabs { display: flex; justify-content: center; background: #fff; border-bottom: 2px solid var(--border); position: sticky; top: 55px; z-index: 100; overflow-x: auto; }
+        .tab-btn { padding: 12px 20px; border: none; background: none; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .2s; border-bottom: 3px solid transparent; }
+        .tab-btn:hover { color: var(--orange); }
+        .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 700; }
 
-        /* CONTENT */
+        /* CONTENT WRAPPER */
         .wrap { max-width: 850px; margin: 0 auto; padding: 20px 15px 60px; }
-        .content-section { display: none; animation: fadeIn .3s ease; }
+        .content-section { display: none; }
         .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .sec { background: var(--card); border-radius: var(--r); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid #f0e2d5; }
-        .sec-head { background: #fef5e7; padding: 10px 18px; margin: -22px -22px 18px; border-bottom: 1px solid #f5c8a8; display: flex; align-items: center; }
-        .sec-head h2 { font-size: .95rem; font-weight: 800; color: var(--org); }
+        .sec { background: var(--card); border-radius: var(--r); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .sec-head { background: #fdf5e6; padding: 10px 18px; margin: -22px -22px 18px; border-bottom: 1px solid var(--border); border-top-left-radius: var(--r); border-top-right-radius: var(--r); }
+        .sec-head h2 { font-size: .95rem; font-weight: 800; color: var(--orange); }
 
-        /* VTABLE */
+        /* BẢNG TỪ VỰNG */
         .vtable { width: 100%; border-collapse: collapse; font-size: .85rem; }
-        .vtable th { background: var(--org-light); color: var(--org); padding: 10px; text-align: left; border-bottom: 2px solid var(--org); }
-        .vtable td { padding: 10px; border-bottom: 1px solid #f5ece8; }
+        .vtable th { background: #fff3e0; color: var(--orange); padding: 10px; text-align: left; border-bottom: 2px solid var(--orange); }
+        .vtable td { padding: 12px 10px; border-bottom: 1px solid #f5ece8; }
         .hz { font-size: 1.5rem; color: var(--red); font-weight: bold; cursor: pointer; }
-        .py { color: var(--org); font-weight: 600; }
+        .py { color: var(--orange); font-weight: 600; }
 
-        /* QUIZ */
-        .fill-item { margin-bottom: 15px; line-height: 1.8; font-size: .95rem; padding-bottom: 10px; border-bottom: 1px dashed #f0e2d5; }
-        .blank { display: inline-block; min-width: 70px; border-bottom: 2px solid var(--org); text-align: center; color: var(--blue); font-weight: bold; cursor: pointer; background: #fffbf5; }
+        /* BÀI TẬP ĐIỀN TỪ */
+        .pool { display: flex; flex-wrap: wrap; gap: 8px; background: #fff9f2; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px; }
+        .word { background: #fff; border: 1px solid var(--border); padding: 4px 12px; border-radius: 15px; font-size: .85rem; font-weight: bold; color: var(--orange); cursor: pointer; }
+        .fill-item { margin-bottom: 15px; line-height: 1.8; font-size: .95rem; }
+        .blank { display: inline-block; min-width: 70px; border-bottom: 2px solid var(--orange); text-align: center; color: var(--blue); font-weight: bold; cursor: pointer; background: #fffbf5; }
         .blank.correct { border-bottom-color: var(--green); color: var(--green); }
         .blank.wrong { border-bottom-color: var(--red); color: var(--red); }
-        .vi-sub { font-size: .75rem; color: var(--muted); font-style: italic; }
 
-        .pool { display: flex; flex-wrap: wrap; gap: 8px; background: #fff9f2; padding: 12px; border-radius: 8px; border: 1px solid #f0e2d5; margin-bottom: 15px; }
-        .word { background: #fff; border: 1px solid #f0e2d5; padding: 4px 12px; border-radius: 15px; font-size: .85rem; font-weight: bold; color: var(--org); cursor: pointer; }
-
-        .opt-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px; }
-        @media(min-width: 500px) { .opt-grid { grid-template-columns: 1fr 1fr; } }
-        .opt-btn { background: #fff; border: 1px solid #f0e2d5; padding: 10px 15px; text-align: left; font-size: .88rem; border-radius: 8px; cursor: pointer; }
-        .opt-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: bold; }
-        .opt-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
-
-        .btn-check { background: var(--org); color: #fff; border: none; padding: 8px 18px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-check { background: var(--orange); color: #fff; border: none; padding: 8px 18px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -140,55 +132,54 @@
         <a href="index.html">👶 Tiếng Trung Kid</a>
         <a href="index.html">📈 Phát triển Hán ngữ</a>
         <a href="index.html">🇹🇼 Tiếng Đài (Phồn thể)</a>
-        <a href="index.html">🏆 HSK3 (3.0)</a>
+        <a href="bai-1-hsk3.html">🏆 HSK3 (3.0)</a>
     </div>
 
     <header>
-        <h1>🏆 Ôn Tập Bài 1 – HSK 3 (3.0)</h1>
-        <p>Luyện tập từ vựng, ngữ pháp và mẫu câu chuẩn hóa theo khung HSK mới</p>
+        <h1>📆 Bài 3: Hôm Nay Là Thứ Hai (今天星期一)</h1>
+        <p>Học cách nói các thứ trong tuần, số đếm nâng cao và mẫu câu thời gian</p>
     </header>
 
-    <div class="meta">
-        <div id="totalScore">Điểm số: 0 / 20</div>
+    <div class="progress-container">
+        <div class="progress-label">
+            <span>Tiến độ hoàn thành bài tập</span>
+            <span id="totalScore">Điểm số: 0 / 20</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="pfill"></div>
+        </div>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(evt, 'vocab')">📋 Từ vựng</button>
-        <button class="tab-btn" onclick="switchTab(evt, 'ex1')">📝 Bài tập 1</button>
-        <button class="tab-btn" onclick="switchTab(evt, 'ex2')">📝 Bài tập 2</button>
+        <button class="tab-btn active" onclick="switchTab(event, 'vocab')">📋 Từ vựng trọng tâm</button>
+        <button class="tab-btn" onclick="switchTab(event, 'ex1')">📝 Luyện tập điền từ</button>
     </div>
 
     <div class="wrap">
         <div id="vocab" class="content-section active">
             <div class="sec">
-                <div class="sec-head"><h2>📋 Từ Vựng Trọng Tâm (Bấm để nghe đọc)</h2></div>
+                <div class="sec-head"><h2>📋 Bảng từ vựng thời gian & số đếm (Bấm để nghe)</h2></div>
                 <table class="vtable">
                     <thead>
                         <tr>
                             <th>Chữ Hán</th>
                             <th>Pinyin</th>
                             <th>Nghĩa tiếng Việt</th>
-                            <th>Ví dụ mẫu</th>
+                            <th>Ví dụ ứng dụng</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="hz" onclick="speak('打算')">打算 🔊</td>
-                            <td class="py">dǎsuàn</td>
-                            <td>Dự định, lên kế hoạch</td>
-                            <td>你周末有什么打算？<br><small class="muted">Cậu cuối tuần có dự định gì?</small></td>
+                            <td class="hz" onclick="speak('星期一')">星期一 🔊</td>
+                            <td class="py">xīngqīyī</td>
+                            <td>Thứ Hai</td>
+                            <td>今天星期一，我要去上学。<br><small style="color:var(--gray)">Hôm nay là thứ hai, tôi phải đi học.</small></td>
                         </tr>
                         <tr>
-                            <td class="hz" onclick="speak('一直')">一直 🔊</td>
-                            <td class="py">yīzhí</td>
-                            <td>Luôn luôn, thẳng một mạch</td>
-                            <td>我一直很喜欢你。<br><small class="muted">Tớ vẫn luôn rất thích cậu.</small></td>
-                        </tr>
-                        <tr>
-                            <td class="hz" onclick="speak('着急')">着急 🔊</td>
-                            <td class="py">zhāojí</td>
-                            <td>Lo lắng, sốt ruột</td>
-                            <td>别着急, 慢慢来。<br><small class="muted">Đừng sốt ruột, từ từ thôi.</small></td>
+                            <td class="hz" onclick="speak('昨天')">昨天 🔊</td>
+                            <td class="py">zuótiān</td>
+                            <td>Hôm qua</td>
+                            <td>昨天你去哪儿了？<br><small style="color:var(--gray)">Hôm qua bạn đi đâu thế?</small></td>
                         </tr>
                     </tbody>
                 </table>
@@ -197,33 +188,18 @@
 
         <div id="ex1" class="content-section">
             <div class="sec">
-                <div class="sec-head"><h2>📝 Bài 1: Chọn từ thích hợp điền vào chỗ trống</h2></div>
+                <div class="sec-head"><h2>📝 Chọn từ trên thanh công cụ thả vào chỗ trống đúng</h2></div>
                 <div class="pool">
-                    <div class="word" onclick="pickWord('打算', 't1')">打算</div>
-                    <div class="word" onclick="pickWord('一直', 't2')">一直</div>
+                    <div class="word" onclick="pickWord('星期一', 't1')">星期一</div>
+                    <div class="word" onclick="pickWord('昨天', 't2')">昨天</div>
                 </div>
                 <div class="fill-item">
-                    1. 📝 你明年来 Trung Quốc 有 cái gì <span class="blank" id="t1" onclick="clearBlank('t1')">?</span> 吗？
-                    <div class="vi-sub">Năm sau bạn đến Trung Quốc có dự định gì không?</div>
+                    1. 今天是星期日，明天就是 <span class="blank" id="t1" onclick="clearBlank('t1')">?</span> 了。
                 </div>
                 <div class="fill-item">
-                    2. 🏃‍♂️ Thầy giáo <span class="blank" id="t2" onclick="clearBlank('t2')">?</span> 在教室等你。
-                    <div class="vi-sub">Thầy giáo cứ ở suốt trong phòng học đợi em.</div>
+                    2. <span class="blank" id="t2" onclick="clearBlank('t2')">?</span> 星期六，我没有去工作。
                 </div>
                 <button class="btn-check" onclick="checkEx1()">✔️ Kiểm tra đáp án</button>
-            </div>
-        </div>
-
-        <div id="ex2" class="content-section">
-            <div class="sec">
-                <div class="sec-head"><h2>⚡ Bài 2: Trắc nghiệm lựa chọn đáp án đúng</h2></div>
-                <div class="quiz-q">
-                    <p><b>Câu 1: Từ trái nghĩa hoặc ngữ cảnh của "着急" (zhāojí) thường đi với từ nào để khuyên ngăn?</b></p>
-                    <div class="opt-grid">
-                        <button class="opt-btn" onclick="checkOpt(this, true)"><div class="opt-idx">A</div> 别 (别着急)</button>
-                        <button class="opt-btn" onclick="checkOpt(this, false)"><div class="opt-idx">B</div> 太 (太着急)</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -234,7 +210,7 @@
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            (e ? e.currentTarget : event.target).classList.add('active');
+            e.currentTarget.classList.add('active');
         }
         function speak(t) {
             if ('speechSynthesis' in window) {
@@ -247,20 +223,17 @@
         }
         function clearBlank(id) {
             let b = document.getElementById(id);
-            if(b) { b.innerText = "?"; b.className = "blank"; b.style.color = "var(--blue)"; }
+            if(b) { b.innerText = "?"; b.className = "blank"; }
         }
         function checkEx1() {
             let s = 0;
             let t1 = document.getElementById('t1');
             let t2 = document.getElementById('t2');
-            if(t1 && t1.innerText === "打算") { t1.className = "blank correct"; s += 10; } else if(t1) { t1.className = "blank wrong"; }
-            if(t2 && t2.innerText === "一直") { t2.className = "blank correct"; s += 10; } else if(t2) { t2.className = "blank wrong"; }
-            score = s; document.getElementById('totalScore').innerText = `Điểm số: ${score} / 20`;
-        }
-        function checkOpt(btn, isCorrect) {
-            let p = btn.parentElement; p.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
-            if(isCorrect) { btn.className = "opt-btn correct"; score += 10; } else { btn.className = "opt-btn wrong"; }
+            if(t1 && t1.innerText === "星期一") { t1.className = "blank correct"; s += 10; } else if(t1) { t1.className = "blank wrong"; }
+            if(t2 && t2.innerText === "昨天") { t2.className = "blank correct"; s += 10; } else if(t2) { t2.className = "blank wrong"; }
+            score = s; 
             document.getElementById('totalScore').innerText = `Điểm số: ${score} / 20`;
+            document.getElementById('pfill').style.width = (score === 20) ? "100%" : "50%";
         }
     </script>
 </body>
