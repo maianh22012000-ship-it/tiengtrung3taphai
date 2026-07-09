@@ -5,54 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Bài Ôn Tập Tiếng Trung</title>
     <style>
-        /* ĐỊNH DẠNG THANH ĐIỀU HƯỚNG */
-.back-to-menu-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 20px;
-    font-family: sans-serif;
-}
-.back-to-menu-nav a {
-    color: #4a5568;
-    text-decoration: none;
-    background: #f1f5f9;
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-.back-to-menu-nav a:hover {
-    background: #e2e8f0;
-}
-.back-to-menu-nav .btn-home {
-    background-color: #c0392b;
-    color: white;
-}
-.back-to-menu-nav .btn-home:hover {
-    background-color: #a93226;
-}
-
-/* ĐẨY NỘI DUNG XUỐNG ĐỂ KHÔNG BỊ MENU CHE */
-body {
-    <div class="back-to-menu-nav">
-    <a href="index.html" class="btn-home">🏠 Về Trang Chủ</a>
-    <span style="color: #7f8c8d; font-size: 0.9rem; font-weight: bold; margin-left: 10px;">Chuyển mục nhanh:</span>
-    <a href="index.html">👶 Tiếng Trung Kid</a>
-    <a href="index.html">📈 Phát triển Hán ngữ</a>
-    <a href="index.html">🇹🇼 Tiếng Đài (Phồn thể)</a>
-</div>
-    padding-top: 60px !important;
-}
         /* Thiết lập chung */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -107,7 +59,7 @@ body {
 
         /* Nội dung chính phía dưới thanh Navbar */
         .main-content {
-            padding: 100px 20px 40px 20px; /* Để trống khoảng cách bên trên cho Navbar không che mất chữ */
+            padding: 100px 20px 40px 20px;
         }
 
         .welcome-title {
@@ -239,72 +191,8 @@ body {
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
-    /* 👑 THANH MENU NHANH TRÊN CÙNG CHO FILE BÀI TẬP */
-.top-fast-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    z-index: 99999; /* Đảm bảo luôn nổi lên trên cùng */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.top-fast-menu .btn-home {
-    background-color: #c0392b;
-    color: #ffffff !important;
-    font-weight: bold;
-}
-
-.top-fast-menu .btn-home:hover {
-    background-color: #a93226;
-}
-
-.top-fast-menu a {
-    color: #4a5568 !important;
-    text-decoration: none !important;
-    background-color: #f1f5f9;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    border: 1px solid #e2e8f0;
-}
-
-.top-fast-menu a:hover {
-    background-color: #fff5f5;
-    color: #c0392b !important;
-    border-color: #feb2b2;
-}
-
-.top-fast-menu .menu-label {
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: #7f8c8d;
-    margin-right: 5px;
-}
-
-/* TỰ ĐỘNG ĐẨY NỘI DUNG BÀI TẬP XUỐNG ĐỂ KHÔNG BỊ MENU CHE */
-body {
-    padding-top: 60px !important;
-}
 </head>
 <body>
-    <!-- 👑 THANH MENU NHANH TRÊN CÙNG -->
-<div class="top-fast-menu">
-    <a href="index.html" class="btn-home">🏠 Về Trang Chủ</a>
-    <span class="menu-label">Chuyển nhanh:</span>
-    <a href="index.html">👶 Tiếng Trung Kid</a>
-    <a href="index.html">📈 Phát triển Hán ngữ</a>
-    <a href="index.html">🇹🇼 Tiếng Đài (Phồn thể)</a>
-</div>
 
     <div class="top-navbar">
         <div class="nav-brand">📚 Menu nhanh:</div>
@@ -329,11 +217,11 @@ body {
                         📙 Tiếng trung 3 tập 2 (63 từ)
                     </a>
                     <a href="hoc-tu-vung-hoat-dong-hang-ngay.html" class="sub-item" onclick="event.stopPropagation();">
-    📙 Học từ vựng hoạt động hằng ngày
-</a>
+                        📙 Học từ vựng hoạt động hằng ngày
+                    </a>
                     <a href="hoc-tu-vung-cam-xuc.html" class="sub-item" onclick="event.stopPropagation();">
-    📙 Học từ vựng cảm xúc
-</a>
+                        📙 Học từ vựng cảm xúc
+                    </a>
                 </div>
             </div>
 
@@ -368,22 +256,17 @@ body {
     </div>
 
     <script>
-        // Hàm đóng/mở thư mục thủ công
         function toggleFolder(card) {
             card.classList.toggle('active');
         }
 
-        // Hàm click từ Thanh Menu: tự động cuộn xuống, mở toang thư mục đó ra để học viên thấy bài học ngay
         function scrollToFolder(index) {
-            // Đóng tất cả các thư mục khác lại trước
             const allCards = document.querySelectorAll('.folder-card');
             allCards.forEach(card => card.classList.remove('active'));
 
-            // Tìm thư mục được chọn, kích hoạt mở ra
             const targetCard = document.getElementById('folder-' + index);
             if (targetCard) {
                 targetCard.classList.add('active');
-                // Cuộn mượt mà đến vị trí thư mục đó
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
