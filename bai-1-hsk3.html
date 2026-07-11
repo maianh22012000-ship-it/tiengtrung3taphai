@@ -296,9 +296,65 @@ header{
   .match-grid,.mc-opts,.cat-grid{grid-template-columns:1fr}
   .write-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ── QUICK MENU BAR ── */
+.quick-menu-bar{
+  position:sticky;top:0;left:0;right:0;z-index:40;
+  background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  padding:8px 14px;flex-wrap:wrap;
+}
+.quick-menu-bar .qm-brand{
+  font-weight:800;color:var(--org);font-size:.82rem;margin-right:4px;
+  text-transform:uppercase;white-space:nowrap;
+}
+.quick-menu-bar a.qm-btn{
+  background-color:#f8f9fa;border:1px solid #e2e8f0;padding:6px 13px;
+  border-radius:20px;font-weight:700;color:#4a5568;font-size:.78rem;
+  text-decoration:none;transition:all .2s ease;white-space:nowrap;
+}
+.quick-menu-bar a.qm-btn:hover{background-color:var(--org-bg);color:var(--org);border-color:var(--org-light)}
+.quick-menu-bar a.qm-btn.current{background:var(--org);color:#fff;border-color:var(--org)}
+
+/* ── NỘP BÀI / SUBMIT BAR ── */
+.submit-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:35;
+  background:#fff;border-top:2px solid var(--org-light);
+  box-shadow:0 -6px 20px rgba(0,0,0,.10);
+  padding:12px 16px;display:flex;justify-content:center;align-items:center;
+  gap:14px;flex-wrap:wrap;
+}
+.btn-gold{background:linear-gradient(90deg,#f9a825,#f57f17);color:#fff}
+.btn-gold:hover{background:linear-gradient(90deg,#f57f17,#e65100)}
+.grand-score{font-weight:800;color:var(--org);font-size:.9rem}
+
+.result-panel{
+  background:linear-gradient(160deg,#fff,#fff3e0);border:2px solid var(--gold);
+  border-radius:var(--r);padding:20px 22px;margin-bottom:22px;display:none;
+  box-shadow:var(--shadow);
+}
+.result-panel.show{display:block}
+.result-panel h3{margin:0 0 12px;color:var(--org);font-size:1rem;font-weight:800}
+.result-row{display:flex;justify-content:space-between;padding:7px 0;
+  border-bottom:1px dashed var(--border);font-size:.86rem;color:var(--text)}
+.result-row.total{font-weight:800;border-bottom:none;font-size:1.02rem;
+  color:var(--org);padding-top:12px}
+.result-msg{margin-top:10px;font-weight:700;color:var(--red);font-size:.86rem}
+
+body{padding-bottom:78px}
 </style>
 </head>
 <body>
+
+<div class="quick-menu-bar">
+  <span class="qm-brand">📚 Menu nhanh:</span>
+  <a class="qm-btn" href="index.html">🏠 Trang chủ</a>
+  <a class="qm-btn" href="index.html#folder-0">👶 Tiếng Trung Kid</a>
+  <a class="qm-btn" href="index.html#folder-1">📈 Phát triển Hán ngữ</a>
+  <a class="qm-btn" href="index.html#folder-2">🇹🇼 Tiếng Đài (Phồn thể)</a>
+  <a class="qm-btn" href="index.html#folder-3">🎯 HSK1 (3.0)</a>
+  <a class="qm-btn current" href="index.html#folder-4">🏆 HSK3 (3.0)</a>
+</div>
 
 <header>
   <div class="h-left">
@@ -324,6 +380,12 @@ header{
 </div>
 
 <div class="wrap">
+
+  <!-- KẾT QUẢ NỘP BÀI -->
+  <div class="result-panel" id="resultPanel">
+    <h3>📊 Kết Quả Nộp Bài</h3>
+    <div id="resultBody"></div>
+  </div>
 
   <!-- PROGRESS -->
   <div class="overview no-print">
@@ -430,6 +492,13 @@ header{
   </div>
 
 </div>
+
+<div class="submit-bar no-print">
+  <button class="btn btn-gold" onclick="submitAll()">📩 Nộp Bài &amp; Chấm Điểm</button>
+  <button class="btn btn-outline" onclick="resetAll()">♻️ Làm lại toàn bộ</button>
+  <span class="grand-score" id="grandScoreDisplay"></span>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -883,7 +952,50 @@ function ansSent(i,sel){
 
 /* ══ GLOBAL ══ */
 function revealAll(){revealFill();}
-function resetAll(){hideFill();resetMatch();buildMC();resetWrite();resetCat();buildSent();}
+function resetAll(){
+  hideFill();resetMatch();buildMC();resetWrite();resetCat();buildSent();
+  document.getElementById('resultPanel').classList.remove('show');
+  document.getElementById('grandScoreDisplay').textContent='';
+}
+
+/* ══ NỘP BÀI & CHẤM ĐIỂM TỔNG ══ */
+function submitAll(){
+  // Chấm các phần chưa được kiểm tra thủ công
+  checkWrite();
+  checkCat();
+  document.getElementById('matchRes').textContent =
+    mMatched.length===MPAIRS.length?`🎉 Hoàn hảo! ${mMatched.length}/${MPAIRS.length}`:`✓ ${mMatched.length}/${MPAIRS.length} cặp đúng`;
+  SC.match=mMatched.length;updProg(2,SC.match,SC.matchT);
+
+  const sections=[
+    {label:'Bài 1 · Điền chữ Hán vào chỗ trống', cur:SC.fill,  tot:SC.fillT},
+    {label:'Bài 2 · Nối từ với nghĩa',           cur:SC.match, tot:SC.matchT},
+    {label:'Bài 3 · Trắc nghiệm',                cur:SC.mc,    tot:SC.mcT},
+    {label:'Bài 4 · Viết chữ Hán',               cur:SC.write, tot:SC.writeT},
+    {label:'Bài 5 · Phân loại từ vựng',          cur:SC.cat,   tot:SC.catT},
+    {label:'Bài 6 · Chọn từ hoàn thành câu',     cur:SC.sent,  tot:SC.sentT},
+  ];
+  const totalCorrect=sections.reduce((s,x)=>s+x.cur,0);
+  const totalAll=sections.reduce((s,x)=>s+x.tot,0);
+  const percent=totalAll?Math.round(totalCorrect/totalAll*100):0;
+
+  let message;
+  if(percent>=90)message='🌟 Xuất sắc! Bạn nắm rất vững từ vựng bài 1.';
+  else if(percent>=70)message='👍 Khá tốt! Ôn lại vài từ còn sai nhé.';
+  else if(percent>=50)message='📚 Trung bình, cần ôn tập thêm.';
+  else message='💪 Cố gắng hơn nhé, hãy xem lại bảng từ vựng và làm lại.';
+
+  document.getElementById('resultBody').innerHTML =
+    sections.map(x=>`<div class="result-row"><span>${x.label}</span><span>${x.cur} / ${x.tot}</span></div>`).join('')+
+    `<div class="result-row total"><span>TỔNG ĐIỂM</span><span>${totalCorrect} / ${totalAll} (${percent}%)</span></div>
+     <div class="result-msg">${message}</div>`;
+
+  const panel=document.getElementById('resultPanel');
+  panel.classList.add('show');
+  document.getElementById('grandScoreDisplay').textContent=`Điểm: ${totalCorrect}/${totalAll} (${percent}%)`;
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+  toast(`📩 Đã nộp bài — ${totalCorrect}/${totalAll} (${percent}%)`, 3000);
+}
 
 /* ── INIT ── */
 buildVocabTabs();buildVocabTable();
