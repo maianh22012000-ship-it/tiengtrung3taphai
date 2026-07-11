@@ -187,7 +187,7 @@
             color: #ffffff;
         }
 
-        /* Màu cam cho HSK3 và các lớp HSK khác */
+        /* Màu cam cho HSK3 */
         .sub-item.orange {
             background-color: #fef5e7;
             color: #e67e22;
@@ -200,7 +200,7 @@
 
         /* Màu tím cho HSK1 */
         .sub-item.purple {
-            background-color: #f5eef8;
+            background-color: #f4ecf7;
             color: #8e44ad;
         }
 
@@ -223,8 +223,7 @@
         <button class="nav-btn" onclick="scrollToFolder(1)">📈 Phát triển Hán ngữ</button>
         <button class="nav-btn" onclick="scrollToFolder(2)">🇹🇼 Tiếng Đài (Phồn thể)</button>
         <button class="nav-btn" onclick="scrollToFolder(3)">🎯 HSK1 (3.0)</button>
-        <button class="nav-btn" onclick="scrollToFolder(4)">🏆 HSK3 (3.0)</button>
-    </div>
+        <button class="nav-btn" onclick="scrollToFolder(4)">🏆 HSK3 (3.0)</button> </div>
 
     <div class="main-content">
         <div class="welcome-title">Tiếng Trung Mai Anh</div>
@@ -280,11 +279,11 @@
             <div class="folder-card" id="folder-3" onclick="toggleFolder(this)">
                 <div class="folder-icon">🎯</div>
                 <div class="folder-title">HSK1 (3.0)</div>
-                <div class="folder-desc">Hệ thống bài tập, từ vựng và lộ trình luyện tập chuẩn hóa HSK 1 phiên bản mới. Bấm để xem bài học.</div>
+                <div class="folder-desc">Hệ thống bài ôn tập từ vựng và ngữ pháp cơ bản chuẩn HSK 1 phiên bản mới. Bấm để xem bài học.</div>
                 
                 <div class="sub-menu">
-                    <a href="bai-4-hsk1.html" class="sub-item purple" onclick="event.stopPropagation();">
-                        📙 Bài 4 HSK1
+                    <a href="on-tap-tu-vung-tieng-trung.html" class="sub-item purple" onclick="event.stopPropagation();">
+                        🎯 Ôn tập Gia đình & Số đếm (27 từ)
                     </a>
                 </div>
             </div>
@@ -319,6 +318,15 @@
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
+
+        // Tự động mở đúng mục khi được điều hướng tới từ 1 file bài tập (vd: index.html#folder-3)
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash; // vd: "#folder-3"
+            const match = hash.match(/folder-(\d+)/);
+            if (match) {
+                scrollToFolder(Number(match[1]));
+            }
+        });
     </script>
 
 </body>
