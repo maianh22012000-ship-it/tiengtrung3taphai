@@ -213,11 +213,142 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* KHỐI THÔNG TIN GIỚI THIỆU + LIÊN HỆ */
+        .info-section {
+            max-width: 760px;
+            margin: 0 auto 40px auto;
+            background: #ffffff;
+            border: 2px solid #f0e6da;
+            border-radius: 18px;
+            padding: 36px 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+        .info-logo {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 14px;
+        }
+
+        .info-name {
+            margin: 0 0 6px 0;
+            color: #c0392b;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .info-tagline {
+            color: #95867a;
+            font-size: 0.95rem;
+            margin-bottom: 22px;
+        }
+
+        .info-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 26px;
+        }
+
+        .info-tags span {
+            background-color: #fff2f0;
+            color: #c0392b;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .info-block {
+            text-align: left;
+            background-color: #fcf8f2;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 24px;
+        }
+
+        .info-block h3 {
+            margin: 0 0 12px 0;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .info-block ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .info-block li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: #555;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .info-block li:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-block li .ico {
+            flex-shrink: 0;
+        }
+
+        .info-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #fff2f0;
+            color: #e74c3c;
+            padding: 9px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .info-contact a:hover {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        @media (max-width: 560px) {
+            .info-section { padding: 28px 20px; }
+            .info-name { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
     <div class="top-navbar">
+        <img src="logo.png" alt="Tiếng Trung Mai Anh" class="nav-logo">
         <div class="nav-brand">📚 Menu nhanh:</div>
         <button class="nav-btn" onclick="scrollToFolder(0)">👶 Tiếng Trung Kid</button>
         <button class="nav-btn" onclick="scrollToFolder(1)">📈 Phát triển Hán ngữ</button>
@@ -228,6 +359,39 @@
     <div class="main-content">
         <div class="welcome-title">Tiếng Trung Mai Anh</div>
         <div class="welcome-desc">Vui lòng chọn khóa học để xem các bài ôn tập</div>
+
+        <div class="info-section">
+            <img src="logo.png" alt="Tiếng Trung Mai Anh" class="info-logo">
+            <div class="info-tagline">Tiếng Trung từ cơ bản đến nâng cao</div>
+
+            <div class="info-tags">
+                <span>Ôn thi HSK</span>
+                <span>Ôn thi THPT</span>
+                <span>Giao tiếp</span>
+                <span>Sửa phát âm</span>
+                <span>Online / Offline</span>
+                <span>Học nhóm</span>
+                <span>Học 1:1</span>
+                <span>Học 2:1</span>
+            </div>
+
+            <div class="info-block">
+                <h3>👩‍🏫 Thông tin giáo viên</h3>
+                <ul>
+                    <li><span class="ico">🎓</span> Tốt nghiệp Đại học Quảng Tây (Trung Quốc), chuyên ngành Hán ngữ, bằng giỏi</li>
+                    <li><span class="ico">🏅</span> Học bổng Chính phủ Quảng Tây</li>
+                    <li><span class="ico">📜</span> Chứng chỉ HSK6 + HSKK cao cấp</li>
+                    <li><span class="ico">📅</span> Kinh nghiệm giảng dạy từ năm 2019</li>
+                    <li><span class="ico">🌏</span> Kinh nghiệm phiên dịch tiếng Trung, hướng dẫn viên du lịch Trung Quốc</li>
+                </ul>
+            </div>
+
+            <div class="info-contact">
+                <a href="tel:0819389893">📞 0819 389 893</a>
+                <a href="https://zalo.me/0819389893" target="_blank">💬 Zalo tư vấn</a>
+                <a href="https://www.facebook.com/profile.php?id=61566567394447" target="_blank">📘 Facebook: Tiếng Trung Mai Anh</a>
+            </div>
+        </div>
 
         <div class="menu-container">
 
