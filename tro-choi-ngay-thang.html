@@ -21,6 +21,25 @@
     color:var(--ink); min-height:100vh; padding-bottom:100px; overflow-x:hidden;
   }
 
+  /* ── QUICK MENU BAR ── */
+  .quick-menu-bar{
+    position:sticky; top:0; left:0; right:0; z-index:60;
+    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.08);
+    display:flex; justify-content:center; align-items:center; gap:8px;
+    padding:8px 14px; flex-wrap:wrap;
+  }
+  .quick-menu-bar .qm-brand{
+    font-weight:800; color:var(--candy); font-size:.82rem; margin-right:4px;
+    text-transform:uppercase; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn{
+    background-color:#f8f9fa; border:1px solid #e2e8f0; padding:6px 13px;
+    border-radius:20px; font-weight:700; color:#4a5568; font-size:.78rem;
+    text-decoration:none; transition:all .2s ease; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn:hover{ background-color:#fff5f5; color:var(--candy); border-color:#feb2b2; }
+  .quick-menu-bar a.qm-btn.current{ background:var(--candy); color:#fff; border-color:#c94f70; }
+
   /* ── BUNTING HEADER (dây cờ sinh nhật) ── */
   .bunting{ display:flex; justify-content:center; gap:4px; padding-top:10px; flex-wrap:wrap; }
   .flag{ width:30px; height:38px; clip-path:polygon(0 0,100% 0,50% 100%); animation:sway 2.4s ease-in-out infinite; }
@@ -38,7 +57,7 @@
 
   /* ── STAR / SCORE BAR ── */
   .stat-bar{
-    position:sticky; top:0; z-index:50; display:flex; justify-content:center; gap:20px;
+    position:sticky; top:41px; z-index:50; display:flex; justify-content:center; gap:20px;
     background:#fff; padding:10px 16px; box-shadow:0 4px 14px rgba(0,0,0,.08); flex-wrap:wrap;
   }
   .stat-chip{
@@ -197,6 +216,16 @@
 </style>
 </head>
 <body>
+
+<div class="quick-menu-bar">
+  <span class="qm-brand">📚 Menu nhanh:</span>
+  <a class="qm-btn" href="index.html">🏠 Trang chủ</a>
+  <a class="qm-btn current" href="index.html#folder-0">👶 Tiếng Trung Kid</a>
+  <a class="qm-btn" href="index.html#folder-1">📈 Phát triển Hán ngữ</a>
+  <a class="qm-btn" href="index.html#folder-2">🇹🇼 Tiếng Đài (Phồn thể)</a>
+  <a class="qm-btn" href="index.html#folder-3">🎯 HSK1 (3.0)</a>
+  <a class="qm-btn" href="index.html#folder-4">🏆 HSK3 (3.0)</a>
+</div>
 
 <div class="bunting">
   <div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div>
