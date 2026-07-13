@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>温习 · Ôn Tập Từ Vựng Tiếng Trung – Bài 2 (HSK3)</title>
+<style>
+  :root{
+    --red:#c0392b; --red-dark:#8e2a1f; --cream:#fdf6ee; --ink:#2b2320;
+    --gold:#c9a24b; --green:#3f7d5c; --card-bg:#ffffff;
+    --shadow:0 8px 24px rgba(139,42,31,0.12); --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 10% 10%, #fbe9dd 0%, transparent 45%),
+      radial-gradient(circle at 90% 20%, #f6dede 0%, transparent 40%),
+      var(--cream);
+    color:var(--ink); min-height:100vh; padding-bottom:90px;
+  }
+
+  /* ── QUICK MENU BAR ── */
+  .quick-menu-bar{
+    position:sticky; top:0; left:0; right:0; z-index:40;
+    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.08);
+    display:flex; justify-content:center; align-items:center; gap:8px;
+    padding:8px 14px; flex-wrap:wrap;
+  }
+  .quick-menu-bar .qm-brand{
+    font-weight:800; color:var(--red-dark); font-size:.82rem; margin-right:4px;
+    text-transform:uppercase; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn{
+    background-color:#f8f9fa; border:1px solid #e2e8f0; padding:6px 13px;
+    border-radius:20px; font-weight:700; color:#4a5568; font-size:.78rem;
+    text-decoration:none; transition:all .2s ease; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn:hover{ background-color:#fff5f5; color:var(--red-dark); border-color:#feb2b2; }
+  .quick-menu-bar a.qm-btn.current{ background:var(--red); color:#fff; border-color:var(--red-dark); }
+
+  header{ padding:26px 20px 16px; text-align:center; position:relative; }
+  header::before, header::after{
+    content:""; position:absolute; top:0; bottom:0; width:6px;
+    background:repeating-linear-gradient(45deg,var(--gold),var(--gold) 4px,transparent 4px,transparent 8px);
+    opacity:.5;
+  }
+  header::before{ left:0; } header::after{ right:0; }
+  h1{ margin:0; font-size:1.9rem; color:var(--red-dark); letter-spacing:1px; }
+  h1 .cn{ font-size:2.3rem; margin-right:8px; }
+  header p{ margin:6px 0 0; color:#8a6a55; font-size:.9rem; }
+
+  nav.tabs{
+    display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
+    padding:10px 16px 20px; position:sticky; top:41px; z-index:5; background:var(--cream);
+  }
+  nav.tabs button{
+    border:2px solid transparent; background:#fff; color:var(--red-dark);
+    padding:9px 14px; border-radius:999px; font-size:.85rem; font-weight:600;
+    cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:.2s;
+  }
+  nav.tabs button:hover{ transform:translateY(-2px); }
+  nav.tabs button.active{ background:var(--red); color:#fff; border-color:var(--red-dark); }
+
+  main{ max-width:920px; margin:0 auto; padding:0 16px 20px; }
+  section.view{ display:none; animation:fadein .25s ease; }
+  section.view.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+  .panel{ background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-bottom:20px; }
+  .panel h2{ margin-top:0; color:var(--red-dark); font-size:1.2rem; }
+  .panel .sub{ color:#8a6a55; font-size:.85rem; margin-top:-8px; margin-bottom:16px; }
+
+  .btn{
+    border:none; background:var(--red); color:#fff; padding:9px 16px; border-radius:10px;
+    font-weight:600; cursor:pointer; font-size:.88rem; transition:.15s;
+  }
+  .btn:hover{ background:var(--red-dark); }
+  .btn.secondary{ background:#efe0d3; color:var(--red-dark); }
+  .btn.secondary:hover{ background:#e6cdb8; }
+  .btn.gold{ background:var(--gold); color:#3a2c10; }
+
+  table.vocab-table{ width:100%; border-collapse:collapse; font-size:.92rem; }
+  table.vocab-table th, table.vocab-table td{ padding:9px 10px; border-bottom:1px solid #f0ddc9; text-align:left; }
+  table.vocab-table th{ color:var(--red-dark); background:#fdf1e7; font-size:.85rem; }
+  table.vocab-table td.hz-cell{ font-size:1.2rem; font-weight:700; }
+  table.vocab-table td.py-cell{ color:var(--red); }
+  table.vocab-table tr:hover td{ background:#fdf6ee; }
+  .lesson-chip{ display:inline-block; font-size:.7rem; background:var(--green); color:#fff; padding:2px 8px; border-radius:999px; }
+
+  .ex-item{
+    padding:14px; border:1.5px solid #f0ddc9; border-radius:12px; margin-bottom:12px;
+    background:linear-gradient(160deg,#fff,#fdf1e7);
+  }
+  .ex-item .q-line{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .ex-item .num{ font-weight:700; color:var(--gold); min-width:24px; }
+  .ex-item .sentence{ font-size:1.25rem; font-weight:600; }
+  .ex-item .blank-input{
+    display:inline-block; width:80px; padding:4px 6px; border-radius:6px; border:1.5px solid #e6d3c4;
+    font-size:1.1rem; text-align:center; font-weight:700; margin:0 3px;
+  }
+  .ex-item .hint{ color:#8a6a55; font-size:.85rem; margin-left:34px; }
+  .ex-item .feedback-line{ margin-left:34px; font-size:.85rem; font-weight:600; margin-top:6px; }
+  .ex-item.correct{ border-color:var(--green); }
+  .ex-item.wrong{ border-color:var(--red); }
+  .feedback-line.ok{ color:var(--green); }
+  .feedback-line.bad{ color:var(--red); }
+
+  .py-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .py-row .hz2{ font-size:1.5rem; font-weight:700; min-width:60px; }
+  .py-row .mn2{ flex:1; min-width:140px; color:#6b5a4d; font-size:.9rem; }
+  .py-row input{ width:150px; padding:8px 10px; border-radius:8px; border:1.5px solid #e6d3c4; font-size:1rem; text-align:center; }
+
+  .match-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .match-col{ display:flex; flex-direction:column; gap:8px; }
+  .match-item{
+    background:#fff; border:2px solid #e6d3c4; border-radius:10px; padding:10px 14px;
+    cursor:pointer; font-size:.95rem; text-align:center; transition:.15s;
+  }
+  .match-item .hz{ font-size:1.3rem; font-weight:700; }
+  .match-item .py3{ font-size:.8rem; color:var(--red); }
+  .match-item:hover{ border-color:var(--red); }
+  .match-item.selected{ border-color:var(--gold); background:#fdf1d8; }
+  .match-item.matched{ border-color:var(--green); background:#dff3e6; color:var(--green); cursor:default; pointer-events:none; }
+  .match-item.wrongflash{ border-color:var(--red); background:#fbe0dc; }
+
+  .mc-block{ padding:14px; border:1.5px solid #f0ddc9; border-radius:12px; margin-bottom:14px; background:linear-gradient(160deg,#fff,#fdf1e7); }
+  .mc-block .mc-q{ font-weight:600; margin-bottom:10px; }
+  .mc-block .mc-q .cn-main{ font-size:1.3rem; color:var(--red-dark); }
+  .mc-block .mc-q .py-sub{ color:var(--red); font-size:.9rem; font-weight:400; }
+  .mc-options{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .mc-opt{ display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid #e6d3c4; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:.92rem; }
+  .mc-opt:hover{ border-color:var(--red); }
+  .mc-opt input{ accent-color:var(--red); }
+  .mc-opt.correct{ border-color:var(--green); background:#dff3e6; }
+  .mc-opt.wrong{ border-color:var(--red); background:#fbe0dc; }
+
+  .submit-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:#fff; border-top:2px solid var(--gold);
+    box-shadow:0 -6px 20px rgba(0,0,0,.08);
+    padding:12px 16px; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .submit-bar .grand-score{ font-weight:700; color:var(--red-dark); font-size:.95rem; }
+
+  .result-panel{
+    background:linear-gradient(160deg,#fff,#fbe9dc); border:2px solid var(--gold); border-radius:16px;
+    padding:20px; margin-bottom:20px; display:none;
+  }
+  .result-panel.show{ display:block; }
+  .result-panel h3{ margin-top:0; color:var(--red-dark); }
+  .result-row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #e6d3c4; font-size:.92rem; }
+  .result-row.total{ font-weight:700; border-bottom:none; font-size:1.05rem; color:var(--red-dark); padding-top:10px; }
+
+  footer{ text-align:center; color:#a68b78; font-size:.8rem; padding:20px; }
+
+  @media(max-width:640px){
+    .match-wrap{ gap:10px; }
+    .mc-options{ grid-template-columns:1fr; }
+    h1{ font-size:1.5rem; } h1 .cn{ font-size:1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="quick-menu-bar">
+  <span class="qm-brand">📚 Menu nhanh:</span>
+  <a class="qm-btn" href="index.html">🏠 Trang chủ</a>
+  <a class="qm-btn" href="index.html#folder-0">👶 Tiếng Trung Kid</a>
+  <a class="qm-btn" href="index.html#folder-1">📈 Phát triển Hán ngữ</a>
+  <a class="qm-btn" href="index.html#folder-2">🇹🇼 Tiếng Đài (Phồn thể)</a>
+  <a class="qm-btn" href="index.html#folder-3">🎯 HSK1 (3.0)</a>
+  <a class="qm-btn current" href="index.html#folder-4">🏆 HSK3 (3.0)</a>
+</div>
+
+<header>
+  <h1><span class="cn">温习</span>Ôn Tập Từ Vựng Tiếng Trung</h1>
+  <p>Bài 2 · Gọi món ăn tại nhà hàng · 点餐</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-view="vocab">📖 Bảng từ vựng</button>
+  <button data-view="b1">✏️ Bài 1: Điền chữ Hán</button>
+  <button data-view="b2">🔗 Bài 2: Nối từ</button>
+  <button data-view="b3">❓ Bài 3: Trắc nghiệm</button>
+  <button data-view="b4">🔤 Bài 4: Viết pinyin</button>
+  <button data-view="b5">📝 Bài 5: Chọn câu phù hợp</button>
+</nav>
+
+<main>
+
+  <!-- RESULT PANEL (hiện sau khi nộp bài) -->
+  <div class="result-panel" id="result-panel">
+    <h3>📊 Kết quả bài làm</h3>
+    <div id="result-body"></div>
+  </div>
+
+  <!-- ============ 0. VOCAB TABLE ============ -->
+  <section class="view active" id="view-vocab">
+    <div class="panel">
+      <h2>📖 Bảng Từ Vựng Tổng Hợp</h2>
+      <div class="sub">Toàn bộ 25 từ vựng chủ đề gọi món ăn.</div>
+      <table class="vocab-table">
+        <thead><tr><th>#</th><th>Hán tự</th><th>Pinyin</th><th>Nghĩa</th><th>Từ loại</th></tr></thead>
+        <tbody id="vocab-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 1. FILL IN HANZI (câu cụ thể) ============ -->
+  <section class="view" id="view-b1">
+    <div class="panel">
+      <h2>✏️ Bài 1: Điền Chữ Hán Vào Chỗ Trống</h2>
+      <div class="sub">Đọc câu và điền đúng chữ Hán còn thiếu vào ô trống.</div>
+      <div id="b1-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ 2. MATCHING ============ -->
+  <section class="view" id="view-b2">
+    <div class="panel">
+      <h2>🔗 Bài 2: Nối Từ Với Nghĩa</h2>
+      <div class="sub">Chọn 1 chữ Hán bên trái rồi chọn nghĩa tương ứng bên phải.</div>
+      <div style="margin-bottom:10px;"><button class="btn secondary" id="match-reset">🔄 Làm lại phần nối từ</button></div>
+      <div class="match-wrap">
+        <div class="match-col" id="match-left"></div>
+        <div class="match-col" id="match-right"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. QUIZ ============ -->
+  <section class="view" id="view-b3">
+    <div class="panel">
+      <h2>❓ Bài 3: Trắc Nghiệm</h2>
+      <div class="sub">Chọn đáp án đúng nhất cho mỗi câu.</div>
+      <div id="b3-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ 4. WRITE PINYIN ============ -->
+  <section class="view" id="view-b4">
+    <div class="panel">
+      <h2>🔤 Bài 4: Viết Pinyin</h2>
+      <div class="sub">Nhìn chữ Hán và nghĩa, gõ đúng phiên âm có dấu thanh điệu (ví dụ: nǐ hǎo).</div>
+      <div id="b4-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5. SENTENCE CHOICE (tình huống) ============ -->
+  <section class="view" id="view-b5">
+    <div class="panel">
+      <h2>📝 Bài 5: Chọn Câu Phù Hợp Với Tình Huống</h2>
+      <div class="sub">Đọc tình huống rồi chọn câu tiếng Trung phù hợp nhất.</div>
+      <div id="b5-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="submit-bar">
+  <button class="btn gold" id="btn-submit">📩 Nộp Bài &amp; Chấm Điểm</button>
+  <button class="btn secondary" id="btn-reset-all">♻️ Làm lại toàn bộ</button>
+  <span class="grand-score" id="grand-score-display"></span>
+</div>
+
+<footer>做中文练习 · Chúc bạn học tốt! 加油！</footer>
+
+<script>
+/* =========================================================
+   DỮ LIỆU TỪ VỰNG – CHỦ ĐỀ GỌI MÓN ĂN
+   ========================================================= */
+const vocabData = [
+  { hanzi:"菜单",   pinyin:"càidān",     meaning:"thực đơn",      type:"danh từ" },
+  { hanzi:"筷子",   pinyin:"kuàizi",     meaning:"đũa",           type:"danh từ" },
+  { hanzi:"碗",     pinyin:"wǎn",        meaning:"bát",           type:"danh từ" },
+  { hanzi:"勺子",   pinyin:"sháozi",     meaning:"thìa, muỗng",   type:"danh từ" },
+  { hanzi:"饮料",   pinyin:"yǐnliào",    meaning:"đồ uống",       type:"danh từ" },
+  { hanzi:"鸡",     pinyin:"jī",         meaning:"gà",            type:"danh từ" },
+  { hanzi:"蛋糕",   pinyin:"dàngāo",     meaning:"bánh kem",      type:"danh từ" },
+  { hanzi:"方便",   pinyin:"fāngbiàn",   meaning:"tiện lợi",      type:"tính từ" },
+  { hanzi:"方便面", pinyin:"fāngbiànmiàn", meaning:"mì gói",      type:"danh từ" },
+  { hanzi:"简单",   pinyin:"jiǎndān",    meaning:"đơn giản",      type:"tính từ" },
+  { hanzi:"选",     pinyin:"xuǎn",       meaning:"chọn",          type:"động từ" },
+  { hanzi:"尝",     pinyin:"cháng",      meaning:"nếm",           type:"động từ" },
+  { hanzi:"渴",     pinyin:"kě",         meaning:"khát",          type:"tính từ" },
+  { hanzi:"饿",     pinyin:"è",          meaning:"đói",           type:"tính từ" },
+  { hanzi:"热情",   pinyin:"rèqíng",     meaning:"nhiệt tình",    type:"tính từ" },
+  { hanzi:"外卖",   pinyin:"wàimài",     meaning:"đồ ăn giao",    type:"danh từ" },
+  { hanzi:"不用",   pinyin:"búyòng",     meaning:"không cần",     type:"phó từ" },
+  { hanzi:"好久",   pinyin:"hǎojiǔ",     meaning:"lâu rồi",       type:"danh từ" },
+  { hanzi:"用",     pinyin:"yòng",       meaning:"dùng",          type:"động từ" },
+  { hanzi:"马上",   pinyin:"mǎshàng",    meaning:"ngay lập tức",  type:"phó từ" },
+  { hanzi:"又",     pinyin:"yòu",        meaning:"lại (đã)",      type:"phó từ" },
+  { hanzi:"双",     pinyin:"shuāng",     meaning:"đôi",           type:"lượng từ" },
+  { hanzi:"张",     pinyin:"zhāng",      meaning:"(LT cho bàn, giấy)", type:"lượng từ" },
+  { hanzi:"员",     pinyin:"yuán",       meaning:"nhân viên",     type:"danh từ" },
+  { hanzi:"客气",   pinyin:"kèqi",       meaning:"khách sáo, lịch sự", type:"tính từ" },
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function pickN(arr, n){ return shuffle(arr).slice(0, Math.min(n, arr.length)); }
+function normalize(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+/* =========================================================
+   TAB NAVIGATION
+   ========================================================= */
+const tabButtons = document.querySelectorAll('nav.tabs button');
+const views = document.querySelectorAll('section.view');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    views.forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+/* =========================================================
+   0. VOCAB TABLE
+   ========================================================= */
+const vocabTbody = document.getElementById('vocab-tbody');
+vocabData.forEach((v, idx)=>{
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${idx+1}</td><td class="hz-cell">${v.hanzi}</td><td class="py-cell">${v.pinyin}</td><td>${v.meaning}</td><td>${v.type}</td>`;
+  vocabTbody.appendChild(tr);
+});
+
+/* =========================================================
+   BÀI 1: ĐIỀN CHỮ HÁN VÀO CHỖ TRỐNG (câu cụ thể)
+   ========================================================= */
+const b1Data = [
+  { before:"服务员，请给我一份", after:"。", answer:"菜单", pinyinFull:"Fúwùyuán, qǐng gěi wǒ yī fèn càidān.", meaning:"Phục vụ ơi, cho tôi xin thực đơn." },
+  { before:"我很", after:"，想喝点儿水。", answer:"渴", pinyinFull:"Wǒ hěn kě, xiǎng hē diǎnr shuǐ.", meaning:"Tôi rất khát, muốn uống chút nước." },
+  { before:"我有点儿", after:"，想吃点儿东西。", answer:"饿", pinyinFull:"Wǒ yǒudiǎnr è, xiǎng chī diǎnr dōngxi.", meaning:"Tôi hơi đói, muốn ăn chút gì đó." },
+  { before:"这家店的服务员很", after:"。", answer:"热情", pinyinFull:"Zhè jiā diàn de fúwùyuán hěn rèqíng.", meaning:"Nhân viên phục vụ quán này rất nhiệt tình." },
+  { before:"我今天不想出去，点一份", after:"吧。", answer:"外卖", pinyinFull:"Wǒ jīntiān bù xiǎng chūqù, diǎn yī fèn wàimài ba.", meaning:"Hôm nay tôi không muốn ra ngoài, gọi đồ ăn giao thôi." },
+  { before:"吃饭的时候，我喜欢用", after:"，不喜欢用叉子。", answer:"筷子", pinyinFull:"Chīfàn de shíhou, wǒ xǐhuan yòng kuàizi, bù xǐhuan yòng chāzi.", meaning:"Khi ăn cơm tôi thích dùng đũa, không thích dùng dĩa." },
+  { before:"泡面很", after:"，五分钟就好了。", answer:"方便", pinyinFull:"Pàomiàn hěn fāngbiàn, wǔ fēnzhōng jiù hǎo le.", meaning:"Mì gói rất tiện lợi, 5 phút là xong." },
+  { before:"服务员说菜", after:"就到。", answer:"马上", pinyinFull:"Fúwùyuán shuō cài mǎshàng jiù dào.", meaning:"Nhân viên nói món ăn sẽ đến ngay lập tức." },
+  { before:"我等了", after:"了，菜怎么还没来？", answer:"好久", pinyinFull:"Wǒ děngle hǎojiǔ le, cài zěnme hái méi lái?", meaning:"Tôi đợi lâu rồi, sao món ăn vẫn chưa tới?" },
+  { before:"我", after:"点了一份炒饭。", answer:"又", pinyinFull:"Wǒ yòu diǎnle yī fèn chǎofàn.", meaning:"Tôi lại gọi thêm một phần cơm rang." },
+  { before:"A：谢谢你！ B：不用", after:"。", answer:"客气", pinyinFull:"Bùyòng kèqi.", meaning:"Đừng khách sáo. / Không có gì." },
+  { before:"请给我一", after:"筷子。", answer:"双", pinyinFull:"Qǐng gěi wǒ yī shuāng kuàizi.", meaning:"Cho tôi xin một đôi đũa." },
+];
+const b1List = document.getElementById('b1-list');
+b1Data.forEach((q, idx)=>{
+  const div = document.createElement('div');
+  div.className = 'ex-item';
+  div.dataset.idx = idx;
+  div.innerHTML = `
+    <div class="q-line">
+      <span class="num">${idx+1}.</span>
+      <span class="sentence">${q.before}<input type="text" class="blank-input" data-idx="${idx}" maxlength="5">${q.after}</span>
+    </div>
+    <div class="hint">💡 ${q.meaning}</div>
+    <div class="feedback-line" data-idx="${idx}"></div>
+  `;
+  b1List.appendChild(div);
+});
+
+/* =========================================================
+   BÀI 2: NỐI TỪ VỚI NGHĨA
+   ========================================================= */
+const matchLeft = document.getElementById('match-left');
+const matchRight = document.getElementById('match-right');
+let matchSet = [];
+let matchedPairs = new Set();
+let selectedLeft = null;
+
+function loadMatch(){
+  matchedPairs = new Set();
+  selectedLeft = null;
+  matchSet = pickN(vocabData, 10);
+  matchLeft.innerHTML = '';
+  matchSet.forEach((v, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.idx = idx;
+    el.innerHTML = `<div class="hz">${v.hanzi}</div><div class="py3">${v.pinyin}</div>`;
+    el.addEventListener('click', ()=> onLeftClick(el, idx));
+    matchLeft.appendChild(el);
+  });
+  const shuffledRight = shuffle(matchSet.map((v, idx)=>({...v, idx})));
+  matchRight.innerHTML = '';
+  shuffledRight.forEach(v=>{
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.idx = v.idx;
+    el.textContent = v.meaning;
+    el.addEventListener('click', ()=> onRightClick(el, v.idx));
+    matchRight.appendChild(el);
+  });
+}
+function onLeftClick(el, idx){
+  if(el.classList.contains('matched')) return;
+  matchLeft.querySelectorAll('.match-item').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLeft = idx;
+}
+function onRightClick(el, idx){
+  if(el.classList.contains('matched')) return;
+  if(selectedLeft === null) return;
+  const leftEl = matchLeft.querySelector(`.match-item[data-idx="${selectedLeft}"]`);
+  if(selectedLeft === idx){
+    leftEl.classList.remove('selected');
+    leftEl.classList.add('matched');
+    el.classList.add('matched');
+    matchedPairs.add(idx);
+    selectedLeft = null;
+  } else {
+    el.classList.add('wrongflash');
+    setTimeout(()=> el.classList.remove('wrongflash'), 500);
+  }
+}
+document.getElementById('match-reset').addEventListener('click', loadMatch);
+loadMatch();
+
+/* =========================================================
+   BÀI 3: TRẮC NGHIỆM (cố định, chấm cùng lúc)
+   ========================================================= */
+const b3List = document.getElementById('b3-list');
+let b3Data = [];
+function generateB3(){
+  b3Data = [];
+  const modes = ['hanzi2meaning','meaning2hanzi','pinyin2hanzi'];
+  const targets = pickN(vocabData, 10);
+  targets.forEach(target=>{
+    const mode = modes[Math.floor(Math.random()*modes.length)];
+    let label, main, sub, correctText, field;
+    if(mode === 'hanzi2meaning'){
+      label = 'Chọn nghĩa đúng của:'; main = target.hanzi; sub = target.pinyin;
+      correctText = target.meaning; field = 'meaning';
+    } else if(mode === 'meaning2hanzi'){
+      label = 'Chọn Hán tự đúng với nghĩa:'; main = target.meaning; sub = '';
+      correctText = target.hanzi; field = 'hanzi';
+    } else {
+      label = 'Chọn Hán tự đúng với phiên âm:'; main = target.pinyin; sub = '';
+      correctText = target.hanzi; field = 'hanzi';
+    }
+    const distractors = shuffle(vocabData.filter(x=>x!==target)).slice(0,3).map(v=>v[field]);
+    const options = shuffle([correctText, ...distractors]);
+    b3Data.push({ label, main, sub, correct: correctText, options });
+  });
+}
+function renderB3(){
+  b3List.innerHTML = '';
+  b3Data.forEach((q, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'mc-block';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="mc-q">
+        <span class="num">${idx+1}.</span> ${q.label}
+        <div class="cn-main">${q.main}</div>
+        ${q.sub ? `<div class="py-sub">${q.sub}</div>` : ''}
+      </div>
+      <div class="mc-options">
+        ${q.options.map((opt)=>`
+          <label class="mc-opt" data-value="${opt.replace(/"/g,'&quot;')}">
+            <input type="radio" name="b3-${idx}" value="${opt.replace(/"/g,'&quot;')}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    b3List.appendChild(div);
+  });
+}
+generateB3(); renderB3();
+
+/* =========================================================
+   BÀI 4: VIẾT PINYIN
+   ========================================================= */
+const b4List = document.getElementById('b4-list');
+let b4Data = [];
+function loadB4(){
+  b4Data = pickN(vocabData, 10);
+  b4List.innerHTML = '';
+  b4Data.forEach((v, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'ex-item';
+    row.dataset.idx = idx;
+    row.innerHTML = `
+      <div class="py-row">
+        <span class="num">${idx+1}.</span>
+        <span class="hz2">${v.hanzi}</span>
+        <span class="mn2">${v.meaning}</span>
+        <input type="text" class="py-input" data-idx="${idx}" placeholder="gõ pinyin…">
+      </div>
+      <div class="feedback-line" data-idx="${idx}"></div>
+    `;
+    b4List.appendChild(row);
+  });
+}
+loadB4();
+
+/* =========================================================
+   BÀI 5: CHỌN CÂU PHÙ HỢP VỚI TÌNH HUỐNG CỤ THỂ
+   ========================================================= */
+const b5Data = [
+  {
+    situation:"Bạn muốn nhờ phục vụ mang thực đơn tới.",
+    correct:"请给我菜单。",
+    options:["请给我菜单。","菜单请给我。","给我请菜单。","我给请菜单。"]
+  },
+  {
+    situation:"Bạn muốn nói bạn rất đói.",
+    correct:"我很饿。",
+    options:["我很饿。","很我饿。","饿我很。","我饿很。"]
+  },
+  {
+    situation:"Bạn muốn khen nhân viên quán này rất nhiệt tình.",
+    correct:"这家店的服务员很热情。",
+    options:["这家店的服务员很热情。","服务员这家店很热情。","这家热情店的服务员很。","很热情这家店的服务员。"]
+  },
+  {
+    situation:"Bạn muốn gọi một phần đồ ăn giao đến nhà.",
+    correct:"我要点一份外卖。",
+    options:["我要点一份外卖。","我要一份点外卖。","点我要一份外卖。","外卖我要点一份。"]
+  },
+  {
+    situation:"Bạn muốn nói mì gói rất tiện lợi.",
+    correct:"方便面很方便。",
+    options:["方便面很方便。","很方便方便面。","方便方便面很。","面方便很方便。"]
+  },
+  {
+    situation:"Bạn muốn xin thêm một đôi đũa.",
+    correct:"请再给我一双筷子。",
+    options:["请再给我一双筷子。","请给我再一双筷子。","再请给我一双筷子。","请给我一双再筷子。"]
+  },
+  {
+    situation:"Có người cảm ơn bạn, bạn muốn đáp lại rằng đừng khách sáo.",
+    correct:"不用客气。",
+    options:["不用客气。","客气不用。","不客气用。","用不客气。"]
+  }
+];
+const b5List = document.getElementById('b5-list');
+function renderB5(){
+  b5List.innerHTML = '';
+  b5Data.forEach((q, idx)=>{
+    const shuffledOpts = shuffle(q.options);
+    const div = document.createElement('div');
+    div.className = 'mc-block';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="mc-q"><span class="num">${idx+1}.</span> Tình huống: ${q.situation}</div>
+      <div class="mc-options" style="grid-template-columns:1fr;">
+        ${shuffledOpts.map(opt=>`
+          <label class="mc-opt" data-value="${opt.replace(/"/g,'&quot;')}">
+            <input type="radio" name="b5-${idx}" value="${opt.replace(/"/g,'&quot;')}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    b5List.appendChild(div);
+  });
+}
+renderB5();
+
+/* =========================================================
+   NỘP BÀI & CHẤM ĐIỂM TỔNG
+   ========================================================= */
+function gradeB1(){
+  let correct = 0;
+  b1Data.forEach((q, idx)=>{
+    const item = b1List.querySelector(`.ex-item[data-idx="${idx}"]`);
+    const input = item.querySelector(`input[data-idx="${idx}"]`);
+    const fb = item.querySelector(`.feedback-line[data-idx="${idx}"]`);
+    const ok = input.value.trim() === q.answer;
+    item.classList.remove('correct','wrong');
+    item.classList.add(ok ? 'correct' : 'wrong');
+    fb.className = 'feedback-line ' + (ok ? 'ok' : 'bad');
+    fb.textContent = ok ? '✅ Chính xác! — ' + q.pinyinFull : `❌ Đáp án đúng: ${q.answer} — ${q.pinyinFull}`;
+    if(ok) correct++;
+  });
+  return { correct, total: b1Data.length };
+}
+function gradeB2(){
+  return { correct: matchedPairs.size, total: matchSet.length };
+}
+function gradeMC(container, data, prefix){
+  let correct = 0;
+  data.forEach((q, idx)=>{
+    const block = container.querySelector(`.mc-block[data-idx="${idx}"]`);
+    const checked = block.querySelector(`input[name="${prefix}-${idx}"]:checked`);
+    const chosenVal = checked ? checked.value : null;
+    block.querySelectorAll('.mc-opt').forEach(opt=>{
+      opt.classList.remove('correct','wrong');
+      const val = opt.dataset.value;
+      if(val === q.correct) opt.classList.add('correct');
+      else if(val === chosenVal) opt.classList.add('wrong');
+    });
+    if(chosenVal === q.correct) correct++;
+  });
+  return { correct, total: data.length };
+}
+function gradeB4(){
+  let correct = 0;
+  b4Data.forEach((v, idx)=>{
+    const item = b4List.querySelector(`.ex-item[data-idx="${idx}"]`);
+    const input = item.querySelector(`input.py-input[data-idx="${idx}"]`);
+    const fb = item.querySelector(`.feedback-line[data-idx="${idx}"]`);
+    const ok = normalize(input.value) === normalize(v.pinyin);
+    item.classList.remove('correct','wrong');
+    item.classList.add(ok ? 'correct' : 'wrong');
+    fb.className = 'feedback-line ' + (ok ? 'ok' : 'bad');
+    fb.textContent = ok ? '✅ Chính xác!' : `❌ Đáp án đúng: ${v.pinyin}`;
+    if(ok) correct++;
+  });
+  return { correct, total: b4Data.length };
+}
+
+const resultPanel = document.getElementById('result-panel');
+const resultBody = document.getElementById('result-body');
+const grandScoreDisplay = document.getElementById('grand-score-display');
+
+document.getElementById('btn-submit').addEventListener('click', ()=>{
+  const r1 = gradeB1();
+  const r2 = gradeB2();
+  const r3 = gradeMC(b3List, b3Data, 'b3');
+  const r4 = gradeB4();
+  const r5 = gradeMC(b5List, b5Data, 'b5');
+
+  const totalCorrect = r1.correct + r2.correct + r3.correct + r4.correct + r5.correct;
+  const totalAll = r1.total + r2.total + r3.total + r4.total + r5.total;
+  const percent = Math.round((totalCorrect/totalAll)*100);
+
+  let message;
+  if(percent >= 90) message = '🌟 Xuất sắc! Bạn nắm rất vững từ vựng.';
+  else if(percent >= 70) message = '👍 Khá tốt! Ôn lại vài từ còn sai nhé.';
+  else if(percent >= 50) message = '📚 Trung bình, cần ôn tập thêm.';
+  else message = '💪 Cố gắng hơn nhé, hãy xem lại bảng từ vựng.';
+
+  resultBody.innerHTML = `
+    <div class="result-row"><span>Bài 1 — Điền chữ Hán</span><span>${r1.correct} / ${r1.total}</span></div>
+    <div class="result-row"><span>Bài 2 — Nối từ với nghĩa</span><span>${r2.correct} / ${r2.total}</span></div>
+    <div class="result-row"><span>Bài 3 — Trắc nghiệm</span><span>${r3.correct} / ${r3.total}</span></div>
+    <div class="result-row"><span>Bài 4 — Viết pinyin</span><span>${r4.correct} / ${r4.total}</span></div>
+    <div class="result-row"><span>Bài 5 — Chọn câu phù hợp</span><span>${r5.correct} / ${r5.total}</span></div>
+    <div class="result-row total"><span>TỔNG ĐIỂM</span><span>${totalCorrect} / ${totalAll} (${percent}%)</span></div>
+    <div style="margin-top:10px;font-weight:600;color:var(--red-dark);">${message}</div>
+  `;
+  resultPanel.classList.add('show');
+  grandScoreDisplay.textContent = `Điểm: ${totalCorrect}/${totalAll} (${percent}%)`;
+
+  document.querySelector('nav.tabs button[data-view="vocab"]').click();
+  resultPanel.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+document.getElementById('btn-reset-all').addEventListener('click', ()=>{
+  resultPanel.classList.remove('show');
+  grandScoreDisplay.textContent = '';
+  b1List.querySelectorAll('input').forEach(i=>{ i.value=''; });
+  b1List.querySelectorAll('.ex-item').forEach(i=>i.classList.remove('correct','wrong'));
+  b1List.querySelectorAll('.feedback-line').forEach(f=>{ f.textContent=''; f.className='feedback-line'; });
+  loadMatch();
+  generateB3(); renderB3();
+  loadB4();
+  renderB5();
+});
+</script>
+</body>
+</html>
