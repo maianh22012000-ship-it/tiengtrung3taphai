@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎈 Bé Vui Học Ngày Tháng Tiếng Trung</title>
+<style>
+  :root{
+    --sky:#3fb7e6; --sun:#ffc93c; --candy:#ff6f91; --grass:#5fd068; --grape:#a06cd5;
+    --cream:#fffaf0; --ink:#3a2e4d; --card:#ffffff;
+    --shadow:0 10px 26px rgba(160,108,213,0.18); --radius:22px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:"Segoe UI","Comic Sans MS","Trebuchet MS",system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 8% 12%, #fff1c2 0%, transparent 40%),
+      radial-gradient(circle at 92% 18%, #d9f4ff 0%, transparent 42%),
+      radial-gradient(circle at 50% 95%, #ffe1ec 0%, transparent 45%),
+      var(--cream);
+    color:var(--ink); min-height:100vh; padding-bottom:100px; overflow-x:hidden;
+  }
+
+  /* ── BUNTING HEADER (dây cờ sinh nhật) ── */
+  .bunting{ display:flex; justify-content:center; gap:4px; padding-top:10px; flex-wrap:wrap; }
+  .flag{ width:30px; height:38px; clip-path:polygon(0 0,100% 0,50% 100%); animation:sway 2.4s ease-in-out infinite; }
+  .flag:nth-child(odd){ animation-delay:.3s; }
+  .flag:nth-child(1){background:var(--candy);} .flag:nth-child(2){background:var(--sun);}
+  .flag:nth-child(3){background:var(--sky);} .flag:nth-child(4){background:var(--grass);}
+  .flag:nth-child(5){background:var(--grape);} .flag:nth-child(6){background:var(--candy);}
+  .flag:nth-child(7){background:var(--sun);} .flag:nth-child(8){background:var(--sky);}
+  .flag:nth-child(9){background:var(--grass);} .flag:nth-child(10){background:var(--grape);}
+  @keyframes sway{ 0%,100%{transform:rotate(-4deg);} 50%{transform:rotate(4deg);} }
+
+  header{ text-align:center; padding:6px 16px 10px; }
+  h1{ margin:6px 0 2px; font-size:1.9rem; color:var(--candy); text-shadow:2px 2px 0 #fff, 3px 3px 0 rgba(160,108,213,.25); }
+  header p{ margin:0; color:#7a6a95; font-size:1rem; font-weight:600; }
+
+  /* ── STAR / SCORE BAR ── */
+  .stat-bar{
+    position:sticky; top:0; z-index:50; display:flex; justify-content:center; gap:20px;
+    background:#fff; padding:10px 16px; box-shadow:0 4px 14px rgba(0,0,0,.08); flex-wrap:wrap;
+  }
+  .stat-chip{
+    display:flex; align-items:center; gap:6px; background:linear-gradient(135deg,#fff5da,#ffe9b3);
+    border:2px solid var(--sun); border-radius:999px; padding:6px 14px; font-weight:800; font-size:.95rem; color:#8a6a10;
+  }
+  .stat-chip.streak{ background:linear-gradient(135deg,#ffe0ec,#ffc2d6); border-color:var(--candy); color:#9c1f4a; }
+
+  /* ── GAME PORTAL NAV ── */
+  nav.portals{
+    max-width:960px; margin:16px auto 6px; padding:0 14px;
+    display:grid; grid-template-columns:repeat(5,1fr); gap:10px;
+  }
+  nav.portals button{
+    border:none; border-radius:18px; padding:12px 6px; cursor:pointer; font-weight:800; font-size:.8rem;
+    color:#fff; box-shadow:0 6px 0 rgba(0,0,0,.12); transition:.15s; display:flex; flex-direction:column; align-items:center; gap:4px;
+  }
+  nav.portals button .ic{ font-size:1.5rem; }
+  nav.portals button:active{ transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.12); }
+  nav.portals button:nth-child(1){ background:var(--candy); }
+  nav.portals button:nth-child(2){ background:var(--sky); }
+  nav.portals button:nth-child(3){ background:var(--grass); }
+  nav.portals button:nth-child(4){ background:var(--grape); }
+  nav.portals button:nth-child(5){ background:#ff9a3c; }
+  nav.portals button.active{ outline:4px solid #fff; outline-offset:-8px; transform:scale(1.04); }
+
+  main{ max-width:960px; margin:0 auto; padding:10px 14px; }
+  section.view{ display:none; animation:pop .3s ease; }
+  section.view.active{ display:block; }
+  @keyframes pop{ from{opacity:0; transform:scale(.96);} to{opacity:1; transform:none;} }
+
+  .panel{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; margin-bottom:20px; border:3px solid #fff; }
+  .panel h2{ margin-top:0; color:var(--grape); font-size:1.3rem; }
+  .panel .sub{ color:#8a7aa3; font-size:.92rem; margin-top:-8px; margin-bottom:18px; font-weight:600; }
+
+  .btn{
+    border:none; color:#fff; padding:11px 20px; border-radius:14px; font-weight:800; cursor:pointer;
+    font-size:.95rem; box-shadow:0 5px 0 rgba(0,0,0,.15); transition:.12s;
+  }
+  .btn:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.15); }
+  .btn.pink{ background:var(--candy); } .btn.blue{ background:var(--sky); }
+  .btn.green{ background:var(--grass); } .btn.purple{ background:var(--grape); }
+  .btn.orange{ background:#ff9a3c; }
+
+  /* ── GAME 1: BÓNG BAY GHÉP ĐÔI (memory flip) ── */
+  .balloon-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .balloon{
+    aspect-ratio:1/1.15; border-radius:50% 50% 46% 46%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-weight:800; font-size:1rem; text-align:center; padding:10px; position:relative;
+    background:linear-gradient(150deg,#ffd3e0,#ff9fb8); color:#7a1436; box-shadow:0 6px 14px rgba(255,111,145,.35);
+    transition:.2s; user-select:none;
+  }
+  .balloon::after{ content:"▽"; position:absolute; bottom:-10px; font-size:.7rem; color:#ff9fb8; }
+  .balloon:nth-child(4n+2){ background:linear-gradient(150deg,#c9f0ff,#8fdcff); color:#0a4a63; box-shadow:0 6px 14px rgba(63,183,230,.35); }
+  .balloon:nth-child(4n+2)::after{ color:#8fdcff; }
+  .balloon:nth-child(4n+3){ background:linear-gradient(150deg,#fff2b8,#ffd93c); color:#6b4d00; box-shadow:0 6px 14px rgba(255,201,60,.35); }
+  .balloon:nth-child(4n+3)::after{ color:#ffd93c; }
+  .balloon:nth-child(4n){ background:linear-gradient(150deg,#dcffe0,#8ee89a); color:#0e5a1c; box-shadow:0 6px 14px rgba(95,208,104,.35); }
+  .balloon:nth-child(4n)::after{ color:#8ee89a; }
+  .balloon:hover{ transform:translateY(-4px) scale(1.03); }
+  .balloon.selected{ outline:4px solid var(--grape); outline-offset:2px; }
+  .balloon.matched{ opacity:.35; pointer-events:none; transform:scale(.9); }
+  .balloon.shake{ animation:shake .4s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+  .balloon .hz{ font-size:1.5rem; display:block; }
+  .balloon .py{ font-size:.7rem; font-weight:600; opacity:.85; }
+
+  /* ── GAME 2: LỊCH SINH NHẬT (calendar picker) ── */
+  .target-bubble{
+    background:linear-gradient(135deg,#fff,#f3ecff); border:3px dashed var(--grape); border-radius:18px;
+    padding:16px; text-align:center; margin-bottom:18px;
+  }
+  .target-bubble .py-big{ color:var(--grape); font-weight:800; font-size:1.15rem; }
+  .target-bubble .hz-big{ font-size:1.6rem; font-weight:800; color:var(--candy); margin-top:4px; }
+  .target-bubble .vn-big{ color:#7a6a95; font-size:.9rem; margin-top:4px; }
+
+  .cal-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .cal-card{
+    background:#fff; border:3px solid #ffd166; border-radius:16px; overflow:hidden; cursor:pointer;
+    box-shadow:0 5px 14px rgba(0,0,0,.08); transition:.15s; text-align:center;
+  }
+  .cal-card:hover{ transform:translateY(-3px); }
+  .cal-card .cal-top{ background:var(--candy); color:#fff; font-weight:800; font-size:.72rem; padding:5px; }
+  .cal-card .cal-day{ font-size:1.9rem; font-weight:800; padding:12px 0; color:#333; }
+  .cal-card.correct{ border-color:var(--grass); background:#eafff0; }
+  .cal-card.wrong{ border-color:var(--candy); background:#ffe9ee; }
+
+  /* ── GAME 3: NÉM PHI TIÊU (multiple choice) ── */
+  .dart-board{
+    width:120px; height:120px; border-radius:50%; margin:0 auto 14px;
+    background:repeating-radial-gradient(circle, var(--candy) 0 14px, #fff 14px 28px, var(--candy) 28px 42px, #fff 42px 56px);
+    display:flex; align-items:center; justify-content:center; font-size:2rem; box-shadow:0 6px 16px rgba(0,0,0,.15);
+  }
+  .mc-block{ padding:16px; border:3px solid #ffe0ba; border-radius:18px; margin-bottom:16px; background:linear-gradient(160deg,#fff,#fff8ec); }
+  .mc-block .mc-q{ font-weight:800; margin-bottom:10px; text-align:center; }
+  .mc-block .mc-q .cn-main{ font-size:1.5rem; color:var(--candy); }
+  .mc-block .mc-q .py-sub{ color:var(--grape); font-size:.95rem; font-weight:700; }
+  .mc-options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mc-opt{
+    display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; border:3px solid #ffe0ba;
+    border-radius:14px; padding:12px 10px; cursor:pointer; font-size:1rem; font-weight:700; text-align:center;
+  }
+  .mc-opt:hover{ border-color:var(--sun); transform:scale(1.02); }
+  .mc-opt input{ display:none; }
+  .mc-opt.correct{ border-color:var(--grass); background:#eafff0; }
+  .mc-opt.wrong{ border-color:var(--candy); background:#ffe9ee; }
+
+  /* ── GAME 4: GHÉP CÂU THẦN KỲ (sentence builder) ── */
+  .builder-item{ padding:16px; border:3px solid #cdeaff; border-radius:18px; margin-bottom:16px; background:linear-gradient(160deg,#fff,#eef9ff); }
+  .builder-item .meaning-line{ font-weight:800; color:var(--sky); margin-bottom:10px; text-align:center; }
+  .answer-slot{
+    min-height:52px; border:3px dashed #a8d8f0; border-radius:14px; background:#fff; display:flex; align-items:center;
+    gap:6px; padding:8px; flex-wrap:wrap; margin-bottom:10px; justify-content:center;
+  }
+  .word-tile{
+    background:var(--grape); color:#fff; font-weight:800; padding:8px 14px; border-radius:10px; cursor:pointer;
+    font-size:1.05rem; box-shadow:0 3px 0 rgba(0,0,0,.15); user-select:none; transition:.15s;
+  }
+  .word-tile:hover{ transform:translateY(-2px); }
+  .word-tile.used{ opacity:.3; pointer-events:none; }
+  .tile-bank{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+  .answer-slot .word-tile{ background:var(--sky); }
+  .builder-item .feedback-line{ text-align:center; font-weight:800; margin-top:6px; min-height:20px; }
+  .builder-item.correct .answer-slot{ border-color:var(--grass); }
+  .builder-item.wrong .answer-slot{ border-color:var(--candy); }
+  .feedback-line.ok{ color:#1a8a3c; } .feedback-line.bad{ color:#c92454; }
+
+  /* ── FINAL RESULT ── */
+  .result-panel{
+    background:linear-gradient(160deg,#fff7e0,#ffe4ef); border:4px solid var(--sun); border-radius:24px;
+    padding:26px; margin-bottom:20px; display:none; text-align:center;
+  }
+  .result-panel.show{ display:block; animation:pop .4s ease; }
+  .result-panel h3{ margin-top:0; color:var(--candy); font-size:1.4rem; }
+  .stars-row{ font-size:2.4rem; letter-spacing:6px; margin:10px 0; }
+  .result-row{ display:flex; justify-content:space-between; padding:6px 14px; border-bottom:1px dashed #f0c8d8; font-size:.95rem; max-width:420px; margin:0 auto; text-align:left; }
+  .result-row.total{ font-weight:800; border-bottom:none; font-size:1.1rem; color:var(--grape); padding-top:10px; }
+
+  .submit-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:20; background:#fff; border-top:3px solid var(--sun);
+    box-shadow:0 -6px 20px rgba(0,0,0,.1); padding:12px 16px; display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+  }
+
+  footer{ text-align:center; color:#a68bb5; font-size:.85rem; padding:20px; font-weight:600; }
+
+  /* confetti */
+  .confetti-piece{ position:fixed; top:-10px; width:10px; height:14px; z-index:999; pointer-events:none; border-radius:2px; }
+
+  @media(max-width:640px){
+    nav.portals{ grid-template-columns:repeat(3,1fr); }
+    .balloon-grid{ grid-template-columns:repeat(3,1fr); }
+    .cal-grid{ grid-template-columns:repeat(2,1fr); }
+    .mc-options{ grid-template-columns:1fr; }
+    h1{ font-size:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bunting">
+  <div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div>
+  <div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div><div class="flag"></div>
+</div>
+
+<header>
+  <h1>🎉 Bé Vui Học Ngày Tháng</h1>
+  <p>今天 · 明天 · 昨天 · 月 · 号 — Chơi mà học, học mà chơi!</p>
+</header>
+
+<div class="stat-bar">
+  <div class="stat-chip">⭐ Sao: <span id="star-count">0</span></div>
+  <div class="stat-chip streak">🔥 Chuỗi đúng: <span id="streak-count">0</span></div>
+</div>
+
+<nav class="portals">
+  <button class="active" data-view="g1"><span class="ic">🎈</span>Ghép bóng bay</button>
+  <button data-view="g2"><span class="ic">🎂</span>Lịch sinh nhật</button>
+  <button data-view="g3"><span class="ic">🎯</span>Ném phi tiêu</button>
+  <button data-view="g4"><span class="ic">🧩</span>Ghép câu</button>
+  <button data-view="g5"><span class="ic">🏁</span>Tổng kết</button>
+</nav>
+
+<main>
+
+  <div class="result-panel" id="result-panel">
+    <h3>🎊 Kết Quả Của Bé!</h3>
+    <div class="stars-row" id="stars-row">⭐⭐⭐⭐⭐</div>
+    <div id="result-body"></div>
+  </div>
+
+  <!-- ============ GAME 1: BÓNG BAY GHÉP ĐÔI ============ -->
+  <section class="view active" id="view-g1">
+    <div class="panel">
+      <h2>🎈 Ghép Bóng Bay — Tìm Cặp Giống Nhau</h2>
+      <div class="sub">Bấm 1 bóng chữ Hán rồi bấm 1 bóng nghĩa tiếng Việt tương ứng để ghép đôi!</div>
+      <div style="margin-bottom:12px;"><button class="btn purple" id="g1-reset">🔄 Chơi lại</button></div>
+      <div class="balloon-grid" id="g1-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME 2: LỊCH SINH NHẬT ============ -->
+  <section class="view" id="view-g2">
+    <div class="panel">
+      <h2>🎂 Lịch Sinh Nhật — Chọn Đúng Ngày</h2>
+      <div class="sub">Đọc câu rồi bấm vào tấm lịch có đúng ngày tháng nhé!</div>
+      <div class="target-bubble" id="g2-target"></div>
+      <div class="cal-grid" id="g2-grid"></div>
+      <div style="text-align:center;margin-top:14px;"><button class="btn blue" id="g2-next">➡️ Câu tiếp theo</button></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME 3: NÉM PHI TIÊU ============ -->
+  <section class="view" id="view-g3">
+    <div class="panel">
+      <h2>🎯 Ném Phi Tiêu — Trả Lời Nhanh</h2>
+      <div class="sub">Chọn đáp án đúng để "trúng đích"! Trả lời hết rồi bấm Nộp bài ở khu Tổng kết nhé.</div>
+      <div class="dart-board">🎯</div>
+      <div id="g3-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME 4: GHÉP CÂU THẦN KỲ ============ -->
+  <section class="view" id="view-g4">
+    <div class="panel">
+      <h2>🧩 Ghép Câu Thần Kỳ</h2>
+      <div class="sub">Bấm các mảnh ghép theo đúng thứ tự để tạo thành câu tiếng Trung nhé!</div>
+      <div id="g4-list"></div>
+      <div style="text-align:center;"><button class="btn green" id="g4-reset">🔄 Làm lại các câu</button></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME 5: TỔNG KẾT ============ -->
+  <section class="view" id="view-g5">
+    <div class="panel">
+      <h2>🏁 Tổng Kết — Xem Bé Được Bao Nhiêu Sao!</h2>
+      <div class="sub">Bấm nút bên dưới để xem điểm của cả 4 trò chơi. Bé nhớ chơi hết cả 4 trò trước nhé!</div>
+      <div style="text-align:center;">
+        <button class="btn orange" id="btn-submit">📩 Nộp Bài &amp; Xem Sao</button>
+        <button class="btn purple" id="btn-reset-all">♻️ Chơi lại từ đầu</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>做中文游戏 · Bé chơi vui — bé học giỏi! 加油小朋友！🌈</footer>
+
+<script>
+/* =========================================================
+   DỮ LIỆU TỪ VỰNG & CÂU MẪU — CHỦ ĐỀ NGÀY THÁNG
+   ========================================================= */
+const vocab = [
+  { hanzi:"今天", pinyin:"jīntiān",  meaning:"hôm nay" },
+  { hanzi:"号",   pinyin:"hào / rì", meaning:"ngày" },
+  { hanzi:"明天", pinyin:"míngtiān", meaning:"ngày mai" },
+  { hanzi:"月",   pinyin:"yuè",      meaning:"tháng" },
+  { hanzi:"昨天", pinyin:"zuótiān",  meaning:"hôm qua" },
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+/* =========================================================
+   ĐIỂM SAO & CHUỖI ĐÚNG (dùng chung cho tất cả trò chơi)
+   ========================================================= */
+let totalStars = 0;
+let streak = 0;
+const starCountEl = document.getElementById('star-count');
+const streakCountEl = document.getElementById('streak-count');
+function addStar(n){
+  totalStars += n; streak += 1;
+  starCountEl.textContent = totalStars;
+  streakCountEl.textContent = streak;
+  burstConfetti();
+}
+function breakStreak(){ streak = 0; streakCountEl.textContent = streak; }
+
+function burstConfetti(){
+  const colors = ['#ff6f91','#ffc93c','#3fb7e6','#5fd068','#a06cd5'];
+  for(let i=0;i<16;i++){
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = (Math.random()*100)+'vw';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(p);
+    const duration = 900 + Math.random()*500;
+    p.animate([
+      { transform:`translateY(0) rotate(0deg)`, opacity:1 },
+      { transform:`translateY(90vh) rotate(${360+Math.random()*360}deg)`, opacity:0 }
+    ], { duration, easing:'ease-in' });
+    setTimeout(()=>p.remove(), duration+50);
+  }
+}
+
+/* =========================================================
+   TAB NAVIGATION (game portals)
+   ========================================================= */
+const portalButtons = document.querySelectorAll('nav.portals button');
+const views = document.querySelectorAll('section.view');
+portalButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    portalButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    views.forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+/* =========================================================
+   GAME 1: GHÉP BÓNG BAY (memory match hanzi <-> nghĩa)
+   ========================================================= */
+const g1Grid = document.getElementById('g1-grid');
+let g1Selected = null;
+let g1Matched = new Set();
+let g1Cards = [];
+
+function loadG1(){
+  g1Matched = new Set(); g1Selected = null;
+  const left = vocab.map((v,idx)=>({ type:'hz', idx, text:v.hanzi, sub:v.pinyin }));
+  const right = vocab.map((v,idx)=>({ type:'mn', idx, text:v.meaning }));
+  g1Cards = shuffle([...left, ...right]);
+  g1Grid.innerHTML = '';
+  g1Cards.forEach((c, pos)=>{
+    const el = document.createElement('div');
+    el.className = 'balloon';
+    el.dataset.pos = pos;
+    el.dataset.idx = c.idx;
+    el.dataset.type = c.type;
+    el.innerHTML = c.type === 'hz'
+      ? `<span><span class="hz">${c.text}</span><span class="py">${c.sub}</span></span>`
+      : `<span>${c.text}</span>`;
+    el.addEventListener('click', ()=> onBalloonClick(el, c));
+    g1Grid.appendChild(el);
+  });
+}
+function onBalloonClick(el, c){
+  if(el.classList.contains('matched')) return;
+  if(g1Selected === null){
+    g1Grid.querySelectorAll('.balloon').forEach(b=>b.classList.remove('selected'));
+    el.classList.add('selected');
+    g1Selected = { el, c };
+    return;
+  }
+  if(g1Selected.el === el) return;
+  const a = g1Selected;
+  const isPair = a.c.idx === c.idx && a.c.type !== c.type;
+  if(isPair){
+    a.el.classList.remove('selected');
+    a.el.classList.add('matched'); el.classList.add('matched');
+    g1Matched.add(c.idx);
+    addStar(1);
+    g1Selected = null;
+    if(g1Matched.size === vocab.length){
+      setTimeout(()=> alert('🎉 Bé giỏi quá! Ghép đúng hết tất cả bóng bay rồi!'), 200);
+    }
+  } else {
+    breakStreak();
+    el.classList.add('shake'); a.el.classList.add('shake');
+    setTimeout(()=>{ el.classList.remove('shake','selected'); a.el.classList.remove('shake','selected'); }, 450);
+    g1Selected = null;
+  }
+}
+document.getElementById('g1-reset').addEventListener('click', loadG1);
+loadG1();
+
+/* =========================================================
+   GAME 2: LỊCH SINH NHẬT (chọn đúng ngày trên lịch)
+   ========================================================= */
+const g2Rounds = [
+  { py:"Jīntiān jiǔ yuè shíbā hào.", hz:"今天9月18号。", vn:"Hôm nay là ngày 18 tháng 9.", month:9, day:18 },
+  { py:"Míngtiān jiǔ yuè shíjiǔ hào.", hz:"明天9月19号。", vn:"Ngày mai là ngày 19 tháng 9.", month:9, day:19 },
+  { py:"Sān yuè bā hào.", hz:"三月八号。", vn:"Ngày 8 tháng 3.", month:3, day:8 },
+  { py:"Shí yuè sì hào.", hz:"十月四号。", vn:"Ngày 4 tháng 10.", month:10, day:4 },
+  { py:"Zuótiān shì shí yuè wǔ hào.", hz:"昨天是10月5号。", vn:"Hôm qua là ngày 5 tháng 10.", month:10, day:5 },
+];
+const g2Distractors = [
+  {month:3, day:18}, {month:10, day:8}, {month:9, day:8}, {month:10, day:19},
+  {month:9, day:5}, {month:3, day:4}, {month:9, day:4}, {month:10, day:18},
+];
+let g2Idx = 0;
+const g2Target = document.getElementById('g2-target');
+const g2Grid = document.getElementById('g2-grid');
+let g2Score = { correct:0, total:0 };
+
+function renderG2(){
+  const r = g2Rounds[g2Idx];
+  g2Target.innerHTML = `
+    <div class="py-big">${r.py}</div>
+    <div class="hz-big">${r.hz}</div>
+    <div class="vn-big">💬 ${r.vn}</div>
+  `;
+  const others = shuffle(g2Distractors.filter(d=> !(d.month===r.month && d.day===r.day))).slice(0,3);
+  const options = shuffle([{month:r.month, day:r.day}, ...others]);
+  g2Grid.innerHTML = '';
+  options.forEach(opt=>{
+    const el = document.createElement('div');
+    el.className = 'cal-card';
+    el.innerHTML = `<div class="cal-top">THÁNG ${opt.month}</div><div class="cal-day">${opt.day}</div>`;
+    el.addEventListener('click', ()=> onG2Pick(el, opt, r));
+    g2Grid.appendChild(el);
+  });
+}
+function onG2Pick(el, opt, r){
+  if(g2Grid.dataset.locked === '1') return;
+  g2Grid.dataset.locked = '1';
+  const isCorrect = opt.month === r.month && opt.day === r.day;
+  g2Grid.querySelectorAll('.cal-card').forEach(c=>{
+    const t = c.querySelector('.cal-top').textContent;
+  });
+  if(isCorrect){ el.classList.add('correct'); addStar(1); }
+  else{ el.classList.add('wrong'); breakStreak();
+    g2Grid.querySelectorAll('.cal-card').forEach(c=>{
+      if(c.querySelector('.cal-day').textContent == r.day && c.querySelector('.cal-top').textContent.includes(r.month)) c.classList.add('correct');
+    });
+  }
+  g2Score.total += 1; if(isCorrect) g2Score.correct += 1;
+}
+document.getElementById('g2-next').addEventListener('click', ()=>{
+  g2Idx = (g2Idx + 1) % g2Rounds.length;
+  g2Grid.dataset.locked = '0';
+  renderG2();
+});
+renderG2();
+
+/* =========================================================
+   GAME 3: NÉM PHI TIÊU (trắc nghiệm)
+   ========================================================= */
+const g3Data = [
+  { label:"Chữ này nghĩa là gì?", main:"今天", sub:"jīntiān", correct:"hôm nay", options:["hôm nay","ngày mai","hôm qua","tháng"] },
+  { label:"Chữ này nghĩa là gì?", main:"明天", sub:"míngtiān", correct:"ngày mai", options:["hôm nay","ngày mai","hôm qua","ngày"] },
+  { label:"Chữ này nghĩa là gì?", main:"昨天", sub:"zuótiān", correct:"hôm qua", options:["hôm nay","ngày mai","hôm qua","tháng"] },
+  { label:"“Tháng” tiếng Trung là chữ nào?", main:"月 / 号 / 天 / 日", sub:"", correct:"月", options:["月","号","天","日"] },
+  { label:"“Ngày” tiếng Trung là chữ nào?", main:"月 / 号 / 天 / 明", sub:"", correct:"号", options:["月","号","天","明"] },
+  { label:"Câu này nghĩa là gì?", main:"今天几号？", sub:"Jīntiān jǐ hào?", correct:"Hôm nay là ngày mấy?", options:["Hôm nay là ngày mấy?","Ngày mai là ngày mấy?","Hôm qua là ngày mấy?","Bây giờ mấy giờ?"] },
+  { label:"Câu này nghĩa là gì?", main:"明天几月几号？", sub:"Míngtiān jǐ yuè jǐ hào?", correct:"Ngày mai là ngày mấy tháng mấy?", options:["Hôm nay là ngày mấy?","Ngày mai là ngày mấy tháng mấy?","Hôm qua là ngày mấy?","Hôm nay tháng mấy?"] },
+  { label:"Câu nào đúng nghĩa: “Hôm nay là ngày 18 tháng 9”?", main:"", sub:"", correct:"今天9月18号。", options:["今天9月18号。","明天9月18号。","今天8月19号。","昨天9月18号。"] },
+];
+const g3List = document.getElementById('g3-list');
+function renderG3(){
+  g3List.innerHTML = '';
+  g3Data.forEach((q, idx)=>{
+    const shuffledOpts = shuffle(q.options);
+    const div = document.createElement('div');
+    div.className = 'mc-block';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="mc-q">
+        ${q.label}
+        ${q.main ? `<div class="cn-main">${q.main}</div>` : ''}
+        ${q.sub ? `<div class="py-sub">${q.sub}</div>` : ''}
+      </div>
+      <div class="mc-options">
+        ${shuffledOpts.map(opt=>`
+          <label class="mc-opt" data-value="${opt.replace(/"/g,'&quot;')}">
+            <input type="radio" name="g3-${idx}" value="${opt.replace(/"/g,'&quot;')}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    g3List.appendChild(div);
+  });
+  g3List.querySelectorAll('.mc-opt').forEach(opt=>{
+    opt.addEventListener('click', function(){
+      const block = this.closest('.mc-block');
+      if(block.dataset.locked === '1') return;
+      block.dataset.locked = '1';
+      const idx = Number(block.dataset.idx);
+      const q = g3Data[idx];
+      const chosenVal = this.dataset.value;
+      block.querySelectorAll('.mc-opt').forEach(o=>{
+        if(o.dataset.value === q.correct) o.classList.add('correct');
+        else if(o === this) o.classList.add('wrong');
+      });
+      if(chosenVal === q.correct) addStar(1); else breakStreak();
+    });
+  });
+}
+renderG3();
+
+/* =========================================================
+   GAME 4: GHÉP CÂU THẦN KỲ (sentence builder)
+   ========================================================= */
+const g4Data = [
+  { meaning:"Hôm nay là ngày 18 tháng 9.", tiles:["今天","9","月","18","号"] },
+  { meaning:"Ngày mai là ngày 19 tháng 9.", tiles:["明天","9","月","19","号"] },
+  { meaning:"Hôm qua là ngày 5 tháng 10.", tiles:["昨天","是","10","月","5","号"] },
+  { meaning:"Ngày mai là ngày mấy tháng mấy?", tiles:["明天","几","月","几","号"] },
+  { meaning:"Hôm nay là ngày mấy?", tiles:["今天","几","号"] },
+];
+const g4List = document.getElementById('g4-list');
+let g4State = [];
+
+function loadG4(){
+  g4List.innerHTML = '';
+  g4State = g4Data.map(q=>({ answer:[], bankOrder: shuffle(q.tiles.map((t,i)=>i)) }));
+  g4Data.forEach((q, qIdx)=>{
+    const div = document.createElement('div');
+    div.className = 'builder-item';
+    div.dataset.idx = qIdx;
+    div.innerHTML = `
+      <div class="meaning-line">💬 ${q.meaning}</div>
+      <div class="answer-slot" id="g4-slot-${qIdx}"></div>
+      <div class="tile-bank" id="g4-bank-${qIdx}"></div>
+      <div class="feedback-line" id="g4-fb-${qIdx}"></div>
+    `;
+    g4List.appendChild(div);
+    const bank = document.getElementById('g4-bank-'+qIdx);
+    g4State[qIdx].bankOrder.forEach(tileIdx=>{
+      const tile = document.createElement('div');
+      tile.className = 'word-tile';
+      tile.textContent = q.tiles[tileIdx];
+      tile.dataset.tileIdx = tileIdx;
+      tile.addEventListener('click', ()=> pickTile(qIdx, tileIdx, tile));
+      bank.appendChild(tile);
+    });
+  });
+}
+function pickTile(qIdx, tileIdx, tileEl){
+  const div = g4List.querySelector(`.builder-item[data-idx="${qIdx}"]`);
+  if(div.classList.contains('correct') || div.classList.contains('wrong')) return;
+  if(tileEl.classList.contains('used')) return;
+  tileEl.classList.add('used');
+  g4State[qIdx].answer.push(tileIdx);
+  const slot = document.getElementById('g4-slot-'+qIdx);
+  const chip = document.createElement('div');
+  chip.className = 'word-tile';
+  chip.textContent = g4Data[qIdx].tiles[tileIdx];
+  chip.addEventListener('click', ()=>{
+    if(div.classList.contains('correct') || div.classList.contains('wrong')) return;
+    chip.remove();
+    tileEl.classList.remove('used');
+    g4State[qIdx].answer = g4State[qIdx].answer.filter(t=>t!==tileIdx || (chip.dataset.removed=true, false));
+  });
+  slot.appendChild(chip);
+
+  const q = g4Data[qIdx];
+  if(g4State[qIdx].answer.length === q.tiles.length){
+    const builtText = g4State[qIdx].answer.map(i=>q.tiles[i]).join('');
+    const targetText = q.tiles.join('');
+    const fb = document.getElementById('g4-fb-'+qIdx);
+    const isOk = builtText === targetText;
+    div.classList.add(isOk ? 'correct' : 'wrong');
+    fb.className = 'feedback-line ' + (isOk ? 'ok' : 'bad');
+    fb.textContent = isOk ? '✅ Chính xác! Bé giỏi quá!' : `❌ Câu đúng là: ${targetText}`;
+    if(isOk) addStar(1); else breakStreak();
+  }
+}
+document.getElementById('g4-reset').addEventListener('click', loadG4);
+loadG4();
+
+/* =========================================================
+   GAME 5: TỔNG KẾT ĐIỂM
+   ========================================================= */
+const resultPanel = document.getElementById('result-panel');
+const resultBody = document.getElementById('result-body');
+const starsRow = document.getElementById('stars-row');
+
+function scoreG1(){ return { correct: g1Matched.size, total: vocab.length }; }
+function scoreG2(){ return { correct: g2Score.correct, total: g2Score.total || g2Rounds.length }; }
+function scoreG3(){
+  let correct = 0;
+  g3List.querySelectorAll('.mc-block').forEach(block=>{
+    const idx = Number(block.dataset.idx);
+    const q = g3Data[idx];
+    const checkedCorrect = block.querySelector('.mc-opt.correct');
+    const chosenWrong = block.querySelector('.mc-opt.wrong');
+    if(block.dataset.locked === '1' && !chosenWrong) correct++;
+  });
+  return { correct, total: g3Data.length };
+}
+function scoreG4(){
+  let correct = 0;
+  g4List.querySelectorAll('.builder-item').forEach(div=>{ if(div.classList.contains('correct')) correct++; });
+  return { correct, total: g4Data.length };
+}
+
+document.getElementById('btn-submit').addEventListener('click', ()=>{
+  const r1 = scoreG1(); const r2 = scoreG2(); const r3 = scoreG3(); const r4 = scoreG4();
+  const totalCorrect = r1.correct + r2.correct + r3.correct + r4.correct;
+  const totalAll = r1.total + r2.total + r3.total + r4.total;
+  const percent = totalAll ? Math.round((totalCorrect/totalAll)*100) : 0;
+  const starN = percent >= 90 ? 5 : percent >= 75 ? 4 : percent >= 55 ? 3 : percent >= 30 ? 2 : 1;
+  let message;
+  if(starN === 5) message = '🌟🌟 Xuất sắc! Bé là siêu sao tiếng Trung!';
+  else if(starN === 4) message = '👏 Giỏi lắm! Bé nhớ bài rất tốt!';
+  else if(starN === 3) message = '😊 Khá tốt! Cùng ôn lại chút nữa nhé!';
+  else message = '💪 Cố lên nào! Chơi lại các trò chơi để nhớ bài hơn nhé!';
+
+  starsRow.textContent = '⭐'.repeat(starN) + '☆'.repeat(5-starN);
+  resultBody.innerHTML = `
+    <div class="result-row"><span>🎈 Ghép bóng bay</span><span>${r1.correct} / ${r1.total}</span></div>
+    <div class="result-row"><span>🎂 Lịch sinh nhật</span><span>${r2.correct} / ${r2.total}</span></div>
+    <div class="result-row"><span>🎯 Ném phi tiêu</span><span>${r3.correct} / ${r3.total}</span></div>
+    <div class="result-row"><span>🧩 Ghép câu</span><span>${r4.correct} / ${r4.total}</span></div>
+    <div class="result-row total"><span>TỔNG SỐ SAO ⭐</span><span>${totalStars} sao (${totalCorrect}/${totalAll} câu đúng)</span></div>
+    <div style="margin-top:10px;font-weight:800;color:var(--candy);">${message}</div>
+  `;
+  resultPanel.classList.add('show');
+  burstConfetti(); setTimeout(burstConfetti, 300);
+  resultPanel.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+document.getElementById('btn-reset-all').addEventListener('click', ()=>{
+  resultPanel.classList.remove('show');
+  totalStars = 0; streak = 0; starCountEl.textContent = 0; streakCountEl.textContent = 0;
+  g2Idx = 0; g2Score = { correct:0, total:0 };
+  loadG1();
+  g2Grid.dataset.locked = '0'; renderG2();
+  renderG3();
+  loadG4();
+  document.querySelector('nav.portals button[data-view="g1"]').click();
+});
+</script>
+</body>
+</html>
