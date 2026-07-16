@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐼 Số Đếm Tiếng Trung 1-99</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky1:#8ed3f7; --sky2:#eaf8ff;
+    --coral:#ff6f6f; --sun:#ffce3d; --grass:#57d68a; --sea:#4bc3e0;
+    --grape:#b18cf2; --peach:#ffb37b; --pink:#ff8fc7; --teal:#2bd9c9; --indigo:#7c8cff;
+    --ink:#2d2a4a; --ink-soft:#5c5878; --cream:#fffdf6; --white:#ffffff;
+    --shadow:0 12px 28px rgba(45,42,74,0.18); --radius:26px;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; font-family:'Quicksand',system-ui,sans-serif; color:var(--ink);
+    min-height:100vh; overflow-x:hidden;
+    background:linear-gradient(180deg,var(--sky1) 0%, var(--sky2) 55%, #fff9ec 100%);
+    position:relative;
+  }
+  h1,h2,h3,.display{ font-family:'Baloo 2',system-ui,sans-serif; }
+
+  .cloud{ position:fixed; opacity:.85; pointer-events:none; z-index:0; animation:drift 40s linear infinite; }
+  .cloud svg{ display:block; }
+  .cloud.c1{ top:6%; left:-10%; width:160px; animation-duration:55s; }
+  .cloud.c2{ top:16%; left:60%; width:110px; animation-duration:70s; animation-delay:-20s; }
+  .cloud.c3{ top:3%; left:35%; width:90px; animation-duration:48s; animation-delay:-10s; }
+  @keyframes drift{ from{ transform:translateX(0);} to{ transform:translateX(140vw);} }
+  .twinkle{ position:fixed; font-size:1.2rem; opacity:.7; animation:twinkle 3s ease-in-out infinite; pointer-events:none; z-index:0;}
+  @keyframes twinkle{ 0%,100%{ opacity:.25; transform:scale(.85);} 50%{ opacity:.9; transform:scale(1.1);} }
+
+  .topbar{
+    position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:12px;
+    padding:10px 18px; background:rgba(255,255,255,.72); backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(45,42,74,.08);
+  }
+  .topbar .mascot-mini{ font-size:1.8rem; }
+  .topbar .brand{ font-weight:700; font-size:1.1rem; flex:1; }
+  .topbar .brand small{ display:block; font-family:'Quicksand'; font-weight:600; font-size:.7rem; color:var(--ink-soft); }
+  .trophy-badge{
+    display:flex; align-items:center; gap:6px; background:var(--white); border-radius:999px;
+    padding:6px 14px; font-weight:700; box-shadow:var(--shadow); font-size:.9rem;
+  }
+
+  main{ position:relative; z-index:1; max-width:980px; margin:0 auto; padding:20px 16px 60px; }
+
+  .intro{ text-align:center; margin:6px 0 24px; }
+  .intro .mascot-big{ font-size:3.6rem; display:inline-block; animation:bob 3s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0) rotate(-3deg);} 50%{ transform:translateY(-10px) rotate(3deg);} }
+  .intro h1{ font-size:1.7rem; margin:6px 0 4px; }
+  .intro p{ margin:0; color:var(--ink-soft); font-weight:600; }
+
+  .mode-tabs{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:20px; }
+  .mode-tab{
+    border:none; padding:10px 18px; border-radius:999px; font-family:'Quicksand'; font-weight:700;
+    cursor:pointer; background:#fff; color:var(--ink-soft); box-shadow:0 3px 10px rgba(45,42,74,.08);
+    font-size:.88rem;
+  }
+  .mode-tab.active{ color:#fff; box-shadow:0 6px 16px rgba(45,42,74,.22); }
+
+  .panel{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; min-height:320px; }
+  .panel h2{ margin-top:0; font-size:1.3rem; }
+  .panel .sub-desc{ color:var(--ink-soft); font-weight:600; margin-bottom:18px; }
+
+  /* Rule tab */
+  .rule-block{
+    background:#fff8e0; border-radius:18px; padding:16px 18px; margin-bottom:16px;
+  }
+  .rule-block h3{ margin:0 0 8px; font-size:1.05rem; }
+  .rule-examples{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  .rule-ex-chip{
+    background:#fff; border-radius:12px; padding:8px 14px; box-shadow:0 3px 8px rgba(45,42,74,.08);
+    font-weight:700; text-align:center;
+  }
+  .rule-ex-chip .num{ color:var(--coral); font-size:1.1rem; }
+  .rule-ex-chip .py{ font-size:.78rem; color:var(--ink-soft); font-weight:600; }
+  .note-box{ background:#eef7ff; border-radius:14px; padding:12px 16px; font-size:.88rem; color:var(--ink-soft); font-weight:600; }
+
+  .base-table{ display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px; margin-top:10px; }
+  .base-cell{
+    background:#fff; border-radius:12px; padding:8px 4px; text-align:center; box-shadow:0 3px 8px rgba(45,42,74,.08);
+  }
+  .base-cell .n{ font-weight:800; color:var(--sea); font-family:'Baloo 2'; }
+  .base-cell .hz{ font-size:1.2rem; font-weight:800; }
+
+  /* Flashcards */
+  .flash-wrap{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .flash-card{ width:100%; max-width:340px; height:220px; perspective:1200px; cursor:pointer; }
+  .flash-inner{
+    position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;
+    border-radius:22px; box-shadow:0 10px 24px rgba(45,42,74,.18);
+  }
+  .flash-card.flipped .flash-inner{ transform:rotateY(180deg); }
+  .flash-face{
+    position:absolute; inset:0; border-radius:22px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; backface-visibility:hidden; padding:14px; text-align:center;
+  }
+  .flash-front{ background:linear-gradient(160deg,#fff,#fff3e0); }
+  .flash-front .num{ font-size:3.4rem; margin-bottom:8px; font-weight:800; color:var(--coral); font-family:'Baloo 2'; }
+  .flash-front .hz{ font-size:2rem; font-weight:800; color:var(--ink); font-family:'Baloo 2'; }
+  .flash-back{ background:linear-gradient(160deg,#fff2f8,#eef7ff); transform:rotateY(180deg); }
+  .flash-back .py{ font-size:1.3rem; font-weight:700; color:var(--coral); }
+  .flash-hint{ font-size:.78rem; color:var(--ink-soft); font-weight:600; }
+  .flash-nav{ display:flex; align-items:center; gap:14px; }
+  .nav-btn{
+    border:none; width:42px; height:42px; border-radius:50%; background:var(--sun); color:#442; font-weight:800;
+    font-size:1.1rem; cursor:pointer; box-shadow:var(--shadow);
+  }
+  .flash-dots{ display:flex; gap:5px; flex-wrap:wrap; justify-content:center; max-width:280px; }
+  .flash-dots span{ width:7px; height:7px; border-radius:50%; background:#e4dfd2; display:inline-block; }
+  .flash-dots span.on{ background:var(--coral); }
+
+  /* Games */
+  .game-sub-tabs{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+  .game-sub-tab{
+    border:none; padding:8px 16px; border-radius:999px; font-weight:700; cursor:pointer;
+    background:#f4f1e8; color:var(--ink); font-size:.85rem;
+  }
+  .game-sub-tab.active{ background:var(--grape); color:#fff; }
+
+  .quiz-progress{ font-weight:700; color:var(--ink-soft); margin-bottom:6px; font-size:.9rem; }
+  .quiz-prompt{ text-align:center; margin-bottom:18px; }
+  .quiz-prompt .qp-main{ font-size:2.6rem; font-weight:800; font-family:'Baloo 2'; color:var(--ink); }
+  .quiz-prompt .qp-sub{ color:var(--ink-soft); font-weight:600; }
+  .quiz-options{ display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:440px; margin:0 auto; }
+  .opt-btn{
+    border:2.5px solid #eee1cf; background:#fff; border-radius:16px; padding:14px; cursor:pointer;
+    font-weight:700; font-size:1.15rem; transition:.15s;
+  }
+  .opt-btn:hover{ border-color:var(--sea); }
+  .opt-btn.correct{ border-color:var(--grass); background:#e8fbf0; color:#2c8f5a; }
+  .opt-btn.wrong{ border-color:var(--coral); background:#ffecec; color:#c0392b; }
+  .opt-btn[disabled]{ cursor:default; }
+
+  .match-grid{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .match-col{ display:flex; flex-direction:column; gap:10px; }
+  .tile{
+    border:2.5px solid #eee1cf; background:#fff; border-radius:16px; padding:12px; cursor:pointer;
+    font-weight:700; text-align:center; transition:.15s; font-size:1.05rem;
+  }
+  .tile:hover{ border-color:var(--sea); }
+  .tile.selected{ border-color:var(--sun); background:#fff8e0; }
+  .tile.matched{ border-color:var(--grass); background:#e8fbf0; color:#2c8f5a; cursor:default; opacity:.7; }
+  .tile.wrongflash{ border-color:var(--coral); background:#ffecec; }
+
+  .order-track{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:22px; min-height:44px; }
+  .order-track .slot{
+    min-width:60px; height:56px; border:2px dashed #e4dfd2; border-radius:12px; display:flex;
+    align-items:center; justify-content:center; font-weight:800; font-size:1.5rem; color:var(--ink-soft);
+  }
+  .order-track .slot.filled{ border-style:solid; border-color:var(--grass); background:#e8fbf0; }
+  .order-pool{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .order-card{
+    border:2.5px solid #eee1cf; background:#fff; border-radius:16px; padding:14px 20px; cursor:pointer;
+    text-align:center; font-weight:800; font-size:1.4rem; transition:.15s; font-family:'Baloo 2';
+  }
+  .order-card:hover{ border-color:var(--sea); transform:translateY(-2px); }
+  .order-card.used{ opacity:.25; pointer-events:none; }
+  .order-card.shake{ animation:shake .35s; border-color:var(--coral); }
+  @keyframes shake{ 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+  .order-target{ text-align:center; margin-bottom:16px; }
+  .order-target .num{ font-size:2.6rem; font-weight:800; color:var(--coral); font-family:'Baloo 2'; }
+
+  .result-panel{ text-align:center; }
+  .result-panel .stars-big{ font-size:2.6rem; margin:8px 0; }
+  .result-panel .score-line{ font-weight:700; color:var(--ink-soft); margin-bottom:14px; }
+  .action-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .pill-btn{
+    border:none; border-radius:999px; padding:12px 22px; font-weight:800; cursor:pointer; font-family:'Quicksand';
+    box-shadow:var(--shadow); font-size:.95rem;
+  }
+  .pill-btn.primary{ background:var(--coral); color:#fff; }
+
+  #confetti-layer{ position:fixed; inset:0; pointer-events:none; z-index:999; overflow:hidden; }
+  .confetto{ position:absolute; top:-20px; border-radius:2px; animation:fall linear forwards; }
+  @keyframes fall{ to{ transform:translateY(110vh) rotate(600deg); opacity:.9; } }
+
+  @media(max-width:640px){
+    .quiz-options{ grid-template-columns:1fr; }
+    .match-grid{ gap:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="confetti-layer"></div>
+
+<div class="topbar">
+  <span class="mascot-mini">🐼</span>
+  <div class="brand">Số Đếm Tiếng Trung 1-99<small>数字 1-99 · Học đếm số vui nhộn</small></div>
+  <div class="trophy-badge">🔢 1 → 99</div>
+</div>
+
+<main>
+  <div class="intro">
+    <div class="mascot-big">🐼</div>
+    <h1>Cùng học đếm số tiếng Trung nhé!</h1>
+    <p>Chỉ cần thuộc số 1-10 là đếm được đến 99 luôn đó! 🎈</p>
+  </div>
+
+  <div class="mode-tabs" id="mode-tabs"></div>
+  <div class="panel" id="panel"></div>
+</main>
+
+<script>
+/* ── decor ── */
+function makeCloud(cls){
+  const d = document.createElement('div'); d.className = 'cloud ' + cls;
+  d.innerHTML = '<svg viewBox="0 0 200 100" width="100%"><ellipse cx="60" cy="60" rx="55" ry="32" fill="#ffffff"/><ellipse cx="110" cy="45" rx="45" ry="30" fill="#ffffff"/><ellipse cx="150" cy="65" rx="40" ry="26" fill="#ffffff"/></svg>';
+  return d;
+}
+document.body.appendChild(makeCloud('c1'));
+document.body.appendChild(makeCloud('c2'));
+document.body.appendChild(makeCloud('c3'));
+const twinkleEmojis = ['⭐','✨','🌟'];
+for(let i=0;i<8;i++){
+  const t = document.createElement('div');
+  t.className = 'twinkle'; t.textContent = twinkleEmojis[i % twinkleEmojis.length];
+  t.style.left = (Math.random()*94+2) + 'vw'; t.style.top = (Math.random()*70+4) + 'vh';
+  t.style.animationDelay = (Math.random()*3) + 's';
+  document.body.appendChild(t);
+}
+
+/* =========================================================
+   SỐ HÓA: sinh chữ Hán / pinyin cho số 0-99
+   ========================================================= */
+const digitHz = ['零','一','二','三','四','五','六','七','八','九'];
+const digitPy = ['líng','yī','èr','sān','sì','wǔ','liù','qī','bā','jiǔ'];
+
+function numToHz(n){
+  if(n < 10) return digitHz[n];
+  if(n === 10) return '十';
+  if(n < 20) return '十' + digitHz[n-10];
+  const tens = Math.floor(n/10), ones = n%10;
+  if(ones === 0) return digitHz[tens] + '十';
+  return digitHz[tens] + '十' + digitHz[ones];
+}
+function numToPy(n){
+  if(n < 10) return digitPy[n];
+  if(n === 10) return 'shí';
+  if(n < 20) return 'shí ' + digitPy[n-10];
+  const tens = Math.floor(n/10), ones = n%10;
+  if(ones === 0) return digitPy[tens] + ' shí';
+  return digitPy[tens] + ' shí ' + digitPy[ones];
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function shuffle(arr){ const a = arr.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function pickN(arr, n){ return shuffle(arr).slice(0, Math.min(n, arr.length)); }
+function starsFromPct(pct){ if(pct >= 90) return 3; if(pct >= 60) return 2; if(pct > 0) return 1; return 0; }
+function randInt(min, max){ return min + Math.floor(Math.random()*(max-min+1)); }
+function confettiBurst(x, y){
+  const layer = document.getElementById('confetti-layer');
+  const cols = ['#ff6f6f','#ffce3d','#57d68a','#4bc3e0','#b18cf2','#ff8fc7'];
+  for(let i=0;i<24;i++){
+    const el = document.createElement('div'); el.className = 'confetto';
+    const size = 6 + Math.random()*6;
+    el.style.width = size + 'px'; el.style.height = (size*0.4+size) + 'px';
+    el.style.background = cols[Math.floor(Math.random()*cols.length)];
+    el.style.left = (x + (Math.random()*160-80)) + 'px'; el.style.top = (y - 10) + 'px';
+    el.style.animationDuration = (1.6 + Math.random()*1.2) + 's';
+    layer.appendChild(el); setTimeout(()=> el.remove(), 3000);
+  }
+}
+function confettiCenterBurst(){
+  confettiBurst(window.innerWidth/2, window.innerHeight*0.3);
+  setTimeout(()=> confettiBurst(window.innerWidth*0.25, window.innerHeight*0.25), 150);
+  setTimeout(()=> confettiBurst(window.innerWidth*0.75, window.innerHeight*0.25), 300);
+}
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=0.75; speechSynthesis.speak(u); }catch(e){}
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+const tabsMeta = [
+  { id:'rules', label:'📖 Quy tắc đọc số', color:'#ff6f6f' },
+  { id:'cards', label:'🃏 Thẻ từ vựng', color:'#4bc3e0' },
+  { id:'games', label:'🎮 Ôn tập trò chơi', color:'#b18cf2' },
+];
+const tabsWrap = document.getElementById('mode-tabs');
+tabsMeta.forEach(t=>{
+  const b = document.createElement('button');
+  b.className = 'mode-tab'; b.textContent = t.label;
+  b.addEventListener('click', ()=> setTab(t.id, b));
+  tabsWrap.appendChild(b);
+});
+const panel = document.getElementById('panel');
+function setTab(id, btnEl){
+  document.querySelectorAll('.mode-tab').forEach(b=>{ b.classList.remove('active'); b.style.background=''; b.style.color=''; });
+  const meta = tabsMeta.find(t=>t.id===id);
+  const el = btnEl || [...tabsWrap.children][tabsMeta.findIndex(t=>t.id===id)];
+  el.classList.add('active'); el.style.background = meta.color; el.style.color = '#fff';
+  if(id==='rules') renderRules();
+  else if(id==='cards') renderCards();
+  else if(id==='games') renderGames();
+}
+
+/* ── Rules tab ── */
+function renderRules(){
+  panel.innerHTML = `
+    <h2>📖 Quy tắc đọc số từ 1 đến 99</h2>
+    <p class="sub-desc">Chỉ cần thuộc 10 số gốc, bé sẽ đếm được hết đến 99!</p>
+
+    <div class="rule-block">
+      <h3>1️⃣ Số gốc 0-10</h3>
+      <div class="base-table" id="base-table"></div>
+    </div>
+
+    <div class="rule-block">
+      <h3>2️⃣ Số 11-19: 十 (mười) + số hàng đơn vị</h3>
+      <p class="sub-desc" style="margin-bottom:6px;">Ghép chữ "十" (shí) với số 1-9 phía sau.</p>
+      <div class="rule-examples" id="teens-examples"></div>
+    </div>
+
+    <div class="rule-block">
+      <h3>3️⃣ Số tròn chục 20, 30... 90: số hàng chục + 十</h3>
+      <p class="sub-desc" style="margin-bottom:6px;">Ghép số 2-9 phía trước chữ "十".</p>
+      <div class="rule-examples" id="tens-examples"></div>
+    </div>
+
+    <div class="rule-block">
+      <h3>4️⃣ Số ghép (21-99, trừ tròn chục): số hàng chục + 十 + số hàng đơn vị</h3>
+      <div class="rule-examples" id="mix-examples"></div>
+    </div>
+
+    <div class="note-box">
+      💡 Mẹo nhỏ: Số 2 khi đứng riêng là "二 (èr)", nhưng khi đếm đồ vật (2 quả táo, 2 người...) người ta thường dùng "两 (liǎng)" thay vì "二二", ví dụ: 两个苹果 (liǎng gè píngguǒ) = hai quả táo.
+    </div>
+  `;
+  const baseT = document.getElementById('base-table');
+  for(let n=0;n<=10;n++){
+    const c = document.createElement('div'); c.className='base-cell';
+    c.innerHTML = `<div class="n">${n}</div><div class="hz">${numToHz(n)}</div>`;
+    baseT.appendChild(c);
+  }
+  function fillExamples(elId, nums){
+    const wrap = document.getElementById(elId);
+    nums.forEach(n=>{
+      const chip = document.createElement('div'); chip.className = 'rule-ex-chip';
+      chip.innerHTML = `<div class="num">${n} = ${numToHz(n)}</div><div class="py">${numToPy(n)}</div>`;
+      wrap.appendChild(chip);
+    });
+  }
+  fillExamples('teens-examples', [11,13,15,19]);
+  fillExamples('tens-examples', [20,40,60,90]);
+  fillExamples('mix-examples', [21,34,58,99]);
+}
+
+/* ── Flashcards tab ── */
+function renderCards(){
+  const list = [];
+  for(let i=0;i<=20;i++) list.push(i);
+  [30,40,50,60,70,80,90].forEach(n=> list.push(n));
+  let idx = 0;
+  function draw(){
+    const n = list[idx];
+    panel.innerHTML = `
+      <h2>🃏 Thẻ số đếm</h2>
+      <p class="sub-desc">Lướt qua các số 0-20 và các số tròn chục 30-90 để làm quen mặt chữ.</p>
+      <div class="flash-wrap">
+        <div class="flash-card" id="fc"><div class="flash-inner">
+          <div class="flash-face flash-front">
+            <div class="num">${n}</div>
+            <div class="hz">${numToHz(n)}</div>
+            <div class="flash-hint">Bấm vào thẻ để nghe cách đọc 👆</div>
+          </div>
+          <div class="flash-face flash-back">
+            <div class="py">${numToPy(n)}</div>
+          </div>
+        </div></div>
+        <div class="flash-nav">
+          <button class="nav-btn" id="fc-prev">◀</button>
+          <div class="flash-dots">${list.map((_,i)=>`<span class="${i===idx?'on':''}"></span>`).join('')}</div>
+          <button class="nav-btn" id="fc-next">▶</button>
+        </div>
+      </div>
+    `;
+    const fc = document.getElementById('fc');
+    fc.addEventListener('click', ()=>{ fc.classList.toggle('flipped'); speak(numToHz(n)); });
+    document.getElementById('fc-prev').addEventListener('click', ()=>{ idx = (idx-1+list.length)%list.length; draw(); });
+    document.getElementById('fc-next').addEventListener('click', ()=>{ idx = (idx+1)%list.length; draw(); });
+  }
+  draw();
+}
+
+/* ── Games tab ── */
+function renderGames(){
+  panel.innerHTML = `
+    <h2>🎮 Ôn tập trò chơi</h2>
+    <div class="game-sub-tabs">
+      <button class="game-sub-tab active" id="gt-n2h">🔢➡️汉 Số → Chữ Hán</button>
+      <button class="game-sub-tab" id="gt-h2n">汉➡️🔢 Chữ Hán → Số</button>
+      <button class="game-sub-tab" id="gt-match">🧩 Nối số</button>
+      <button class="game-sub-tab" id="gt-build">🧱 Ghép số</button>
+    </div>
+    <div id="game-area"></div>
+  `;
+  const subTabs = { 'gt-n2h':renderQuizNumToHanzi, 'gt-h2n':renderQuizHanzoToNum, 'gt-match':renderMatchGame, 'gt-build':renderBuildGame };
+  Object.keys(subTabs).forEach(id=>{
+    document.getElementById(id).addEventListener('click', (e)=>{
+      document.querySelectorAll('.game-sub-tab').forEach(b=>b.classList.remove('active'));
+      e.target.classList.add('active');
+      subTabs[id]();
+    });
+  });
+  renderQuizNumToHanzi();
+}
+
+function showResult(pct, correctCount, totalCount, replayFn){
+  const stars = starsFromPct(pct);
+  const starsHtml = [1,2,3].map(n => n<=stars ? '⭐' : '☆').join('');
+  const area = document.getElementById('game-area');
+  area.innerHTML = `
+    <div class="result-panel">
+      <div class="stars-big">${starsHtml}</div>
+      <div class="score-line">Bạn đúng ${correctCount}/${totalCount} câu (${pct}%)</div>
+      <div class="action-row"><button class="pill-btn primary" id="retry-btn">🔄 Chơi lại</button></div>
+    </div>
+  `;
+  if(stars>=2) confettiCenterBurst();
+  document.getElementById('retry-btn').addEventListener('click', replayFn);
+}
+
+function distractorsFor(n){
+  let cands = new Set();
+  [n+10,n-10,n+1,n-1,n+9,n-9].forEach(x=>{ if(x>=0 && x<=99 && x!==n) cands.add(x); });
+  if(n>=10){
+    const tens = Math.floor(n/10), ones = n%10;
+    if(ones>0){ const swapped = ones*10+tens; if(swapped>=0 && swapped<=99 && swapped!==n) cands.add(swapped); }
+  }
+  cands = shuffle([...cands]);
+  while(cands.length<3){ const r = randInt(0,99); if(r!==n && !cands.includes(r)) cands.push(r); }
+  return cands.slice(0,3);
+}
+
+/* Game A: Số → Chữ Hán */
+function renderQuizNumToHanzi(){
+  const area = document.getElementById('game-area');
+  const rounds = 8;
+  const nums = pickN(Array.from({length:99},(_,i)=>i+1), rounds);
+  let qi = 0, correct = 0;
+  function draw(){
+    if(qi >= rounds){ showResult(Math.round(correct/rounds*100), correct, rounds, renderQuizNumToHanzi); return; }
+    const n = nums[qi];
+    const opts = shuffle([n, ...distractorsFor(n)]);
+    area.innerHTML = `
+      <div class="quiz-progress">Câu ${qi+1} / ${rounds}</div>
+      <div class="quiz-prompt"><div class="qp-main">${n}</div><div class="qp-sub">Số này chữ Hán viết thế nào?</div></div>
+      <div class="quiz-options" id="opts"></div>
+    `;
+    const wrap = document.getElementById('opts');
+    opts.forEach(o=>{
+      const b = document.createElement('button'); b.className='opt-btn'; b.textContent = numToHz(o);
+      b.addEventListener('click', ()=>{
+        wrap.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(o===n){ b.classList.add('correct'); correct++; const r=b.getBoundingClientRect(); confettiBurst(r.left+r.width/2, r.top); }
+        else { b.classList.add('wrong'); wrap.querySelectorAll('.opt-btn').forEach(x=>{ if(x.textContent===numToHz(n)) x.classList.add('correct'); }); }
+        setTimeout(()=>{ qi++; draw(); }, 850);
+      });
+      wrap.appendChild(b);
+    });
+  }
+  draw();
+}
+
+/* Game B: Chữ Hán → Số */
+function renderQuizHanzoToNum(){
+  const area = document.getElementById('game-area');
+  const rounds = 8;
+  const nums = pickN(Array.from({length:99},(_,i)=>i+1), rounds);
+  let qi = 0, correct = 0;
+  function draw(){
+    if(qi >= rounds){ showResult(Math.round(correct/rounds*100), correct, rounds, renderQuizHanzoToNum); return; }
+    const n = nums[qi];
+    const opts = shuffle([n, ...distractorsFor(n)]);
+    area.innerHTML = `
+      <div class="quiz-progress">Câu ${qi+1} / ${rounds}</div>
+      <div class="quiz-prompt"><div class="qp-main">${numToHz(n)}</div><div class="qp-sub">${numToPy(n)} — đây là số mấy?</div></div>
+      <div class="quiz-options" id="opts"></div>
+    `;
+    const wrap = document.getElementById('opts');
+    opts.forEach(o=>{
+      const b = document.createElement('button'); b.className='opt-btn'; b.textContent = o;
+      b.addEventListener('click', ()=>{
+        wrap.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(o===n){ b.classList.add('correct'); correct++; const r=b.getBoundingClientRect(); confettiBurst(r.left+r.width/2, r.top); }
+        else { b.classList.add('wrong'); wrap.querySelectorAll('.opt-btn').forEach(x=>{ if(Number(x.textContent)===n) x.classList.add('correct'); }); }
+        setTimeout(()=>{ qi++; draw(); }, 850);
+      });
+      wrap.appendChild(b);
+    });
+  }
+  draw();
+}
+
+/* Game C: Nối số (matching) */
+function renderMatchGame(){
+  const area = document.getElementById('game-area');
+  const nums = pickN(Array.from({length:99},(_,i)=>i+1), 8);
+  let matched = new Set(); let selectedIdx = null;
+  const rightShuffled = shuffle(nums.map((n,i)=>({n, idx:i})));
+  area.innerHTML = `
+    <p style="text-align:center;font-weight:700;color:var(--ink-soft);margin-top:0;">Chọn 1 số Ả Rập bên trái rồi chọn đúng chữ Hán bên phải!</p>
+    <div class="match-grid">
+      <div class="match-col" id="match-left"></div>
+      <div class="match-col" id="match-right"></div>
+    </div>
+  `;
+  const left = document.getElementById('match-left');
+  const right = document.getElementById('match-right');
+  nums.forEach((n,i)=>{
+    const el = document.createElement('div'); el.className='tile'; el.dataset.idx=i; el.textContent = n;
+    el.addEventListener('click', ()=>{
+      if(el.classList.contains('matched')) return;
+      left.querySelectorAll('.tile').forEach(x=>x.classList.remove('selected'));
+      el.classList.add('selected'); selectedIdx = i;
+    });
+    left.appendChild(el);
+  });
+  rightShuffled.forEach(v=>{
+    const el = document.createElement('div'); el.className='tile'; el.dataset.idx=v.idx; el.textContent = numToHz(v.n);
+    el.addEventListener('click', ()=>{
+      if(el.classList.contains('matched') || selectedIdx===null) return;
+      const leftEl = left.querySelector(`.tile[data-idx="${selectedIdx}"]`);
+      if(selectedIdx === v.idx){
+        leftEl.classList.remove('selected'); leftEl.classList.add('matched'); el.classList.add('matched');
+        matched.add(v.idx); selectedIdx = null;
+        if(matched.size === nums.length){
+          const rect = el.getBoundingClientRect(); confettiBurst(rect.left, rect.top);
+          setTimeout(()=> showResult(100, nums.length, nums.length, renderMatchGame), 500);
+        }
+      } else {
+        el.classList.add('wrongflash'); setTimeout(()=> el.classList.remove('wrongflash'), 450);
+      }
+    });
+    right.appendChild(el);
+  });
+}
+
+/* Game D: Ghép số (build order game) */
+function renderBuildGame(){
+  const area = document.getElementById('game-area');
+  const rounds = 6;
+  const pool = [];
+  for(let n=11;n<=99;n++){ if(n%10!==0) pool.push(n); } // số ghép 2-3 chữ, có cả hàng đơn vị
+  const targets = pickN(pool, rounds);
+  let ri = 0, correct = 0;
+  function draw(){
+    if(ri >= rounds){ showResult(Math.round(correct/rounds*100), correct, rounds, renderBuildGame); return; }
+    const target = targets[ri];
+    const correctChars = Array.from(numToHz(target));
+    const distractPool = digitHz.filter(c => !correctChars.includes(c));
+    const decorChars = shuffle(distractPool).slice(0,2);
+    const tiles = shuffle([...correctChars, ...decorChars]);
+    let nextIdx = 0;
+    area.innerHTML = `
+      <div class="quiz-progress">Lượt ${ri+1} / ${rounds}</div>
+      <div class="order-target">Ghép số: <span class="num">${target}</span></div>
+      <div class="order-track" id="order-track"></div>
+      <div class="order-pool" id="order-pool"></div>
+    `;
+    const track = document.getElementById('order-track');
+    const poolEl = document.getElementById('order-pool');
+    correctChars.forEach(()=>{ const s = document.createElement('div'); s.className='slot'; s.textContent='?'; track.appendChild(s); });
+    tiles.forEach((ch, ti)=>{
+      const card = document.createElement('div'); card.className='order-card'; card.textContent = ch;
+      card.addEventListener('click', ()=>{
+        if(card.classList.contains('used')) return;
+        if(ch === correctChars[nextIdx]){
+          card.classList.add('used');
+          const slot = track.children[nextIdx];
+          slot.textContent = ch; slot.classList.add('filled');
+          nextIdx++;
+          if(nextIdx === correctChars.length){
+            correct++;
+            const rect = slot.getBoundingClientRect(); confettiBurst(rect.left, rect.top);
+            setTimeout(()=>{ ri++; draw(); }, 700);
+          }
+        } else {
+          card.classList.add('shake'); setTimeout(()=> card.classList.remove('shake'), 400);
+        }
+      });
+      poolEl.appendChild(card);
+    });
+  }
+  draw();
+}
+
+/* init */
+setTab('rules', tabsWrap.children[0]);
+</script>
+</body>
+</html>
