@@ -1,240 +1,678 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Ôn Tập Bài 3 – Hôm Nay Là Thứ Hai</title>
-    <style>
-        /* 👑 ĐỊNH DẠNG THANH MENU NHANH TRÊN CÙNG */
-        .top-fast-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #ffffff !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
-            z-index: 99999 !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            gap: 12px !important;
-            padding: 10px 20px !important;
-            flex-wrap: wrap !important;
-            font-family: 'Segoe UI', system-ui, sans-serif !important;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>温习 · Ôn Tập Từ Vựng Tiếng Trung – Bài 3 (Phát Triển Hán Ngữ)</title>
+<style>
+  :root{
+    --blue:#2f6fed; --blue-dark:#1e4eb8; --cream:#f3f7fd; --ink:#1f2733;
+    --gold:#c9a24b; --green:#3f7d5c; --card-bg:#ffffff;
+    --shadow:0 8px 24px rgba(30,78,184,0.12); --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 10% 10%, #e3edfd 0%, transparent 45%),
+      radial-gradient(circle at 90% 20%, #eaf0fb 0%, transparent 40%),
+      var(--cream);
+    color:var(--ink); min-height:100vh; padding-bottom:90px;
+  }
 
-        .top-fast-menu .btn-home {
-            background-color: #c0392b !important;
-            color: #ffffff !important;
-            font-weight: bold !important;
-            text-decoration: none !important;
-        }
+  /* ── QUICK MENU BAR ── */
+  .quick-menu-bar{
+    position:sticky; top:0; left:0; right:0; z-index:40;
+    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.08);
+    display:flex; justify-content:center; align-items:center; gap:8px;
+    padding:8px 14px; flex-wrap:wrap;
+  }
+  .quick-menu-bar .qm-brand{
+    font-weight:800; color:var(--blue-dark); font-size:.82rem; margin-right:4px;
+    text-transform:uppercase; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn{
+    background-color:#f8f9fa; border:1px solid #e2e8f0; padding:6px 13px;
+    border-radius:20px; font-weight:700; color:#4a5568; font-size:.78rem;
+    text-decoration:none; transition:all .2s ease; white-space:nowrap;
+  }
+  .quick-menu-bar a.qm-btn:hover{ background-color:#eef4ff; color:var(--blue-dark); border-color:#b7cdfb; }
+  .quick-menu-bar a.qm-btn.current{ background:var(--blue); color:#fff; border-color:var(--blue-dark); }
 
-        .top-fast-menu a {
-            color: #4a5568 !important;
-            text-decoration: none !important;
-            background-color: #f1f5f9 !important;
-            padding: 6px 14px !important;
-            border-radius: 20px !important;
-            font-size: 0.85rem !important;
-            font-weight: 600 !important;
-            transition: all 0.2s ease !important;
-            border: 1px solid #e2e8f0 !important;
-        }
+  header{ padding:26px 20px 16px; text-align:center; position:relative; }
+  header::before, header::after{
+    content:""; position:absolute; top:0; bottom:0; width:6px;
+    background:repeating-linear-gradient(45deg,var(--gold),var(--gold) 4px,transparent 4px,transparent 8px);
+    opacity:.5;
+  }
+  header::before{ left:0; } header::after{ right:0; }
+  h1{ margin:0; font-size:1.9rem; color:var(--blue-dark); letter-spacing:1px; }
+  h1 .cn{ font-size:2.3rem; margin-right:8px; }
+  header p{ margin:6px 0 0; color:#5b6b85; font-size:.9rem; }
 
-        .top-fast-menu a:hover {
-            background-color: #fff5f5 !important;
-            color: #c0392b !important;
-            border-color: #feb2b2 !important;
-        }
+  nav.tabs{
+    display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
+    padding:10px 16px 20px; position:sticky; top:41px; z-index:5; background:var(--cream);
+  }
+  nav.tabs button{
+    border:2px solid transparent; background:#fff; color:var(--blue-dark);
+    padding:9px 14px; border-radius:999px; font-size:.85rem; font-weight:600;
+    cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:.2s;
+  }
+  nav.tabs button:hover{ transform:translateY(-2px); }
+  nav.tabs button.active{ background:var(--blue); color:#fff; border-color:var(--blue-dark); }
 
-        .top-fast-menu .menu-label {
-            font-size: 0.85rem !important;
-            font-weight: bold !important;
-            color: #7f8c8d !important;
-            margin-right: 5px !important;
-        }
+  main{ max-width:920px; margin:0 auto; padding:0 16px 20px; }
+  section.view{ display:none; animation:fadein .25s ease; }
+  section.view.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
 
-        /* 🎨 HỆ THỐNG BIẾN MÀU SẮC GỐC */
-        :root {
-            --red: #c0392b; --red-dk: #922b21; --orange: #e67e22;
-            --green: #27ae60; --blue: #2980b9; --gray: #7f8c8d;
-            --bg: #fdf6f0; --card: #fff; --border: #e8d5c4;
-            --text: #2c3e50; --muted: #7f8c8d;
-            --shadow: 0 4px 18px rgba(0,0,0,.09);
-            --r: 14px;
-        }
+  .panel{ background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-bottom:20px; }
+  .panel h2{ margin-top:0; color:var(--blue-dark); font-size:1.2rem; }
+  .panel .sub{ color:#5b6b85; font-size:.85rem; margin-top:-8px; margin-bottom:16px; }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .btn{
+    border:none; background:var(--blue); color:#fff; padding:9px 16px; border-radius:10px;
+    font-weight:600; cursor:pointer; font-size:.88rem; transition:.15s;
+  }
+  .btn:hover{ background:var(--blue-dark); }
+  .btn.secondary{ background:#e3edfd; color:var(--blue-dark); }
+  .btn.secondary:hover{ background:#cfe0fb; }
+  .btn.gold{ background:var(--gold); color:#3a2c10; }
 
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            min-height: 100vh; 
-            padding-top: 75px !important; /* ĐẨY TOÀN BỘ NỘI DUNG XUỐNG ĐỂ KHÔNG BỊ MENU CHE CHỮ */
-        }
+  table.vocab-table{ width:100%; border-collapse:collapse; font-size:.92rem; }
+  table.vocab-table th, table.vocab-table td{ padding:9px 10px; border-bottom:1px solid #dce6f7; text-align:left; }
+  table.vocab-table th{ color:var(--blue-dark); background:#eef4ff; font-size:.85rem; }
+  table.vocab-table td.hz-cell{ font-size:1.2rem; font-weight:700; }
+  table.vocab-table td.py-cell{ color:var(--blue); }
+  table.vocab-table tr:hover td{ background:#f3f7fd; }
+  .lesson-chip{ display:inline-block; font-size:.7rem; background:var(--green); color:#fff; padding:2px 8px; border-radius:999px; }
 
-        /* HEADER */
-        header { 
-            background: linear-gradient(135deg, var(--red), var(--red-dk)); 
-            color: #fff; 
-            text-align: center; 
-            padding: 22px 16px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        header h1 { font-size: 1.4rem; letter-spacing: 1px; margin-bottom: 5px; }
-        header p { font-size: .84rem; opacity: .85; }
+  .ex-item{
+    padding:14px; border:1.5px solid #dce6f7; border-radius:12px; margin-bottom:12px;
+    background:linear-gradient(160deg,#fff,#eef4ff);
+  }
+  .ex-item .q-line{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .ex-item .num{ font-weight:700; color:var(--gold); min-width:24px; }
+  .ex-item .sentence{ font-size:1.25rem; font-weight:600; }
+  .ex-item .blank-input{
+    display:inline-block; width:90px; padding:4px 6px; border-radius:6px; border:1.5px solid #c3d6f5;
+    font-size:1.1rem; text-align:center; font-weight:700; margin:0 3px;
+  }
+  .ex-item .hint{ color:#5b6b85; font-size:.85rem; margin-left:34px; }
+  .ex-item .feedback-line{ margin-left:34px; font-size:.85rem; font-weight:600; margin-top:6px; }
+  .ex-item.correct{ border-color:var(--green); }
+  .ex-item.wrong{ border-color:#d64545; }
+  .feedback-line.ok{ color:var(--green); }
+  .feedback-line.bad{ color:#d64545; }
 
-        .progress-container { max-width: 850px; margin: 20px auto 0; padding: 0 15px; }
-        .progress-label { font-size: .75rem; font-weight: 700; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .progress-bar { background: #e2e8f0; height: 6px; border-radius: 3px; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, var(--orange), var(--red)); height: 100%; width: 0%; transition: width .3s ease; }
+  .py-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .py-row .hz2{ font-size:1.5rem; font-weight:700; min-width:60px; }
+  .py-row .mn2{ flex:1; min-width:140px; color:#5b6b85; font-size:.9rem; }
+  .py-row input{ width:180px; padding:8px 10px; border-radius:8px; border:1.5px solid #c3d6f5; font-size:1rem; text-align:center; }
 
-        /* TABS */
-        .tabs { display: flex; justify-content: center; background: #fff; border-bottom: 2px solid var(--border); position: sticky; top: 55px; z-index: 100; overflow-x: auto; }
-        .tab-btn { padding: 12px 20px; border: none; background: none; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all .2s; border-bottom: 3px solid transparent; }
-        .tab-btn:hover { color: var(--orange); }
-        .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 700; }
+  .match-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .match-col{ display:flex; flex-direction:column; gap:8px; }
+  .match-item{
+    background:#fff; border:2px solid #c3d6f5; border-radius:10px; padding:10px 14px;
+    cursor:pointer; font-size:.95rem; text-align:center; transition:.15s;
+  }
+  .match-item .hz{ font-size:1.3rem; font-weight:700; }
+  .match-item .py3{ font-size:.8rem; color:var(--blue); }
+  .match-item:hover{ border-color:var(--blue); }
+  .match-item.selected{ border-color:var(--gold); background:#fff8e0; }
+  .match-item.matched{ border-color:var(--green); background:#dff3e6; color:var(--green); cursor:default; pointer-events:none; }
+  .match-item.wrongflash{ border-color:#d64545; background:#fbe0dc; }
 
-        /* CONTENT WRAPPER */
-        .wrap { max-width: 850px; margin: 0 auto; padding: 20px 15px 60px; }
-        .content-section { display: none; }
-        .content-section.active { display: block; }
+  .mc-block{ padding:14px; border:1.5px solid #dce6f7; border-radius:12px; margin-bottom:14px; background:linear-gradient(160deg,#fff,#eef4ff); }
+  .mc-block .mc-q{ font-weight:600; margin-bottom:10px; }
+  .mc-block .mc-q .cn-main{ font-size:1.3rem; color:var(--blue-dark); }
+  .mc-block .mc-q .py-sub{ color:var(--blue); font-size:.9rem; font-weight:400; }
+  .mc-options{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .mc-opt{ display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid #c3d6f5; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:.92rem; }
+  .mc-opt:hover{ border-color:var(--blue); }
+  .mc-opt input{ accent-color:var(--blue); }
+  .mc-opt.correct{ border-color:var(--green); background:#dff3e6; }
+  .mc-opt.wrong{ border-color:#d64545; background:#fbe0dc; }
 
-        .sec { background: var(--card); border-radius: var(--r); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-        .sec-head { background: #fdf5e6; padding: 10px 18px; margin: -22px -22px 18px; border-bottom: 1px solid var(--border); border-top-left-radius: var(--r); border-top-right-radius: var(--r); }
-        .sec-head h2 { font-size: .95rem; font-weight: 800; color: var(--orange); }
+  .submit-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:#fff; border-top:2px solid var(--gold);
+    box-shadow:0 -6px 20px rgba(0,0,0,.08);
+    padding:12px 16px; display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .submit-bar .grand-score{ font-weight:700; color:var(--blue-dark); font-size:.95rem; }
 
-        /* BẢNG TỪ VỰNG */
-        .vtable { width: 100%; border-collapse: collapse; font-size: .85rem; }
-        .vtable th { background: #fff3e0; color: var(--orange); padding: 10px; text-align: left; border-bottom: 2px solid var(--orange); }
-        .vtable td { padding: 12px 10px; border-bottom: 1px solid #f5ece8; }
-        .hz { font-size: 1.5rem; color: var(--red); font-weight: bold; cursor: pointer; }
-        .py { color: var(--orange); font-weight: 600; }
+  .result-panel{
+    background:linear-gradient(160deg,#fff,#eaf0fb); border:2px solid var(--gold); border-radius:16px;
+    padding:20px; margin-bottom:20px; display:none;
+  }
+  .result-panel.show{ display:block; }
+  .result-panel h3{ margin-top:0; color:var(--blue-dark); }
+  .result-row{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #c3d6f5; font-size:.92rem; }
+  .result-row.total{ font-weight:700; border-bottom:none; font-size:1.05rem; color:var(--blue-dark); padding-top:10px; }
 
-        /* BÀI TẬP ĐIỀN TỪ */
-        .pool { display: flex; flex-wrap: wrap; gap: 8px; background: #fff9f2; padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px; }
-        .word { background: #fff; border: 1px solid var(--border); padding: 4px 12px; border-radius: 15px; font-size: .85rem; font-weight: bold; color: var(--orange); cursor: pointer; }
-        .fill-item { margin-bottom: 15px; line-height: 1.8; font-size: .95rem; }
-        .blank { display: inline-block; min-width: 70px; border-bottom: 2px solid var(--orange); text-align: center; color: var(--blue); font-weight: bold; cursor: pointer; background: #fffbf5; }
-        .blank.correct { border-bottom-color: var(--green); color: var(--green); }
-        .blank.wrong { border-bottom-color: var(--red); color: var(--red); }
+  footer{ text-align:center; color:#8494ab; font-size:.8rem; padding:20px; }
 
-        .btn-check { background: var(--orange); color: #fff; border: none; padding: 8px 18px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-    </style>
+  @media(max-width:640px){
+    .match-wrap{ gap:10px; }
+    .mc-options{ grid-template-columns:1fr; }
+    h1{ font-size:1.5rem; } h1 .cn{ font-size:1.8rem; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="top-fast-menu">
-        <a href="index.html" class="btn-home">🏠 Về Trang Chủ</a>
-        <span class="menu-label">Chuyển nhanh:</span>
-        <a href="index.html">👶 Tiếng Trung Kid</a>
-        <a href="index.html">📈 Phát triển Hán ngữ</a>
-        <a href="index.html">🇹🇼 Tiếng Đài (Phồn thể)</a>
-        <a href="bai-1-hsk3.html">🏆 HSK3 (3.0)</a>
+<div class="quick-menu-bar">
+  <span class="qm-brand">📚 Menu nhanh:</span>
+  <a class="qm-btn" href="index.html">🏠 Trang chủ</a>
+  <a class="qm-btn" href="index.html#folder-0">👶 Tiếng Trung Kid</a>
+  <a class="qm-btn current" href="index.html#folder-1">📈 Phát triển Hán ngữ</a>
+  <a class="qm-btn" href="index.html#folder-2">🇹🇼 Tiếng Đài (Phồn thể)</a>
+  <a class="qm-btn" href="index.html#folder-3">🎯 HSK1 (3.0)</a>
+  <a class="qm-btn" href="index.html#folder-4">🏆 HSK3 (3.0)</a>
+</div>
+
+<header>
+  <h1><span class="cn">温习</span>Ôn Tập Từ Vựng Tiếng Trung</h1>
+  <p>Bài 3 · Hôm nay là thứ Hai — thứ trong tuần & ngày tháng năm</p>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-view="vocab">📖 Bảng từ vựng</button>
+  <button data-view="b1">✏️ Bài 1: Điền chữ Hán</button>
+  <button data-view="b2">🔗 Bài 2: Nối từ</button>
+  <button data-view="b3">❓ Bài 3: Trắc nghiệm</button>
+  <button data-view="b4">🔤 Bài 4: Viết pinyin</button>
+  <button data-view="b5">📝 Bài 5: Chọn câu phù hợp</button>
+</nav>
+
+<main>
+
+  <!-- RESULT PANEL (hiện sau khi nộp bài) -->
+  <div class="result-panel" id="result-panel">
+    <h3>📊 Kết quả bài làm</h3>
+    <div id="result-body"></div>
+  </div>
+
+  <!-- ============ 0. VOCAB TABLE ============ -->
+  <section class="view active" id="view-vocab">
+    <div class="panel">
+      <h2>📖 Bảng Từ Vựng Tổng Hợp</h2>
+      <div class="sub">Toàn bộ 18 từ vựng của Bài 3.</div>
+      <table class="vocab-table">
+        <thead><tr><th>#</th><th>Hán tự</th><th>Pinyin</th><th>Nghĩa</th><th>Từ loại</th></tr></thead>
+        <tbody id="vocab-tbody"></tbody>
+      </table>
     </div>
+  </section>
 
-    <header>
-        <h1>📆 Bài 3: Hôm Nay Là Thứ Hai (今天星期一)</h1>
-        <p>Học cách nói các thứ trong tuần, số đếm nâng cao và mẫu câu thời gian</p>
-    </header>
-
-    <div class="progress-container">
-        <div class="progress-label">
-            <span>Tiến độ hoàn thành bài tập</span>
-            <span id="totalScore">Điểm số: 0 / 20</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" id="pfill"></div>
-        </div>
+  <!-- ============ 1. FILL IN HANZI (câu cụ thể) ============ -->
+  <section class="view" id="view-b1">
+    <div class="panel">
+      <h2>✏️ Bài 1: Điền Chữ Hán Vào Chỗ Trống</h2>
+      <div class="sub">Đọc câu và điền đúng chữ Hán còn thiếu vào ô trống.</div>
+      <div id="b1-list"></div>
     </div>
+  </section>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab(event, 'vocab')">📋 Từ vựng trọng tâm</button>
-        <button class="tab-btn" onclick="switchTab(event, 'ex1')">📝 Luyện tập điền từ</button>
+  <!-- ============ 2. MATCHING ============ -->
+  <section class="view" id="view-b2">
+    <div class="panel">
+      <h2>🔗 Bài 2: Nối Từ Với Nghĩa</h2>
+      <div class="sub">Chọn 1 chữ Hán bên trái rồi chọn nghĩa tương ứng bên phải.</div>
+      <div style="margin-bottom:10px;"><button class="btn secondary" id="match-reset">🔄 Làm lại phần nối từ</button></div>
+      <div class="match-wrap">
+        <div class="match-col" id="match-left"></div>
+        <div class="match-col" id="match-right"></div>
+      </div>
     </div>
+  </section>
 
-    <div class="wrap">
-        <div id="vocab" class="content-section active">
-            <div class="sec">
-                <div class="sec-head"><h2>📋 Bảng từ vựng thời gian & số đếm (Bấm để nghe)</h2></div>
-                <table class="vtable">
-                    <thead>
-                        <tr>
-                            <th>Chữ Hán</th>
-                            <th>Pinyin</th>
-                            <th>Nghĩa tiếng Việt</th>
-                            <th>Ví dụ ứng dụng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="hz" onclick="speak('星期一')">星期一 🔊</td>
-                            <td class="py">xīngqīyī</td>
-                            <td>Thứ Hai</td>
-                            <td>今天星期一，我要去上学。<br><small style="color:var(--gray)">Hôm nay là thứ hai, tôi phải đi học.</small></td>
-                        </tr>
-                        <tr>
-                            <td class="hz" onclick="speak('昨天')">昨天 🔊</td>
-                            <td class="py">zuótiān</td>
-                            <td>Hôm qua</td>
-                            <td>昨天你去哪儿了？<br><small style="color:var(--gray)">Hôm qua bạn đi đâu thế?</small></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="ex1" class="content-section">
-            <div class="sec">
-                <div class="sec-head"><h2>📝 Chọn từ trên thanh công cụ thả vào chỗ trống đúng</h2></div>
-                <div class="pool">
-                    <div class="word" onclick="pickWord('星期一', 't1')">星期一</div>
-                    <div class="word" onclick="pickWord('昨天', 't2')">昨天</div>
-                </div>
-                <div class="fill-item">
-                    1. 今天是星期日，明天就是 <span class="blank" id="t1" onclick="clearBlank('t1')">?</span> 了。
-                </div>
-                <div class="fill-item">
-                    2. <span class="blank" id="t2" onclick="clearBlank('t2')">?</span> 星期六，我没有去工作。
-                </div>
-                <button class="btn-check" onclick="checkEx1()">✔️ Kiểm tra đáp án</button>
-            </div>
-        </div>
+  <!-- ============ 3. QUIZ ============ -->
+  <section class="view" id="view-b3">
+    <div class="panel">
+      <h2>❓ Bài 3: Trắc Nghiệm</h2>
+      <div class="sub">Chọn đáp án đúng nhất cho mỗi câu.</div>
+      <div id="b3-list"></div>
     </div>
+  </section>
 
-    <script>
-        let score = 0;
-        function switchTab(e, id) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            e.currentTarget.classList.add('active');
-        }
-        function speak(t) {
-            if ('speechSynthesis' in window) {
-                let u = new SpeechSynthesisUtterance(t); u.lang = 'zh-CN'; window.speechSynthesis.speak(u);
-            }
-        }
-        function pickWord(w, bId) {
-            let b = document.getElementById(bId);
-            if(b && b.innerText === "?") { b.innerText = w; b.style.color = "var(--blue)"; }
-        }
-        function clearBlank(id) {
-            let b = document.getElementById(id);
-            if(b) { b.innerText = "?"; b.className = "blank"; }
-        }
-        function checkEx1() {
-            let s = 0;
-            let t1 = document.getElementById('t1');
-            let t2 = document.getElementById('t2');
-            if(t1 && t1.innerText === "星期一") { t1.className = "blank correct"; s += 10; } else if(t1) { t1.className = "blank wrong"; }
-            if(t2 && t2.innerText === "昨天") { t2.className = "blank correct"; s += 10; } else if(t2) { t2.className = "blank wrong"; }
-            score = s; 
-            document.getElementById('totalScore').innerText = `Điểm số: ${score} / 20`;
-            document.getElementById('pfill').style.width = (score === 20) ? "100%" : "50%";
-        }
-    </script>
+  <!-- ============ 4. WRITE PINYIN ============ -->
+  <section class="view" id="view-b4">
+    <div class="panel">
+      <h2>🔤 Bài 4: Viết Pinyin</h2>
+      <div class="sub">Nhìn chữ Hán và nghĩa, gõ đúng phiên âm (không cần gõ dấu thanh điệu, ví dụ: gõ "jintian" cũng được tính đúng).</div>
+      <div id="b4-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5. SENTENCE CHOICE (tình huống) ============ -->
+  <section class="view" id="view-b5">
+    <div class="panel">
+      <h2>📝 Bài 5: Chọn Câu Phù Hợp Với Tình Huống</h2>
+      <div class="sub">Đọc tình huống rồi chọn câu tiếng Trung phù hợp nhất.</div>
+      <div id="b5-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="submit-bar">
+  <button class="btn gold" id="btn-submit">📩 Nộp Bài &amp; Chấm Điểm</button>
+  <button class="btn secondary" id="btn-reset-all">♻️ Làm lại toàn bộ</button>
+  <span class="grand-score" id="grand-score-display"></span>
+</div>
+
+<footer>做中文练习 · Chúc bạn học tốt! 加油！</footer>
+
+<script>
+/* =========================================================
+   DỮ LIỆU TỪ VỰNG – BÀI 3: THỨ TRONG TUẦN & NGÀY THÁNG NĂM
+   ========================================================= */
+const vocabData = [
+  { hanzi:"星期一",   pinyin:"xīngqīyī",     meaning:"thứ Hai",       type:"danh từ" },
+  { hanzi:"星期二",   pinyin:"xīngqī'èr",    meaning:"thứ Ba",        type:"danh từ" },
+  { hanzi:"星期三",   pinyin:"xīngqīsān",    meaning:"thứ Tư",        type:"danh từ" },
+  { hanzi:"星期四",   pinyin:"xīngqīsì",     meaning:"thứ Năm",       type:"danh từ" },
+  { hanzi:"星期五",   pinyin:"xīngqīwǔ",     meaning:"thứ Sáu",       type:"danh từ" },
+  { hanzi:"星期六",   pinyin:"xīngqīliù",    meaning:"thứ Bảy",       type:"danh từ" },
+  { hanzi:"星期天",   pinyin:"xīngqītiān",   meaning:"Chủ nhật",      type:"danh từ" },
+  { hanzi:"星期几",   pinyin:"xīngqījǐ",     meaning:"thứ mấy",       type:"đại từ nghi vấn" },
+  { hanzi:"昨天",     pinyin:"zuótiān",      meaning:"hôm qua",       type:"danh từ" },
+  { hanzi:"今天",     pinyin:"jīntiān",      meaning:"hôm nay",       type:"danh từ" },
+  { hanzi:"明天",     pinyin:"míngtiān",     meaning:"ngày mai",      type:"danh từ" },
+  { hanzi:"号",       pinyin:"hào",          meaning:"ngày (số)",     type:"lượng từ" },
+  { hanzi:"月",       pinyin:"yuè",          meaning:"tháng",         type:"danh từ" },
+  { hanzi:"年",       pinyin:"nián",         meaning:"năm",           type:"danh từ" },
+  { hanzi:"生日",     pinyin:"shēngrì",      meaning:"sinh nhật",     type:"danh từ" },
+  { hanzi:"上个星期", pinyin:"shàngge xīngqī", meaning:"tuần trước",  type:"cụm danh từ" },
+  { hanzi:"下个星期", pinyin:"xiàge xīngqī", meaning:"tuần sau",      type:"cụm danh từ" },
+  { hanzi:"考试",     pinyin:"kǎoshì",       meaning:"thi, kiểm tra", type:"động từ" },
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function pickN(arr, n){ return shuffle(arr).slice(0, Math.min(n, arr.length)); }
+function normalize(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
+const toneStripMap = {
+  'ā':'a','á':'a','ǎ':'a','à':'a',
+  'ē':'e','é':'e','ě':'e','è':'e',
+  'ī':'i','í':'i','ǐ':'i','ì':'i',
+  'ō':'o','ó':'o','ǒ':'o','ò':'o',
+  'ū':'u','ú':'u','ǔ':'u','ù':'u',
+  'ǖ':'v','ǘ':'v','ǚ':'v','ǜ':'v','ü':'v',
+};
+function stripTones(s){
+  return s.replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/g, ch => toneStripMap[ch] || ch).replace(/'/g,'');
+}
+function normalizeNoTone(s){ return stripTones(normalize(s)); }
+
+/* =========================================================
+   TAB NAVIGATION
+   ========================================================= */
+const tabButtons = document.querySelectorAll('nav.tabs button');
+const views = document.querySelectorAll('section.view');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    views.forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+/* =========================================================
+   0. VOCAB TABLE
+   ========================================================= */
+const vocabTbody = document.getElementById('vocab-tbody');
+vocabData.forEach((v, idx)=>{
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${idx+1}</td><td class="hz-cell">${v.hanzi}</td><td class="py-cell">${v.pinyin}</td><td>${v.meaning}</td><td>${v.type}</td>`;
+  vocabTbody.appendChild(tr);
+});
+
+/* =========================================================
+   BÀI 1: ĐIỀN CHỮ HÁN VÀO CHỖ TRỐNG (câu cụ thể)
+   ========================================================= */
+const b1Data = [
+  { before:"今天是", after:"，我要去上课。", answer:"星期一", pinyinFull:"Jīntiān shì xīngqīyī, wǒ yào qù shàngkè.", meaning:"Hôm nay là thứ Hai, tôi phải đi học." },
+  { before:"明天是", after:"，我要去看电影。", answer:"星期二", pinyinFull:"Míngtiān shì xīngqī'èr, wǒ yào qù kàn diànyǐng.", meaning:"Ngày mai là thứ Ba, tôi sẽ đi xem phim." },
+  { before:"我", after:"要考试。", answer:"星期三", pinyinFull:"Wǒ xīngqīsān yào kǎoshì.", meaning:"Thứ Tư tôi phải thi." },
+  { before:"他", after:"有事，不能来。", answer:"星期四", pinyinFull:"Tā xīngqīsì yǒu shì, bùnéng lái.", meaning:"Thứ Năm anh ấy có việc, không đến được." },
+  { before:"我们", after:"去看电影吧。", answer:"星期五", pinyinFull:"Wǒmen xīngqīwǔ qù kàn diànyǐng ba.", meaning:"Thứ Sáu chúng ta đi xem phim nhé." },
+  { before:"", after:"我们不上班。", answer:"星期六", pinyinFull:"Xīngqīliù wǒmen bù shàngbān.", meaning:"Thứ Bảy chúng tôi không đi làm." },
+  { before:"", after:"是我的生日。", answer:"星期天", pinyinFull:"Xīngqītiān shì wǒ de shēngrì.", meaning:"Chủ nhật là sinh nhật của tôi." },
+  { before:"今天", after:"？", answer:"星期几", pinyinFull:"Jīntiān xīngqījǐ?", meaning:"Hôm nay thứ mấy?" },
+  { before:"", after:"你去哪儿了？", answer:"昨天", pinyinFull:"Zuótiān nǐ qù nǎr le?", meaning:"Hôm qua bạn đi đâu?" },
+  { before:"我", after:"很忙。", answer:"今天", pinyinFull:"Wǒ jīntiān hěn máng.", meaning:"Hôm nay tôi rất bận." },
+  { before:"", after:"是几月几号？", answer:"明天", pinyinFull:"Míngtiān shì jǐyuè jǐhào?", meaning:"Ngày mai là ngày mấy tháng mấy?" },
+  { before:"今天几", after:"？", answer:"号", pinyinFull:"Jīntiān jǐ hào?", meaning:"Hôm nay ngày mấy?" },
+  { before:"我七", after:"三号有考试。", answer:"月", pinyinFull:"Wǒ qīyuè sān hào yǒu kǎoshì.", meaning:"Tôi có thi vào ngày 3 tháng 7." },
+  { before:"祝你新", after:"快乐！", answer:"年", pinyinFull:"Zhù nǐ xīnnián kuàilè!", meaning:"Chúc bạn năm mới vui vẻ!" },
+  { before:"", after:"快到了，我很高兴。", answer:"生日", pinyinFull:"Shēngrì kuài dào le, wǒ hěn gāoxìng.", meaning:"Sắp đến sinh nhật rồi, tôi rất vui." },
+  { before:"", after:"我很忙，没有时间。", answer:"上个星期", pinyinFull:"Shàngge xīngqī wǒ hěn máng, méiyǒu shíjiān.", meaning:"Tuần trước tôi rất bận, không có thời gian." },
+  { before:"", after:"我们要考试。", answer:"下个星期", pinyinFull:"Xiàge xīngqī wǒmen yào kǎoshì.", meaning:"Tuần sau chúng ta phải thi." },
+  { before:"我明天要", after:"。", answer:"考试", pinyinFull:"Wǒ míngtiān yào kǎoshì.", meaning:"Ngày mai tôi phải thi." },
+];
+const b1List = document.getElementById('b1-list');
+b1Data.forEach((q, idx)=>{
+  const div = document.createElement('div');
+  div.className = 'ex-item';
+  div.dataset.idx = idx;
+  div.innerHTML = `
+    <div class="q-line">
+      <span class="num">${idx+1}.</span>
+      <span class="sentence">${q.before}<input type="text" class="blank-input" data-idx="${idx}" maxlength="8">${q.after}</span>
+    </div>
+    <div class="hint">💡 ${q.meaning}</div>
+    <div class="feedback-line" data-idx="${idx}"></div>
+  `;
+  b1List.appendChild(div);
+});
+
+/* =========================================================
+   BÀI 2: NỐI TỪ VỚI NGHĨA
+   ========================================================= */
+const matchLeft = document.getElementById('match-left');
+const matchRight = document.getElementById('match-right');
+let matchSet = [];
+let matchedPairs = new Set();
+let selectedLeft = null;
+
+function loadMatch(){
+  matchedPairs = new Set();
+  selectedLeft = null;
+  matchSet = pickN(vocabData, 10);
+  matchLeft.innerHTML = '';
+  matchSet.forEach((v, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.idx = idx;
+    el.innerHTML = `<div class="hz">${v.hanzi}</div><div class="py3">${v.pinyin}</div>`;
+    el.addEventListener('click', ()=> onLeftClick(el, idx));
+    matchLeft.appendChild(el);
+  });
+  const shuffledRight = shuffle(matchSet.map((v, idx)=>({...v, idx})));
+  matchRight.innerHTML = '';
+  shuffledRight.forEach(v=>{
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.idx = v.idx;
+    el.textContent = v.meaning;
+    el.addEventListener('click', ()=> onRightClick(el, v.idx));
+    matchRight.appendChild(el);
+  });
+}
+function onLeftClick(el, idx){
+  if(el.classList.contains('matched')) return;
+  matchLeft.querySelectorAll('.match-item').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLeft = idx;
+}
+function onRightClick(el, idx){
+  if(el.classList.contains('matched')) return;
+  if(selectedLeft === null) return;
+  const leftEl = matchLeft.querySelector(`.match-item[data-idx="${selectedLeft}"]`);
+  if(selectedLeft === idx){
+    leftEl.classList.remove('selected');
+    leftEl.classList.add('matched');
+    el.classList.add('matched');
+    matchedPairs.add(idx);
+    selectedLeft = null;
+  } else {
+    el.classList.add('wrongflash');
+    setTimeout(()=> el.classList.remove('wrongflash'), 500);
+  }
+}
+document.getElementById('match-reset').addEventListener('click', loadMatch);
+loadMatch();
+
+/* =========================================================
+   BÀI 3: TRẮC NGHIỆM (cố định, chấm cùng lúc)
+   ========================================================= */
+const b3List = document.getElementById('b3-list');
+let b3Data = [];
+function generateB3(){
+  b3Data = [];
+  const modes = ['hanzi2meaning','meaning2hanzi','pinyin2hanzi'];
+  const targets = pickN(vocabData, 10);
+  targets.forEach(target=>{
+    const mode = modes[Math.floor(Math.random()*modes.length)];
+    let label, main, sub, correctText, field;
+    if(mode === 'hanzi2meaning'){
+      label = 'Chọn nghĩa đúng của:'; main = target.hanzi; sub = target.pinyin;
+      correctText = target.meaning; field = 'meaning';
+    } else if(mode === 'meaning2hanzi'){
+      label = 'Chọn Hán tự đúng với nghĩa:'; main = target.meaning; sub = '';
+      correctText = target.hanzi; field = 'hanzi';
+    } else {
+      label = 'Chọn Hán tự đúng với phiên âm:'; main = target.pinyin; sub = '';
+      correctText = target.hanzi; field = 'hanzi';
+    }
+    const distractors = shuffle(vocabData.filter(x=>x!==target)).slice(0,3).map(v=>v[field]);
+    const options = shuffle([correctText, ...distractors]);
+    b3Data.push({ label, main, sub, correct: correctText, options });
+  });
+}
+function renderB3(){
+  b3List.innerHTML = '';
+  b3Data.forEach((q, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'mc-block';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="mc-q">
+        <span class="num">${idx+1}.</span> ${q.label}
+        <div class="cn-main">${q.main}</div>
+        ${q.sub ? `<div class="py-sub">${q.sub}</div>` : ''}
+      </div>
+      <div class="mc-options">
+        ${q.options.map((opt)=>`
+          <label class="mc-opt" data-value="${opt.replace(/"/g,'&quot;')}">
+            <input type="radio" name="b3-${idx}" value="${opt.replace(/"/g,'&quot;')}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    b3List.appendChild(div);
+  });
+}
+generateB3(); renderB3();
+
+/* =========================================================
+   BÀI 4: VIẾT PINYIN
+   ========================================================= */
+const b4List = document.getElementById('b4-list');
+let b4Data = [];
+function loadB4(){
+  b4Data = pickN(vocabData, 10);
+  b4List.innerHTML = '';
+  b4Data.forEach((v, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'ex-item';
+    row.dataset.idx = idx;
+    row.innerHTML = `
+      <div class="py-row">
+        <span class="num">${idx+1}.</span>
+        <span class="hz2">${v.hanzi}</span>
+        <span class="mn2">${v.meaning}</span>
+        <input type="text" class="py-input" data-idx="${idx}" placeholder="gõ pinyin (không cần dấu)…">
+      </div>
+      <div class="feedback-line" data-idx="${idx}"></div>
+    `;
+    b4List.appendChild(row);
+  });
+}
+loadB4();
+
+/* =========================================================
+   BÀI 5: CHỌN CÂU PHÙ HỢP VỚI TÌNH HUỐNG CỤ THỂ
+   ========================================================= */
+const b5Data = [
+  {
+    situation:"Bạn muốn hỏi hôm nay là thứ mấy.",
+    correct:"今天星期几？",
+    options:["今天星期几？","星期几今天？","今天几星期？","几今天星期？"]
+  },
+  {
+    situation:"Bạn muốn nói hôm nay là thứ Hai.",
+    correct:"今天是星期一。",
+    options:["今天是星期一。","星期一是今天。","今天星期一是。","是今天星期一。"]
+  },
+  {
+    situation:"Bạn muốn hỏi hôm qua bạn ấy đi đâu.",
+    correct:"昨天你去哪儿了？",
+    options:["昨天你去哪儿了？","你昨天了去哪儿？","去哪儿昨天你了？","你去昨天哪儿了？"]
+  },
+  {
+    situation:"Bạn muốn nói Chủ nhật là sinh nhật của bạn.",
+    correct:"星期天是我的生日。",
+    options:["星期天是我的生日。","星期天我的是生日。","是星期天我的生日。","星期天生日是我的。"]
+  },
+  {
+    situation:"Bạn muốn nói ngày mai bạn phải thi.",
+    correct:"我明天要考试。",
+    options:["我明天要考试。","我要明天考试。","明天我考试要。","我明天考试要。"]
+  },
+  {
+    situation:"Bạn muốn nói tuần sau chúng ta phải thi.",
+    correct:"下个星期我们要考试。",
+    options:["下个星期我们要考试。","我们要下个星期考试。","下个我们星期要考试。","要下个星期我们考试。"]
+  },
+  {
+    situation:"Bạn muốn chúc mừng năm mới.",
+    correct:"祝你新年快乐！",
+    options:["祝你新年快乐！","新年祝你快乐！","你祝新年快乐！","祝新年你快乐！"]
+  }
+];
+const b5List = document.getElementById('b5-list');
+function renderB5(){
+  b5List.innerHTML = '';
+  b5Data.forEach((q, idx)=>{
+    const shuffledOpts = shuffle(q.options);
+    const div = document.createElement('div');
+    div.className = 'mc-block';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="mc-q"><span class="num">${idx+1}.</span> Tình huống: ${q.situation}</div>
+      <div class="mc-options" style="grid-template-columns:1fr;">
+        ${shuffledOpts.map(opt=>`
+          <label class="mc-opt" data-value="${opt.replace(/"/g,'&quot;')}">
+            <input type="radio" name="b5-${idx}" value="${opt.replace(/"/g,'&quot;')}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    b5List.appendChild(div);
+  });
+}
+renderB5();
+
+/* =========================================================
+   NỘP BÀI & CHẤM ĐIỂM TỔNG
+   ========================================================= */
+function gradeB1(){
+  let correct = 0;
+  b1Data.forEach((q, idx)=>{
+    const item = b1List.querySelector(`.ex-item[data-idx="${idx}"]`);
+    const input = item.querySelector(`input[data-idx="${idx}"]`);
+    const fb = item.querySelector(`.feedback-line[data-idx="${idx}"]`);
+    const ok = input.value.trim() === q.answer;
+    item.classList.remove('correct','wrong');
+    item.classList.add(ok ? 'correct' : 'wrong');
+    fb.className = 'feedback-line ' + (ok ? 'ok' : 'bad');
+    fb.textContent = ok ? '✅ Chính xác! — ' + q.pinyinFull : `❌ Đáp án đúng: ${q.answer} — ${q.pinyinFull}`;
+    if(ok) correct++;
+  });
+  return { correct, total: b1Data.length };
+}
+function gradeB2(){
+  return { correct: matchedPairs.size, total: matchSet.length };
+}
+function gradeMC(container, data, prefix){
+  let correct = 0;
+  data.forEach((q, idx)=>{
+    const block = container.querySelector(`.mc-block[data-idx="${idx}"]`);
+    const checked = block.querySelector(`input[name="${prefix}-${idx}"]:checked`);
+    const chosenVal = checked ? checked.value : null;
+    block.querySelectorAll('.mc-opt').forEach(opt=>{
+      opt.classList.remove('correct','wrong');
+      const val = opt.dataset.value;
+      if(val === q.correct) opt.classList.add('correct');
+      else if(val === chosenVal) opt.classList.add('wrong');
+    });
+    if(chosenVal === q.correct) correct++;
+  });
+  return { correct, total: data.length };
+}
+function gradeB4(){
+  let correct = 0;
+  b4Data.forEach((v, idx)=>{
+    const item = b4List.querySelector(`.ex-item[data-idx="${idx}"]`);
+    const input = item.querySelector(`input.py-input[data-idx="${idx}"]`);
+    const fb = item.querySelector(`.feedback-line[data-idx="${idx}"]`);
+    const ok = normalizeNoTone(input.value) === normalizeNoTone(v.pinyin);
+    item.classList.remove('correct','wrong');
+    item.classList.add(ok ? 'correct' : 'wrong');
+    fb.className = 'feedback-line ' + (ok ? 'ok' : 'bad');
+    fb.textContent = ok ? '✅ Chính xác!' : `❌ Đáp án đúng: ${v.pinyin}`;
+    if(ok) correct++;
+  });
+  return { correct, total: b4Data.length };
+}
+
+const resultPanel = document.getElementById('result-panel');
+const resultBody = document.getElementById('result-body');
+const grandScoreDisplay = document.getElementById('grand-score-display');
+
+document.getElementById('btn-submit').addEventListener('click', ()=>{
+  const r1 = gradeB1();
+  const r2 = gradeB2();
+  const r3 = gradeMC(b3List, b3Data, 'b3');
+  const r4 = gradeB4();
+  const r5 = gradeMC(b5List, b5Data, 'b5');
+
+  const totalCorrect = r1.correct + r2.correct + r3.correct + r4.correct + r5.correct;
+  const totalAll = r1.total + r2.total + r3.total + r4.total + r5.total;
+  const percent = Math.round((totalCorrect/totalAll)*100);
+
+  let message;
+  if(percent >= 90) message = '🌟 Xuất sắc! Bạn nắm rất vững từ vựng.';
+  else if(percent >= 70) message = '👍 Khá tốt! Ôn lại vài từ còn sai nhé.';
+  else if(percent >= 50) message = '📚 Trung bình, cần ôn tập thêm.';
+  else message = '💪 Cố gắng hơn nhé, hãy xem lại bảng từ vựng.';
+
+  resultBody.innerHTML = `
+    <div class="result-row"><span>Bài 1 — Điền chữ Hán</span><span>${r1.correct} / ${r1.total}</span></div>
+    <div class="result-row"><span>Bài 2 — Nối từ với nghĩa</span><span>${r2.correct} / ${r2.total}</span></div>
+    <div class="result-row"><span>Bài 3 — Trắc nghiệm</span><span>${r3.correct} / ${r3.total}</span></div>
+    <div class="result-row"><span>Bài 4 — Viết pinyin</span><span>${r4.correct} / ${r4.total}</span></div>
+    <div class="result-row"><span>Bài 5 — Chọn câu phù hợp</span><span>${r5.correct} / ${r5.total}</span></div>
+    <div class="result-row total"><span>TỔNG ĐIỂM</span><span>${totalCorrect} / ${totalAll} (${percent}%)</span></div>
+    <div style="margin-top:10px;font-weight:600;color:var(--blue-dark);">${message}</div>
+  `;
+  resultPanel.classList.add('show');
+  grandScoreDisplay.textContent = `Điểm: ${totalCorrect}/${totalAll} (${percent}%)`;
+
+  document.querySelector('nav.tabs button[data-view="vocab"]').click();
+  resultPanel.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+document.getElementById('btn-reset-all').addEventListener('click', ()=>{
+  resultPanel.classList.remove('show');
+  grandScoreDisplay.textContent = '';
+  b1List.querySelectorAll('input').forEach(i=>{ i.value=''; });
+  b1List.querySelectorAll('.ex-item').forEach(i=>i.classList.remove('correct','wrong'));
+  b1List.querySelectorAll('.feedback-line').forEach(f=>{ f.textContent=''; f.className='feedback-line'; });
+  loadMatch();
+  generateB3(); renderB3();
+  loadB4();
+  renderB5();
+});
+</script>
 </body>
 </html>
