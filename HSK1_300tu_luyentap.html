@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>温习 · 300 Từ Vựng HSK1 (3.0)</title>
+<style>
+  :root{
+    --red:#c0392b;
+    --red-dark:#8e2a1f;
+    --cream:#fdf6ee;
+    --ink:#2b2320;
+    --gold:#c9a24b;
+    --green:#3f7d5c;
+    --card-bg:#ffffff;
+    --shadow:0 8px 24px rgba(139,42,31,0.12);
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 10% 10%, #fbe9dd 0%, transparent 45%),
+      radial-gradient(circle at 90% 20%, #f6dede 0%, transparent 40%),
+      var(--cream);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  header{ padding:26px 20px 16px; text-align:center; position:relative; }
+  header::before, header::after{
+    content:""; position:absolute; top:0; bottom:0; width:6px;
+    background:repeating-linear-gradient(45deg,var(--gold),var(--gold) 4px,transparent 4px,transparent 8px);
+    opacity:.5;
+  }
+  header::before{ left:0; } header::after{ right:0; }
+  h1{ margin:0; font-size:1.9rem; color:var(--red-dark); letter-spacing:1px; }
+  h1 .cn{ font-size:2.3rem; margin-right:8px; }
+  header p{ margin:6px 0 0; color:#8a6a55; font-size:.9rem; }
+  header .note{ margin:10px auto 0; max-width:640px; font-size:.78rem; color:#a6714f; background:#fdf1d8;
+    border:1px dashed var(--gold); border-radius:10px; padding:8px 12px; }
+
+  nav.tabs{
+    display:flex; justify-content:center; gap:8px; flex-wrap:wrap;
+    padding:0 16px 20px; position:sticky; top:0; z-index:5;
+    background:var(--cream); padding-top:10px;
+  }
+  nav.tabs button{
+    border:2px solid transparent; background:#fff; color:var(--red-dark);
+    padding:9px 16px; border-radius:999px; font-size:.88rem; font-weight:600;
+    cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:.2s;
+  }
+  nav.tabs button:hover{ transform:translateY(-2px); }
+  nav.tabs button.active{ background:var(--red); color:#fff; border-color:var(--red-dark); }
+
+  main{ max-width:900px; margin:0 auto; padding:0 16px 60px; }
+  section.view{ display:none; animation:fadein .25s ease; }
+  section.view.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+  .panel{ background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-bottom:20px; }
+  .panel h2{ margin-top:0; color:var(--red-dark); font-size:1.2rem; display:flex; align-items:center; gap:8px; }
+  .panel .sub{ color:#8a6a55; font-size:.85rem; margin-top:-8px; margin-bottom:16px; }
+
+  .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; justify-content:space-between; }
+  select, input[type=text].search{
+    padding:8px 12px; border-radius:10px; border:1.5px solid #e6d3c4; background:#fff;
+    font-size:.88rem; color:var(--ink);
+  }
+  input[type=text].search{ min-width:180px; }
+  .btn{
+    border:none; background:var(--red); color:#fff; padding:9px 16px; border-radius:10px;
+    font-weight:600; cursor:pointer; font-size:.88rem; transition:.15s;
+  }
+  .btn:hover{ background:var(--red-dark); }
+  .btn.secondary{ background:#efe0d3; color:var(--red-dark); }
+  .btn.secondary:hover{ background:#e6cdb8; }
+  .score-badge{ font-weight:700; color:var(--red-dark); font-size:.9rem; }
+  .count-badge{ color:#8a6a55; font-size:.82rem; }
+
+  /* ===== 1. LIST VIEW ===== */
+  table.list-table{ width:100%; border-collapse:collapse; font-size:.92rem; }
+  table.list-table th{
+    background:var(--red); color:#fff; text-align:left; padding:8px 10px;
+    position:sticky; top:0;
+  }
+  table.list-table td{ padding:7px 10px; border-bottom:1px solid #f0ddc9; }
+  table.list-table tr:nth-child(even){ background:#fdf6ee; }
+  table.list-table .hz-col{ font-size:1.15rem; font-weight:700; color:var(--ink); white-space:nowrap; }
+  table.list-table .py-col{ color:var(--red); white-space:nowrap; }
+  table.list-table .lesson-col{ color:var(--gold); font-weight:700; text-align:center; white-space:nowrap; }
+  .list-scroll{ max-height:60vh; overflow-y:auto; border-radius:12px; border:1px solid #f0ddc9; }
+  .proper-tag{ font-size:.68rem; background:var(--gold); color:#fff; padding:1px 6px; border-radius:6px; margin-left:6px; }
+
+  /* ===== 2. FLASHCARD VIEW ===== */
+  .flash-wrap{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .flash-progress{ color:#8a6a55; font-size:.85rem; }
+  .flashcard{
+    width:100%; max-width:420px; height:230px; perspective:1200px; cursor:pointer;
+  }
+  .flashcard-inner{
+    position:relative; width:100%; height:100%; text-align:center;
+    transition:transform .5s; transform-style:preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner{ transform:rotateY(180deg); }
+  .flash-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:20px; box-shadow:var(--shadow); border:2px solid var(--gold);
+  }
+  .flash-front{ background:linear-gradient(160deg,#fff,#fbe9dc); }
+  .flash-back{ background:linear-gradient(160deg,#fff,#e8f3ec); transform:rotateY(180deg); }
+  .flash-hz{ font-size:3rem; font-weight:700; color:var(--red-dark); }
+  .flash-py{ font-size:1.2rem; color:var(--red); margin-top:8px; }
+  .flash-meaning{ font-size:1.35rem; color:var(--green); font-weight:700; }
+  .flash-lesson{ margin-top:10px; font-size:.8rem; color:#a6714f; }
+  .flash-hint{ font-size:.78rem; color:#a68b78; }
+  .flash-controls{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+
+  /* ===== 3. CHOOSE MEANING (QUIZ) ===== */
+  .quiz-question{
+    text-align:center; background:linear-gradient(160deg,#fff,#fbe9dc);
+    border:2px solid var(--gold); border-radius:18px; padding:24px 16px; margin-bottom:18px;
+  }
+  .quiz-question .prompt-label{ color:#8a6a55; font-size:.85rem; margin-bottom:8px; }
+  .quiz-question .prompt-main{ font-size:2.4rem; color:var(--red-dark); font-weight:700; }
+  .quiz-question .prompt-sub{ color:var(--red); font-size:1.05rem; margin-top:6px; }
+  .quiz-options{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .quiz-opt{
+    background:#fff; border:2px solid #e6d3c4; border-radius:12px; padding:14px 10px;
+    text-align:center; cursor:pointer; font-size:1rem; font-weight:600; color:var(--ink); transition:.15s;
+  }
+  .quiz-opt:hover{ border-color:var(--red); }
+  .quiz-opt.correct{ background:#dff3e6; border-color:var(--green); color:var(--green); }
+  .quiz-opt.wrong{ background:#fbe0dc; border-color:var(--red); color:var(--red-dark); }
+  .quiz-opt.disabled{ pointer-events:none; }
+  .quiz-feedback{ text-align:center; min-height:26px; margin-top:12px; font-weight:600; }
+  .quiz-feedback.ok{ color:var(--green); }
+  .quiz-feedback.bad{ color:var(--red); }
+
+  /* ===== 4. FILL IN BLANK ===== */
+  .fib-item{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:14px; border:1.5px solid #f0ddc9; border-radius:12px; margin-bottom:10px;
+    background:linear-gradient(160deg,#fff,#fdf1e7);
+  }
+  .fib-item .num{ font-weight:700; color:var(--gold); min-width:22px; }
+  .fib-item .clue{ flex:1; min-width:180px; }
+  .fib-item .clue .py{ color:var(--red); font-weight:600; }
+  .fib-item .clue .mn{ color:#6b5a4d; font-size:.9rem; }
+  .fib-item input{
+    width:130px; padding:8px 10px; border-radius:8px; border:1.5px solid #e6d3c4;
+    font-size:1.2rem; text-align:center; font-weight:600;
+  }
+  .fib-item input.correct{ border-color:var(--green); background:#eafaf0; }
+  .fib-item input.wrong{ border-color:var(--red); background:#fbe0dc; }
+  .fib-item .ans{ font-size:.85rem; color:var(--green); min-width:70px; }
+
+  .result-banner{
+    text-align:center; padding:14px; border-radius:12px; font-weight:700; margin-top:14px;
+    background:#fdf1d8; color:var(--red-dark); display:none;
+  }
+  .result-banner.show{ display:block; }
+
+  footer{ text-align:center; color:#a68b78; font-size:.8rem; padding:20px; }
+
+  @media(max-width:600px){
+    h1{ font-size:1.5rem; } h1 .cn{ font-size:1.8rem; }
+    .quiz-question .prompt-main{ font-size:1.9rem; }
+    table.list-table{ font-size:.82rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="cn">温习</span>300 Từ Vựng HSK1 (3.0)</h1>
+  <p>Danh sách · Lật thẻ · Chọn nghĩa · Điền từ — theo 词语表 New HSK TextBook Level 1</p>
+  <div class="note">⚠️ Ghi chú: danh sách này được nhập từ ảnh chụp phụ lục từ vựng do bạn cung cấp (294 mục, gồm 282 từ chính + 12 danh từ riêng). Phần chữ cái <b>Q</b> và phần lớn chữ cái <b>R</b> có vẻ bị thiếu trong ảnh chụp (chỉ thấy "日"). Gửi thêm ảnh phần đó nếu muốn bổ sung cho đủ ~300.</div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-view="list">📋 Danh sách</button>
+  <button data-view="flash">🔄 Lật thẻ</button>
+  <button data-view="quiz">❓ Chọn nghĩa</button>
+  <button data-view="fill">✏️ Điền từ</button>
+</nav>
+
+<main>
+
+  <!-- ============ 1. LIST ============ -->
+  <section class="view active" id="view-list">
+    <div class="panel">
+      <h2>📋 Danh Sách Từ Vựng</h2>
+      <div class="sub">Toàn bộ từ vựng, có thể lọc theo bài học hoặc tìm kiếm.</div>
+      <div class="toolbar">
+        <select id="list-lesson"></select>
+        <input type="text" class="search" id="list-search" placeholder="🔍 Tìm Hán tự / pinyin / nghĩa…">
+        <span class="count-badge" id="list-count"></span>
+      </div>
+      <div class="list-scroll">
+        <table class="list-table">
+          <thead>
+            <tr><th>#</th><th>Hán tự</th><th>Pinyin</th><th>Nghĩa</th><th>Bài</th></tr>
+          </thead>
+          <tbody id="list-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. FLASHCARD ============ -->
+  <section class="view" id="view-flash">
+    <div class="panel">
+      <h2>🔄 Lật Thẻ Ghi Nhớ</h2>
+      <div class="sub">Bấm vào thẻ để lật xem nghĩa. Dùng nút để chuyển thẻ hoặc xáo trộn.</div>
+      <div class="toolbar">
+        <select id="flash-lesson"></select>
+        <span class="flash-progress" id="flash-progress"></span>
+      </div>
+      <div class="flash-wrap">
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner">
+            <div class="flash-face flash-front">
+              <div class="flash-hz" id="flash-hz"></div>
+              <div class="flash-py" id="flash-py"></div>
+              <div class="flash-lesson" id="flash-lesson-front"></div>
+              <div class="flash-hint">👆 Bấm để xem nghĩa</div>
+            </div>
+            <div class="flash-face flash-back">
+              <div class="flash-meaning" id="flash-meaning"></div>
+              <div class="flash-hint">👆 Bấm để quay lại</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-controls">
+          <button class="btn secondary" id="flash-prev">⬅️ Trước</button>
+          <button class="btn secondary" id="flash-shuffle">🔀 Xáo trộn</button>
+          <button class="btn" id="flash-next">Tiếp ➡️</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. CHOOSE MEANING (QUIZ) ============ -->
+  <section class="view" id="view-quiz">
+    <div class="panel">
+      <h2>❓ Chọn Nghĩa Đúng</h2>
+      <div class="sub">Xem chữ Hán và pinyin, chọn nghĩa tiếng Việt đúng.</div>
+      <div class="toolbar">
+        <select id="quiz-lesson"></select>
+        <span class="score-badge"><span id="quiz-score">0</span> / <span id="quiz-total">0</span></span>
+      </div>
+      <div class="quiz-question">
+        <div class="prompt-label" id="quiz-label">Chọn nghĩa đúng của:</div>
+        <div class="prompt-main" id="quiz-main"></div>
+        <div class="prompt-sub" id="quiz-sub"></div>
+      </div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="toolbar" style="justify-content:center;margin-top:10px;">
+        <button class="btn secondary" id="quiz-restart">🔄 Làm lại từ đầu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. FILL IN BLANK ============ -->
+  <section class="view" id="view-fill">
+    <div class="panel">
+      <h2>✏️ Điền Chữ Hán</h2>
+      <div class="sub">Đọc phiên âm và nghĩa, gõ đúng chữ Hán tương ứng.</div>
+      <div class="toolbar">
+        <select id="fill-lesson"></select>
+        <div>
+          <button class="btn secondary" id="fill-new">🔄 Đề mới</button>
+          <button class="btn" id="fill-check">✅ Kiểm tra</button>
+        </div>
+      </div>
+      <div id="fill-list"></div>
+      <div class="result-banner" id="fill-result"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>做中文练习 · Chúc bạn học tốt! 加油！</footer>
+
+<script>
+/* =========================================================
+   DỮ LIỆU TỪ VỰNG (294 mục — từ ảnh chụp 词语表, New HSK TextBook Level 1)
+   ========================================================= */
+const vocabData = [
+  {hanzi:'爱', pinyin:'ài', lesson:'15', meaning:'yêu, thích', type:'core'},
+  {hanzi:'八', pinyin:'bā', lesson:'4', meaning:'số 8 (tám)', type:'core'},
+  {hanzi:'半', pinyin:'bàn', lesson:'7', meaning:'nửa', type:'core'},
+  {hanzi:'包子', pinyin:'bāozi', lesson:'6', meaning:'bánh bao', type:'core'},
+  {hanzi:'杯', pinyin:'bēi', lesson:'13', meaning:'cốc, chén (lượng từ)', type:'core'},
+  {hanzi:'杯子', pinyin:'bēizi', lesson:'10', meaning:'cái cốc', type:'core'},
+  {hanzi:'本', pinyin:'běn', lesson:'9', meaning:'quyển (lượng từ sách)', type:'core'},
+  {hanzi:'边', pinyin:'biān', lesson:'9', meaning:'bên, phía', type:'core'},
+  {hanzi:'病', pinyin:'bìng', lesson:'12', meaning:'bệnh, ốm', type:'core'},
+  {hanzi:'病人', pinyin:'bìngrén', lesson:'8', meaning:'bệnh nhân', type:'core'},
+  {hanzi:'不客气', pinyin:'bú kèqi', lesson:'1', meaning:'không có gì, đừng khách sáo', type:'core'},
+  {hanzi:'不要', pinyin:'búyào', lesson:'14', meaning:'đừng, không cần', type:'core'},
+  {hanzi:'不', pinyin:'bù', lesson:'2', meaning:'không', type:'core'},
+  {hanzi:'菜', pinyin:'cài', lesson:'5,7', meaning:'món ăn, rau', type:'core'},
+  {hanzi:'茶', pinyin:'chá', lesson:'13', meaning:'trà', type:'core'},
+  {hanzi:'唱', pinyin:'chàng', lesson:'9', meaning:'hát', type:'core'},
+  {hanzi:'超市', pinyin:'chāoshì', lesson:'6', meaning:'siêu thị', type:'core'},
+  {hanzi:'车', pinyin:'chē', lesson:'11', meaning:'xe', type:'core'},
+  {hanzi:'吃', pinyin:'chī', lesson:'6', meaning:'ăn', type:'core'},
+  {hanzi:'出租车', pinyin:'chūzūchē', lesson:'6', meaning:'xe taxi', type:'core'},
+  {hanzi:'穿', pinyin:'chuān', lesson:'10', meaning:'mặc (quần áo)', type:'core'},
+  {hanzi:'打电话', pinyin:'dǎ diànhuà', lesson:'13', meaning:'gọi điện thoại', type:'core'},
+  {hanzi:'大', pinyin:'dà', lesson:'4,8', meaning:'to, lớn', type:'core'},
+  {hanzi:'大家', pinyin:'dàjiā', lesson:'1', meaning:'mọi người', type:'core'},
+  {hanzi:'大学', pinyin:'dàxué', lesson:'11', meaning:'đại học', type:'core'},
+  {hanzi:'大学生', pinyin:'dàxuéshēng', lesson:'11', meaning:'sinh viên đại học', type:'core'},
+  {hanzi:'到', pinyin:'dào', lesson:'8', meaning:'đến', type:'core'},
+  {hanzi:'的', pinyin:'de', lesson:'3', meaning:'trợ từ sở hữu (của)', type:'core'},
+  {hanzi:'弟弟', pinyin:'dìdi', lesson:'11', meaning:'em trai', type:'core'},
+  {hanzi:'第', pinyin:'dì', lesson:'9', meaning:'thứ (số thứ tự)', type:'core'},
+  {hanzi:'点', pinyin:'diǎn', lesson:'7', meaning:'giờ; gọi (món)', type:'core'},
+  {hanzi:'电话', pinyin:'diànhuà', lesson:'6', meaning:'điện thoại', type:'core'},
+  {hanzi:'电脑', pinyin:'diànnǎo', lesson:'5', meaning:'máy tính', type:'core'},
+  {hanzi:'电视', pinyin:'diànshì', lesson:'9', meaning:'ti vi', type:'core'},
+  {hanzi:'电影', pinyin:'diànyǐng', lesson:'7', meaning:'phim', type:'core'},
+  {hanzi:'电影院', pinyin:'diànyǐngyuàn', lesson:'7', meaning:'rạp chiếu phim', type:'core'},
+  {hanzi:'店', pinyin:'diàn', lesson:'7', meaning:'cửa hàng', type:'core'},
+  {hanzi:'东西', pinyin:'dōngxi', lesson:'6', meaning:'đồ vật', type:'core'},
+  {hanzi:'都', pinyin:'dōu', lesson:'14', meaning:'đều', type:'core'},
+  {hanzi:'读', pinyin:'dú', lesson:'11', meaning:'đọc', type:'core'},
+  {hanzi:'读书', pinyin:'dúshū', lesson:'9', meaning:'đọc sách', type:'core'},
+  {hanzi:'对', pinyin:'duì', lesson:'3,11', meaning:'đúng; đối với', type:'core'},
+  {hanzi:'对不起', pinyin:'duìbuqǐ', lesson:'2', meaning:'xin lỗi', type:'core'},
+  {hanzi:'多', pinyin:'duō', lesson:'4,8', meaning:'nhiều', type:'core'},
+  {hanzi:'多少', pinyin:'duōshao', lesson:'4', meaning:'bao nhiêu', type:'core'},
+  {hanzi:'儿子', pinyin:'érzi', lesson:'4', meaning:'con trai', type:'core'},
+  {hanzi:'二', pinyin:'èr', lesson:'4', meaning:'số 2 (hai)', type:'core'},
+  {hanzi:'饭', pinyin:'fàn', lesson:'8', meaning:'cơm', type:'core'},
+  {hanzi:'饭店', pinyin:'fàndiàn', lesson:'11', meaning:'khách sạn, nhà hàng', type:'core'},
+  {hanzi:'房间', pinyin:'fángjiān', lesson:'8', meaning:'phòng', type:'core'},
+  {hanzi:'飞机', pinyin:'fēijī', lesson:'15', meaning:'máy bay', type:'core'},
+  {hanzi:'非常', pinyin:'fēicháng', lesson:'6', meaning:'rất, vô cùng', type:'core'},
+  {hanzi:'分', pinyin:'fēn', lesson:'7', meaning:'phút; phân (tiền)', type:'core'},
+  {hanzi:'分钟', pinyin:'fēnzhōng', lesson:'7', meaning:'phút', type:'core'},
+  {hanzi:'服务员', pinyin:'fúwùyuán', lesson:'13', meaning:'nhân viên phục vụ', type:'core'},
+  {hanzi:'高兴', pinyin:'gāoxìng', lesson:'2', meaning:'vui, cao hứng', type:'core'},
+  {hanzi:'哥哥', pinyin:'gēge', lesson:'4', meaning:'anh trai', type:'core'},
+  {hanzi:'歌', pinyin:'gē', lesson:'9', meaning:'bài hát', type:'core'},
+  {hanzi:'个', pinyin:'gè', lesson:'4', meaning:'cái (lượng từ)', type:'core'},
+  {hanzi:'给', pinyin:'gěi', lesson:'13', meaning:'cho, đưa', type:'core'},
+  {hanzi:'工作', pinyin:'gōngzuò', lesson:'3,8', meaning:'công việc, làm việc', type:'core'},
+  {hanzi:'公司', pinyin:'gōngsī', lesson:'12', meaning:'công ty', type:'core'},
+  {hanzi:'狗', pinyin:'gǒu', lesson:'9', meaning:'con chó', type:'core'},
+  {hanzi:'贵', pinyin:'guì', lesson:'10', meaning:'đắt; quý', type:'core'},
+  {hanzi:'国', pinyin:'guó', lesson:'3', meaning:'nước, quốc gia', type:'core'},
+  {hanzi:'还', pinyin:'hái', lesson:'3', meaning:'vẫn, còn', type:'core'},
+  {hanzi:'孩子', pinyin:'háizi', lesson:'4', meaning:'con cái, trẻ em', type:'core'},
+  {hanzi:'好', pinyin:'hǎo', lesson:'1', meaning:'tốt, khỏe', type:'core'},
+  {hanzi:'好吃', pinyin:'hǎochī', lesson:'6', meaning:'ngon', type:'core'},
+  {hanzi:'好看', pinyin:'hǎokàn', lesson:'5', meaning:'đẹp (nhìn)', type:'core'},
+  {hanzi:'好听', pinyin:'hǎotīng', lesson:'9', meaning:'hay (nghe)', type:'core'},
+  {hanzi:'好玩儿', pinyin:'hǎowánr', lesson:'15', meaning:'thú vị, hay chơi', type:'core'},
+  {hanzi:'号', pinyin:'hào', lesson:'5,6', meaning:'ngày, số', type:'core'},
+  {hanzi:'喝', pinyin:'hē', lesson:'12', meaning:'uống', type:'core'},
+  {hanzi:'和', pinyin:'hé', lesson:'4,9', meaning:'và', type:'core'},
+  {hanzi:'很', pinyin:'hěn', lesson:'2', meaning:'rất', type:'core'},
+  {hanzi:'后', pinyin:'hòu', lesson:'7', meaning:'sau', type:'core'},
+  {hanzi:'回', pinyin:'huí', lesson:'12', meaning:'về, quay lại', type:'core'},
+  {hanzi:'会', pinyin:'huì', lesson:'5', meaning:'biết, sẽ', type:'core'},
+  {hanzi:'火车', pinyin:'huǒchē', lesson:'14', meaning:'tàu hỏa', type:'core'},
+  {hanzi:'机场', pinyin:'jīchǎng', lesson:'15', meaning:'sân bay', type:'core'},
+  {hanzi:'鸡蛋', pinyin:'jīdàn', lesson:'13', meaning:'trứng gà', type:'core'},
+  {hanzi:'几', pinyin:'jǐ', lesson:'4,15', meaning:'mấy', type:'core'},
+  {hanzi:'家', pinyin:'jiā', lesson:'4,7,9', meaning:'nhà, gia đình', type:'core'},
+  {hanzi:'家人', pinyin:'jiārén', lesson:'15', meaning:'người nhà', type:'core'},
+  {hanzi:'见', pinyin:'jiàn', lesson:'7', meaning:'gặp', type:'core'},
+  {hanzi:'件', pinyin:'jiàn', lesson:'10', meaning:'cái, chiếc (lượng từ)', type:'core'},
+  {hanzi:'饺子', pinyin:'jiǎozi', lesson:'5', meaning:'sủi cảo', type:'core'},
+  {hanzi:'叫', pinyin:'jiào', lesson:'2', meaning:'gọi, tên là', type:'core'},
+  {hanzi:'接', pinyin:'jiē', lesson:'15', meaning:'đón', type:'core'},
+  {hanzi:'姐姐', pinyin:'jiějie', lesson:'3', meaning:'chị gái', type:'core'},
+  {hanzi:'斤', pinyin:'jīn', lesson:'10', meaning:'cân (đơn vị 500g)', type:'core'},
+  {hanzi:'今年', pinyin:'jīnnián', lesson:'4', meaning:'năm nay', type:'core'},
+  {hanzi:'今天', pinyin:'jīntiān', lesson:'5', meaning:'hôm nay', type:'core'},
+  {hanzi:'九', pinyin:'jiǔ', lesson:'4', meaning:'số 9 (chín)', type:'core'},
+  {hanzi:'开', pinyin:'kāi', lesson:'14', meaning:'mở, lái', type:'core'},
+  {hanzi:'开车', pinyin:'kāichē', lesson:'11', meaning:'lái xe', type:'core'},
+  {hanzi:'看', pinyin:'kàn', lesson:'7', meaning:'xem, nhìn', type:'core'},
+  {hanzi:'看病', pinyin:'kànbìng', lesson:'12', meaning:'khám bệnh', type:'core'},
+  {hanzi:'看见', pinyin:'kànjiàn', lesson:'8', meaning:'nhìn thấy', type:'core'},
+  {hanzi:'可以', pinyin:'kěyǐ', lesson:'13', meaning:'có thể', type:'core'},
+  {hanzi:'课', pinyin:'kè', lesson:'7', meaning:'tiết học, bài học', type:'core'},
+  {hanzi:'口', pinyin:'kǒu', lesson:'4', meaning:'miệng; khẩu (lượng từ đếm người)', type:'core'},
+  {hanzi:'块', pinyin:'kuài', lesson:'10', meaning:'đồng (tiền); miếng, tảng', type:'core'},
+  {hanzi:'来', pinyin:'lái', lesson:'12', meaning:'đến, tới', type:'core'},
+  {hanzi:'老师', pinyin:'lǎoshī', lesson:'1', meaning:'giáo viên', type:'core'},
+  {hanzi:'了', pinyin:'le', lesson:'12,14', meaning:'trợ từ hoàn thành/thay đổi', type:'core'},
+  {hanzi:'冷', pinyin:'lěng', lesson:'12', meaning:'lạnh', type:'core'},
+  {hanzi:'里', pinyin:'lǐ', lesson:'7', meaning:'trong, bên trong', type:'core'},
+  {hanzi:'两', pinyin:'liǎng', lesson:'4', meaning:'hai (đơn vị đếm)', type:'core'},
+  {hanzi:'零', pinyin:'líng', lesson:'4', meaning:'số 0', type:'core'},
+  {hanzi:'六', pinyin:'liù', lesson:'4', meaning:'số 6 (sáu)', type:'core'},
+  {hanzi:'妈妈', pinyin:'māma', lesson:'4', meaning:'mẹ', type:'core'},
+  {hanzi:'吗', pinyin:'ma', lesson:'3', meaning:'trợ từ nghi vấn', type:'core'},
+  {hanzi:'买', pinyin:'mǎi', lesson:'6', meaning:'mua', type:'core'},
+  {hanzi:'卖', pinyin:'mài', lesson:'13', meaning:'bán', type:'core'},
+  {hanzi:'忙', pinyin:'máng', lesson:'3', meaning:'bận', type:'core'},
+  {hanzi:'猫', pinyin:'māo', lesson:'8', meaning:'con mèo', type:'core'},
+  {hanzi:'没', pinyin:'méi', lesson:'8', meaning:'không (phủ định)', type:'core'},
+  {hanzi:'没关系', pinyin:'méi guānxi', lesson:'2', meaning:'không sao', type:'core'},
+  {hanzi:'没事', pinyin:'méishì', lesson:'2', meaning:'không có việc gì, không sao', type:'core'},
+  {hanzi:'没有', pinyin:'méiyǒu', lesson:'4', meaning:'không có', type:'core'},
+  {hanzi:'妹妹', pinyin:'mèimei', lesson:'4', meaning:'em gái', type:'core'},
+  {hanzi:'们', pinyin:'men', lesson:'1', meaning:'hậu tố số nhiều', type:'core'},
+  {hanzi:'米饭', pinyin:'mǐfàn', lesson:'6', meaning:'cơm (gạo)', type:'core'},
+  {hanzi:'哪', pinyin:'nǎ', lesson:'3', meaning:'nào', type:'core'},
+  {hanzi:'哪个', pinyin:'nǎge', lesson:'15', meaning:'cái nào', type:'core'},
+  {hanzi:'哪里', pinyin:'nǎlǐ', lesson:'11', meaning:'đâu, nơi nào', type:'core'},
+  {hanzi:'哪儿', pinyin:'nǎr', lesson:'6', meaning:'đâu, nơi nào', type:'core'},
+  {hanzi:'哪些', pinyin:'nǎxiē', lesson:'14', meaning:'những cái nào', type:'core'},
+  {hanzi:'那', pinyin:'nà', lesson:'9,15', meaning:'đó, kia', type:'core'},
+  {hanzi:'那边', pinyin:'nàbiān', lesson:'6', meaning:'bên đó', type:'core'},
+  {hanzi:'那个', pinyin:'nàge', lesson:'9', meaning:'cái đó', type:'core'},
+  {hanzi:'那里', pinyin:'nàlǐ', lesson:'11', meaning:'chỗ đó', type:'core'},
+  {hanzi:'那儿', pinyin:'nàr', lesson:'10', meaning:'chỗ đó', type:'core'},
+  {hanzi:'那些', pinyin:'nàxiē', lesson:'10', meaning:'những cái đó', type:'core'},
+  {hanzi:'男', pinyin:'nán', lesson:'10', meaning:'nam', type:'core'},
+  {hanzi:'男朋友', pinyin:'nánpéngyou', lesson:'15', meaning:'bạn trai', type:'core'},
+  {hanzi:'呢', pinyin:'ne', lesson:'4,7', meaning:'trợ từ nghi vấn (còn... thì sao)', type:'core'},
+  {hanzi:'能', pinyin:'néng', lesson:'8', meaning:'có thể', type:'core'},
+  {hanzi:'你', pinyin:'nǐ', lesson:'2', meaning:'bạn', type:'core'},
+  {hanzi:'你好', pinyin:'nǐ hǎo', lesson:'1', meaning:'xin chào', type:'core'},
+  {hanzi:'你们', pinyin:'nǐmen', lesson:'1', meaning:'các bạn', type:'core'},
+  {hanzi:'年', pinyin:'nián', lesson:'15', meaning:'năm', type:'core'},
+  {hanzi:'您', pinyin:'nín', lesson:'1', meaning:'ngài, ông/bà (kính ngữ)', type:'core'},
+  {hanzi:'牛奶', pinyin:'niúnǎi', lesson:'6', meaning:'sữa bò', type:'core'},
+  {hanzi:'女', pinyin:'nǚ', lesson:'10', meaning:'nữ', type:'core'},
+  {hanzi:'女儿', pinyin:"nǚ'ér", lesson:'4', meaning:'con gái', type:'core'},
+  {hanzi:'女朋友', pinyin:'nǚpéngyou', lesson:'3', meaning:'bạn gái', type:'core'},
+  {hanzi:'女士', pinyin:'nǚshì', lesson:'13', meaning:'quý bà, cô', type:'core'},
+  {hanzi:'朋友', pinyin:'péngyou', lesson:'9', meaning:'bạn bè', type:'core'},
+  {hanzi:'便宜', pinyin:'piányi', lesson:'10', meaning:'rẻ', type:'core'},
+  {hanzi:'日', pinyin:'rì', lesson:'5', meaning:'ngày; mặt trời', type:'core'},
+  {hanzi:'三', pinyin:'sān', lesson:'4', meaning:'số 3 (ba)', type:'core'},
+  {hanzi:'商店', pinyin:'shāngdiàn', lesson:'10', meaning:'cửa hàng', type:'core'},
+  {hanzi:'上', pinyin:'shàng', lesson:'9,14', meaning:'trên; đi (đến)', type:'core'},
+  {hanzi:'上班', pinyin:'shàngbān', lesson:'7', meaning:'đi làm', type:'core'},
+  {hanzi:'上课', pinyin:'shàngkè', lesson:'7', meaning:'lên lớp, học', type:'core'},
+  {hanzi:'上午', pinyin:'shàngwǔ', lesson:'7', meaning:'buổi sáng', type:'core'},
+  {hanzi:'上学', pinyin:'shàngxué', lesson:'14', meaning:'đi học', type:'core'},
+  {hanzi:'少', pinyin:'shǎo', lesson:'10', meaning:'ít', type:'core'},
+  {hanzi:'谁', pinyin:'shéi', lesson:'3', meaning:'ai', type:'core'},
+  {hanzi:'什么', pinyin:'shénme', lesson:'2', meaning:'cái gì', type:'core'},
+  {hanzi:'生病', pinyin:'shēngbìng', lesson:'12', meaning:'bị bệnh, ốm', type:'core'},
+  {hanzi:'十', pinyin:'shí', lesson:'4', meaning:'số 10 (mười)', type:'core'},
+  {hanzi:'时候', pinyin:'shíhou', lesson:'11', meaning:'lúc, thời điểm', type:'core'},
+  {hanzi:'时间', pinyin:'shíjiān', lesson:'15', meaning:'thời gian', type:'core'},
+  {hanzi:'事', pinyin:'shì', lesson:'7', meaning:'việc, sự việc', type:'core'},
+  {hanzi:'是', pinyin:'shì', lesson:'2', meaning:'là', type:'core'},
+  {hanzi:'手机', pinyin:'shǒujī', lesson:'6', meaning:'điện thoại di động', type:'core'},
+  {hanzi:'售货员', pinyin:'shòuhuòyuán', lesson:'10', meaning:'nhân viên bán hàng', type:'core'},
+  {hanzi:'书', pinyin:'shū', lesson:'9', meaning:'sách', type:'core'},
+  {hanzi:'书店', pinyin:'shūdiàn', lesson:'8', meaning:'hiệu sách', type:'core'},
+  {hanzi:'水', pinyin:'shuǐ', lesson:'12', meaning:'nước', type:'core'},
+  {hanzi:'水果', pinyin:'shuǐguǒ', lesson:'10', meaning:'trái cây', type:'core'},
+  {hanzi:'睡', pinyin:'shuì', lesson:'11', meaning:'ngủ', type:'core'},
+  {hanzi:'睡觉', pinyin:'shuìjiào', lesson:'11', meaning:'đi ngủ', type:'core'},
+  {hanzi:'说', pinyin:'shuō', lesson:'11', meaning:'nói', type:'core'},
+  {hanzi:'说话', pinyin:'shuōhuà', lesson:'14', meaning:'nói chuyện', type:'core'},
+  {hanzi:'四', pinyin:'sì', lesson:'4', meaning:'số 4 (bốn)', type:'core'},
+  {hanzi:'岁', pinyin:'suì', lesson:'4', meaning:'tuổi', type:'core'},
+  {hanzi:'他', pinyin:'tā', lesson:'4', meaning:'anh ấy', type:'core'},
+  {hanzi:'他们', pinyin:'tāmen', lesson:'14', meaning:'họ (nam)', type:'core'},
+  {hanzi:'它', pinyin:'tā', lesson:'5', meaning:'nó', type:'core'},
+  {hanzi:'它们', pinyin:'tāmen', lesson:'14', meaning:'chúng nó', type:'core'},
+  {hanzi:'她', pinyin:'tā', lesson:'3', meaning:'cô ấy', type:'core'},
+  {hanzi:'她们', pinyin:'tāmen', lesson:'14', meaning:'họ (nữ)', type:'core'},
+  {hanzi:'太', pinyin:'tài', lesson:'3', meaning:'quá', type:'core'},
+  {hanzi:'天', pinyin:'tiān', lesson:'12', meaning:'trời, ngày', type:'core'},
+  {hanzi:'天气', pinyin:'tiānqì', lesson:'12', meaning:'thời tiết', type:'core'},
+  {hanzi:'听', pinyin:'tīng', lesson:'14', meaning:'nghe', type:'core'},
+  {hanzi:'听见', pinyin:'tīngjiàn', lesson:'14', meaning:'nghe thấy', type:'core'},
+  {hanzi:'同学', pinyin:'tóngxué', lesson:'1', meaning:'bạn học', type:'core'},
+  {hanzi:'喂', pinyin:'wèi', lesson:'3', meaning:'alô (nghe điện thoại)', type:'core'},
+  {hanzi:'问', pinyin:'wèn', lesson:'11', meaning:'hỏi', type:'core'},
+  {hanzi:'问题', pinyin:'wèntí', lesson:'13', meaning:'vấn đề, câu hỏi', type:'core'},
+  {hanzi:'我', pinyin:'wǒ', lesson:'2', meaning:'tôi', type:'core'},
+  {hanzi:'我们', pinyin:'wǒmen', lesson:'3', meaning:'chúng tôi', type:'core'},
+  {hanzi:'五', pinyin:'wǔ', lesson:'4', meaning:'số 5 (năm)', type:'core'},
+  {hanzi:'午饭', pinyin:'wǔfàn', lesson:'8', meaning:'cơm trưa', type:'core'},
+  {hanzi:'外', pinyin:'wài', lesson:'8', meaning:'ngoài', type:'core'},
+  {hanzi:'外边', pinyin:'wàibian', lesson:'9', meaning:'bên ngoài', type:'core'},
+  {hanzi:'玩', pinyin:'wán', lesson:'9', meaning:'chơi', type:'core'},
+  {hanzi:'晚', pinyin:'wǎn', lesson:'14', meaning:'muộn', type:'core'},
+  {hanzi:'晚饭', pinyin:'wǎnfàn', lesson:'6', meaning:'cơm tối', type:'core'},
+  {hanzi:'晚上', pinyin:'wǎnshang', lesson:'7', meaning:'buổi tối', type:'core'},
+  {hanzi:'喜欢', pinyin:'xǐhuan', lesson:'5', meaning:'thích', type:'core'},
+  {hanzi:'下', pinyin:'xià', lesson:'8,12', meaning:'dưới, xuống', type:'core'},
+  {hanzi:'下班', pinyin:'xiàbān', lesson:'5', meaning:'tan làm', type:'core'},
+  {hanzi:'下课', pinyin:'xiàkè', lesson:'7', meaning:'tan học', type:'core'},
+  {hanzi:'下午', pinyin:'xiàwǔ', lesson:'7', meaning:'buổi chiều', type:'core'},
+  {hanzi:'下雨', pinyin:'xià yǔ', lesson:'12', meaning:'trời mưa', type:'core'},
+  {hanzi:'先生', pinyin:'xiānsheng', lesson:'13', meaning:'ông, tiên sinh', type:'core'},
+  {hanzi:'现在', pinyin:'xiànzài', lesson:'7', meaning:'bây giờ', type:'core'},
+  {hanzi:'想', pinyin:'xiǎng', lesson:'3,6', meaning:'nghĩ, muốn', type:'core'},
+  {hanzi:'小', pinyin:'xiǎo', lesson:'8', meaning:'nhỏ', type:'core'},
+  {hanzi:'小朋友', pinyin:'xiǎopéngyou', lesson:'11', meaning:'em nhỏ, bạn nhỏ', type:'core'},
+  {hanzi:'小时', pinyin:'xiǎoshí', lesson:'15', meaning:'tiếng đồng hồ, giờ', type:'core'},
+  {hanzi:'小学', pinyin:'xiǎoxué', lesson:'14', meaning:'tiểu học', type:'core'},
+  {hanzi:'小学生', pinyin:'xiǎoxuéshēng', lesson:'14', meaning:'học sinh tiểu học', type:'core'},
+  {hanzi:'些', pinyin:'xiē', lesson:'6', meaning:'vài, một số', type:'core'},
+  {hanzi:'写', pinyin:'xiě', lesson:'14', meaning:'viết', type:'core'},
+  {hanzi:'谢谢', pinyin:'xièxie', lesson:'1', meaning:'cảm ơn', type:'core'},
+  {hanzi:'新', pinyin:'xīn', lesson:'5', meaning:'mới', type:'core'},
+  {hanzi:'星期', pinyin:'xīngqī', lesson:'5', meaning:'tuần', type:'core'},
+  {hanzi:'星期日', pinyin:'Xīngqīrì', lesson:'5', meaning:'chủ nhật', type:'core'},
+  {hanzi:'星期天', pinyin:'Xīngqītiān', lesson:'5', meaning:'chủ nhật', type:'core'},
+  {hanzi:'休息', pinyin:'xiūxi', lesson:'5', meaning:'nghỉ ngơi', type:'core'},
+  {hanzi:'学', pinyin:'xué', lesson:'11', meaning:'học', type:'core'},
+  {hanzi:'学生', pinyin:'xuéshēng', lesson:'1', meaning:'học sinh', type:'core'},
+  {hanzi:'学习', pinyin:'xuéxí', lesson:'9', meaning:'học tập', type:'core'},
+  {hanzi:'学校', pinyin:'xuéxiào', lesson:'8', meaning:'trường học', type:'core'},
+  {hanzi:'雪', pinyin:'xuě', lesson:'12', meaning:'tuyết', type:'core'},
+  {hanzi:'药', pinyin:'yào', lesson:'12', meaning:'thuốc', type:'core'},
+  {hanzi:'要', pinyin:'yào', lesson:'11,13,15', meaning:'muốn, cần, sẽ', type:'core'},
+  {hanzi:'也', pinyin:'yě', lesson:'2', meaning:'cũng', type:'core'},
+  {hanzi:'一', pinyin:'yī', lesson:'4', meaning:'số 1 (một)', type:'core'},
+  {hanzi:'一半', pinyin:'yíbàn', lesson:'13', meaning:'một nửa', type:'core'},
+  {hanzi:'一下', pinyin:'yíxià', lesson:'13', meaning:'một chút, một lát', type:'core'},
+  {hanzi:'一点儿', pinyin:'yìdiǎnr', lesson:'12', meaning:'một chút', type:'core'},
+  {hanzi:'一些', pinyin:'yìxiē', lesson:'5', meaning:'một số, một vài', type:'core'},
+  {hanzi:'衣服', pinyin:'yīfu', lesson:'10', meaning:'quần áo', type:'core'},
+  {hanzi:'医', pinyin:'yī', lesson:'11', meaning:'y (thầy thuốc)', type:'core'},
+  {hanzi:'医生', pinyin:'yīshēng', lesson:'8', meaning:'bác sĩ', type:'core'},
+  {hanzi:'医院', pinyin:'yīyuàn', lesson:'7', meaning:'bệnh viện', type:'core'},
+  {hanzi:'椅子', pinyin:'yǐzi', lesson:'9', meaning:'cái ghế', type:'core'},
+  {hanzi:'有', pinyin:'yǒu', lesson:'4', meaning:'có', type:'core'},
+  {hanzi:'有的', pinyin:'yǒude', lesson:'14', meaning:'có cái, một số', type:'core'},
+  {hanzi:'有点儿', pinyin:'yǒudiǎnr', lesson:'12', meaning:'hơi, một chút', type:'core'},
+  {hanzi:'有些', pinyin:'yǒuxiē', lesson:'14', meaning:'một số', type:'core'},
+  {hanzi:'雨', pinyin:'yǔ', lesson:'12', meaning:'mưa', type:'core'},
+  {hanzi:'元', pinyin:'yuán', lesson:'10', meaning:'đồng (tiền)', type:'core'},
+  {hanzi:'月', pinyin:'yuè', lesson:'5', meaning:'tháng', type:'core'},
+  {hanzi:'早', pinyin:'zǎo', lesson:'15', meaning:'sớm', type:'core'},
+  {hanzi:'早饭', pinyin:'zǎofàn', lesson:'13', meaning:'bữa sáng', type:'core'},
+  {hanzi:'早上', pinyin:'zǎoshang', lesson:'7', meaning:'buổi sáng sớm', type:'core'},
+  {hanzi:'怎么', pinyin:'zěnme', lesson:'6', meaning:'thế nào, sao', type:'core'},
+  {hanzi:'怎么样', pinyin:'zěnmeyàng', lesson:'10', meaning:'thế nào', type:'core'},
+  {hanzi:'找', pinyin:'zhǎo', lesson:'11', meaning:'tìm', type:'core'},
+  {hanzi:'这', pinyin:'zhè', lesson:'3', meaning:'này', type:'core'},
+  {hanzi:'这边', pinyin:'zhèbiān', lesson:'10', meaning:'bên này', type:'core'},
+  {hanzi:'这个', pinyin:'zhège', lesson:'13', meaning:'cái này', type:'core'},
+  {hanzi:'这里', pinyin:'zhèlǐ', lesson:'12', meaning:'chỗ này', type:'core'},
+  {hanzi:'这儿', pinyin:'zhèr', lesson:'10', meaning:'chỗ này', type:'core'},
+  {hanzi:'这些', pinyin:'zhèxiē', lesson:'10', meaning:'những cái này', type:'core'},
+  {hanzi:'真', pinyin:'zhēn', lesson:'5', meaning:'thật, thật là', type:'core'},
+  {hanzi:'正在', pinyin:'zhèngzài', lesson:'11', meaning:'đang', type:'core'},
+  {hanzi:'只', pinyin:'zhī', lesson:'8', meaning:'con (lượng từ động vật)', type:'core'},
+  {hanzi:'知道', pinyin:'zhīdào', lesson:'11', meaning:'biết', type:'core'},
+  {hanzi:'中午', pinyin:'zhōngwǔ', lesson:'14', meaning:'buổi trưa', type:'core'},
+  {hanzi:'中学', pinyin:'zhōngxué', lesson:'14', meaning:'trung học', type:'core'},
+  {hanzi:'中学生', pinyin:'zhōngxuéshēng', lesson:'14', meaning:'học sinh trung học', type:'core'},
+  {hanzi:'住', pinyin:'zhù', lesson:'15', meaning:'ở, sống', type:'core'},
+  {hanzi:'桌子', pinyin:'zhuōzi', lesson:'8', meaning:'cái bàn', type:'core'},
+  {hanzi:'字', pinyin:'zì', lesson:'14', meaning:'chữ', type:'core'},
+  {hanzi:'昨天', pinyin:'zuótiān', lesson:'11', meaning:'hôm qua', type:'core'},
+  {hanzi:'坐', pinyin:'zuò', lesson:'6,13', meaning:'ngồi', type:'core'},
+  {hanzi:'做', pinyin:'zuò', lesson:'5,9', meaning:'làm', type:'core'},
+  {hanzi:'做饭', pinyin:'zuò fàn', lesson:'5', meaning:'nấu cơm', type:'core'},
+  {hanzi:'再', pinyin:'zài', lesson:'12,13', meaning:'lại, nữa', type:'core'},
+  {hanzi:'再见', pinyin:'zàijiàn', lesson:'1', meaning:'tạm biệt', type:'core'},
+  {hanzi:'在', pinyin:'zài', lesson:'7,8,11', meaning:'ở, đang', type:'core'},
+  {hanzi:'北京', pinyin:'Běijīng', lesson:'15', meaning:'Bắc Kinh (địa danh)', type:'proper'},
+  {hanzi:'大兴机场', pinyin:'Dàxīng Jīchǎng', lesson:'15', meaning:'Sân bay Đại Hưng', type:'proper'},
+  {hanzi:'法国', pinyin:'Fǎguó', lesson:'3', meaning:'nước Pháp', type:'proper'},
+  {hanzi:'汉语', pinyin:'Hànyǔ', lesson:'14', meaning:'tiếng Hán, tiếng Trung', type:'proper'},
+  {hanzi:'汉字', pinyin:'Hànzì', lesson:'14', meaning:'chữ Hán', type:'proper'},
+  {hanzi:'胡医生', pinyin:'Hú yīshēng', lesson:'8', meaning:'bác sĩ Hồ (tên riêng)', type:'proper'},
+  {hanzi:'泰国', pinyin:'Tàiguó', lesson:'3', meaning:'nước Thái Lan', type:'proper'},
+  {hanzi:'王老师', pinyin:'Wáng lǎoshī', lesson:'1', meaning:'thầy/cô giáo Vương', type:'proper'},
+  {hanzi:"西安", pinyin:"Xī'ān", lesson:'15', meaning:'Tây An (địa danh)', type:'proper'},
+  {hanzi:"西安饭店", pinyin:"Xī'ān Fàndiàn", lesson:'6', meaning:'Khách sạn Tây An', type:'proper'},
+  {hanzi:'中国', pinyin:'Zhōngguó', lesson:'3', meaning:'Trung Quốc', type:'proper'},
+  {hanzi:'中文', pinyin:'Zhōngwén', lesson:'3', meaning:'tiếng Trung, chữ Hán', type:'proper'},
+];
+
+/* helper: danh sách bài học 1..15 xuất hiện trong dữ liệu */
+function lessonsOf(v){ return v.lesson.split(',').map(s=>s.trim()); }
+const allLessonNums = Array.from(new Set(vocabData.flatMap(lessonsOf)))
+  .sort((a,b)=>Number(a)-Number(b));
+const lessonOptions = ["Tất cả", ...allLessonNums];
+
+function fillLessonSelect(select){
+  select.innerHTML = '';
+  lessonOptions.forEach(l=>{
+    const opt = document.createElement('option');
+    opt.value = l;
+    opt.textContent = l === 'Tất cả' ? 'Tất cả các bài' : 'Bài ' + l;
+    select.appendChild(opt);
+  });
+}
+function getFiltered(lesson){
+  if(!lesson || lesson === 'Tất cả') return vocabData.slice();
+  return vocabData.filter(v=> lessonsOf(v).includes(String(lesson)));
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function pickN(arr, n){ return shuffle(arr).slice(0, Math.min(n, arr.length)); }
+
+/* =========================================================
+   TAB NAVIGATION
+   ========================================================= */
+const tabButtons = document.querySelectorAll('nav.tabs button');
+const views = document.querySelectorAll('section.view');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    views.forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+/* =========================================================
+   1. LIST VIEW
+   ========================================================= */
+const listLessonSel = document.getElementById('list-lesson');
+fillLessonSelect(listLessonSel);
+const listSearch = document.getElementById('list-search');
+const listBody = document.getElementById('list-body');
+const listCount = document.getElementById('list-count');
+
+function renderList(){
+  const lesson = listLessonSel.value;
+  const q = listSearch.value.trim().toLowerCase();
+  let pool = getFiltered(lesson);
+  if(q){
+    pool = pool.filter(v =>
+      v.hanzi.toLowerCase().includes(q) ||
+      v.pinyin.toLowerCase().includes(q) ||
+      v.meaning.toLowerCase().includes(q)
+    );
+  }
+  listBody.innerHTML = '';
+  pool.forEach((v, idx)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${idx+1}</td>
+      <td class="hz-col">${v.hanzi}${v.type==='proper' ? '<span class="proper-tag">tên riêng</span>' : ''}</td>
+      <td class="py-col">${v.pinyin}</td>
+      <td>${v.meaning}</td>
+      <td class="lesson-col">${v.lesson}</td>
+    `;
+    listBody.appendChild(tr);
+  });
+  listCount.textContent = `${pool.length} / ${vocabData.length} từ`;
+}
+listLessonSel.addEventListener('change', renderList);
+listSearch.addEventListener('input', renderList);
+renderList();
+
+/* =========================================================
+   2. FLASHCARD
+   ========================================================= */
+const flashLessonSel = document.getElementById('flash-lesson');
+fillLessonSelect(flashLessonSel);
+const flashcardEl = document.getElementById('flashcard');
+const flashHz = document.getElementById('flash-hz');
+const flashPy = document.getElementById('flash-py');
+const flashLessonFront = document.getElementById('flash-lesson-front');
+const flashMeaning = document.getElementById('flash-meaning');
+const flashProgress = document.getElementById('flash-progress');
+let flashPool = [];
+let flashIdx = 0;
+
+function loadFlashPool(){
+  flashPool = getFiltered(flashLessonSel.value);
+  flashIdx = 0;
+  showFlash();
+}
+function showFlash(){
+  flashcardEl.classList.remove('flipped');
+  if(flashPool.length === 0){
+    flashHz.textContent = '—'; flashPy.textContent=''; flashMeaning.textContent='';
+    flashLessonFront.textContent=''; flashProgress.textContent = '0 / 0';
+    return;
+  }
+  const v = flashPool[flashIdx];
+  flashHz.textContent = v.hanzi;
+  flashPy.textContent = v.pinyin;
+  flashLessonFront.textContent = 'Bài ' + v.lesson;
+  flashMeaning.textContent = v.meaning;
+  flashProgress.textContent = `${flashIdx+1} / ${flashPool.length}`;
+}
+flashcardEl.addEventListener('click', ()=> flashcardEl.classList.toggle('flipped'));
+document.getElementById('flash-next').addEventListener('click', ()=>{
+  if(flashPool.length===0) return;
+  flashIdx = (flashIdx+1) % flashPool.length;
+  showFlash();
+});
+document.getElementById('flash-prev').addEventListener('click', ()=>{
+  if(flashPool.length===0) return;
+  flashIdx = (flashIdx-1+flashPool.length) % flashPool.length;
+  showFlash();
+});
+document.getElementById('flash-shuffle').addEventListener('click', ()=>{
+  flashPool = shuffle(flashPool);
+  flashIdx = 0;
+  showFlash();
+});
+flashLessonSel.addEventListener('change', loadFlashPool);
+loadFlashPool();
+
+/* =========================================================
+   3. CHOOSE MEANING (QUIZ)
+   ========================================================= */
+const quizLessonSel = document.getElementById('quiz-lesson');
+fillLessonSelect(quizLessonSel);
+let quizPool = [];
+let quizScore = 0, quizTotal = 0;
+const quizMain = document.getElementById('quiz-main');
+const quizSub = document.getElementById('quiz-sub');
+const quizOptionsEl = document.getElementById('quiz-options');
+const quizFeedback = document.getElementById('quiz-feedback');
+const quizScoreEl = document.getElementById('quiz-score');
+const quizTotalEl = document.getElementById('quiz-total');
+
+function startQuiz(){
+  quizPool = getFiltered(quizLessonSel.value);
+  quizScore = 0; quizTotal = 0;
+  quizScoreEl.textContent = 0; quizTotalEl.textContent = 0;
+  nextQuizQuestion();
+}
+function pickRandomExcl(arr, n, exclude){
+  const pool = arr.filter(x=>x!==exclude);
+  return pickN(pool, n);
+}
+function nextQuizQuestion(){
+  quizFeedback.textContent = ''; quizFeedback.className = 'quiz-feedback';
+  if(quizPool.length < 4){
+    quizMain.textContent = '⚠';
+    quizSub.textContent = '';
+    quizOptionsEl.innerHTML = '<p style="text-align:center;color:#a68b78;grid-column:1/-1;">Cần ít nhất 4 từ trong bài này.</p>';
+    return;
+  }
+  const target = quizPool[Math.floor(Math.random()*quizPool.length)];
+  quizMain.textContent = target.hanzi;
+  quizSub.textContent = target.pinyin;
+  const correctText = target.meaning;
+  const distractors = pickRandomExcl(quizPool, 3, target).map(v=>v.meaning);
+  const options = shuffle([correctText, ...distractors]);
+  quizOptionsEl.innerHTML = '';
+  options.forEach(opt=>{
+    const btn = document.createElement('div');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', ()=> handleQuizAnswer(btn, opt, correctText));
+    quizOptionsEl.appendChild(btn);
+  });
+}
+function handleQuizAnswer(btn, chosen, correct){
+  document.querySelectorAll('#quiz-options .quiz-opt').forEach(o=>o.classList.add('disabled'));
+  quizTotal++;
+  if(chosen === correct){
+    btn.classList.add('correct'); quizScore++;
+    quizFeedback.textContent = '✅ Chính xác!'; quizFeedback.className = 'quiz-feedback ok';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#quiz-options .quiz-opt').forEach(o=>{ if(o.textContent===correct) o.classList.add('correct'); });
+    quizFeedback.textContent = '❌ Sai rồi. Đáp án đúng: ' + correct;
+    quizFeedback.className = 'quiz-feedback bad';
+  }
+  quizScoreEl.textContent = quizScore; quizTotalEl.textContent = quizTotal;
+  setTimeout(nextQuizQuestion, 1300);
+}
+quizLessonSel.addEventListener('change', startQuiz);
+document.getElementById('quiz-restart').addEventListener('click', startQuiz);
+startQuiz();
+
+/* =========================================================
+   4. FILL IN BLANK (điền chữ Hán)
+   ========================================================= */
+const fillLessonSel = document.getElementById('fill-lesson');
+fillLessonSelect(fillLessonSel);
+const fillList = document.getElementById('fill-list');
+const fillResult = document.getElementById('fill-result');
+let fillSet = [];
+
+function loadFill(){
+  fillResult.classList.remove('show');
+  const pool = getFiltered(fillLessonSel.value);
+  fillSet = pickN(pool, Math.min(10, pool.length));
+  fillList.innerHTML = '';
+  fillSet.forEach((v, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'fib-item';
+    row.innerHTML = `
+      <span class="num">${idx+1}.</span>
+      <span class="clue"><span class="py">${v.pinyin}</span> — <span class="mn">${v.meaning}</span></span>
+      <input type="text" data-idx="${idx}" placeholder="gõ chữ Hán…">
+      <span class="ans" data-idx="${idx}"></span>
+    `;
+    fillList.appendChild(row);
+  });
+}
+document.getElementById('fill-check').addEventListener('click', ()=>{
+  let correct = 0;
+  fillSet.forEach((v, idx)=>{
+    const input = fillList.querySelector(`input[data-idx="${idx}"]`);
+    const ansSpan = fillList.querySelector(`span.ans[data-idx="${idx}"]`);
+    const ok = input.value.trim() === v.hanzi;
+    input.classList.remove('correct','wrong');
+    input.classList.add(ok ? 'correct' : 'wrong');
+    ansSpan.textContent = ok ? '✅' : ('Đáp án: ' + v.hanzi);
+    if(ok) correct++;
+  });
+  fillResult.textContent = `Kết quả: ${correct} / ${fillSet.length} câu đúng`;
+  fillResult.classList.add('show');
+});
+document.getElementById('fill-new').addEventListener('click', loadFill);
+fillLessonSel.addEventListener('change', loadFill);
+loadFill();
+
+</script>
+</body>
+</html>
